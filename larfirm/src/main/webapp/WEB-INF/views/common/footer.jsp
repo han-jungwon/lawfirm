@@ -77,6 +77,5 @@
     </div>
 </footer>
 <!-- end footer -->
-<script src="../../resources/js/common.js"></script>
-</body>
-</html>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="resources/js/common.js?ver=3"></script>

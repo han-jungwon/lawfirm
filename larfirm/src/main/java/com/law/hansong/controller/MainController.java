@@ -8,14 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MainController {
     @RequestMapping("/main")
-    @ResponseBody
     public String main(){
         return "main";
     }
 
-    @RequestMapping("/securepage")
-    @ResponseBody
-    public String securitypage(){
-        return "securepage";
-    }
 }

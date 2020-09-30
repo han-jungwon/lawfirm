@@ -40,9 +40,7 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
    @Override
    public void addResourceHandlers(ResourceHandlerRegistry registry) {
       // url 요청이 아래 경로로 들어오면 우측 Location 경로로 읽어오도록 설정하는 것 매핑
-      registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);
-      registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(31556926);
-      registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(31556926);
+      registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(31556926);
       registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
       registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
    }

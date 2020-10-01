@@ -1,6 +1,6 @@
 $(function() {
     var common = {
-        init: function () {
+        init : function () {
             /* --------------------------------------------------------------------------------------
                 공통 라이브러리 추가
              --------------------------------------------------------------------------------------*/
@@ -9,42 +9,56 @@ $(function() {
             //this.gfn_addJavascript('https://code.jquery.com/jquery-3.5.1.slim.min.js');
             _this.gfn_addJavascript('https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js');
             _this.gfn_addJavascript('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js');
-            <!-- template js -->
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/js/wow.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/js/custom.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/js/hizoom.js');
-            <!-- revolution js files -->
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/jquery.themepunch.revolution.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/jquery.themepunch.tools.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/extensions/revolution.extension.actions.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/extensions/revolution.extension.carousel.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/extensions/revolution.extension.kenburn.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/extensions/revolution.extension.layeranimation.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/extensions/revolution.extension.migration.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/extensions/revolution.extension.navigation.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/extensions/revolution.extension.parallax.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/extensions/revolution.extension.slideanims.min.js');
-            _this.gfn_addJavascript(_this.gfn_getContextPath() + '/resources/revolution/js/extensions/revolution.extension.video.min.js');
         },
+
         /**
          * @description ContextPath 를 가져온다.
          * @example /hansong
          * @returns {string}
          */
-        gfn_getContextPath: function () {
+        gfn_getContextPath : function () {
             const hostIndex = location.href.indexOf(location.host) + location.host.length;
             return location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
         },
+
         /**
          * @description javascript를 추가한다..
          * @example gfn_addJavascript('/contextpath/resources/js/~~.min.js')
          * */
-        gfn_addJavascript: function (jsname) {
+        gfn_addJavascript : function (jsname) {
             var th = document.getElementsByTagName('head')[0];
             var newScript = document.createElement('script');
-            //newScript.setAttribute('type','text/javascript');
+            newScript.setAttribute('type','text/javascript');
             newScript.setAttribute('src', jsname);
             th.appendChild(newScript);
+        },
+
+        /**
+         * @description 유효한(존재하는) '월'인지 체크
+         * @param mm
+         * @returns {boolean|boolean}
+         */
+        gfn_isValidMonth : function (mm) {
+            var m = parseInt(mm,10);
+            return (1 <= m && m <= 12);
+        },
+
+        /**
+         * @description 유효한(존재하는) '일'인지 체크
+         * @param yyyy
+         * @param mm
+         * @param dd
+         * @returns {boolean|boolean}
+         */
+        gfn_isValidDay : function (yyyy, mm, dd) {
+            const m = parseInt(mm, 10) - 1;
+            const d = parseInt(dd, 10);
+
+            var end = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            if ((yyyy % 4 == 0 && yyyy % 100 != 0) || yyyy % 400 == 0) {
+                end[1] = 29;
+            }
+            return (1 <= d && d <= end[m]);
         }
     }
     common.init();

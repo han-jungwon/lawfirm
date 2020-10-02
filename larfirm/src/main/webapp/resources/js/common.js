@@ -6,9 +6,9 @@ $(function() {
              --------------------------------------------------------------------------------------*/
             var _this = this;
             <!-- jQuery, Bootstrap -->
-            //this.gfn_addJavascript('https://code.jquery.com/jquery-3.5.1.slim.min.js');
             _this.gfn_addJavascript('https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js');
             _this.gfn_addJavascript('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js');
+            //_this.gfn_addJavascript('resources/js/~~.min.js');
         },
 
         /**
@@ -23,6 +23,7 @@ $(function() {
 
         /**
          * @description javascript를 추가한다..
+         * @param jsname
          * @example gfn_addJavascript('/contextpath/resources/js/~~.min.js')
          * */
         gfn_addJavascript : function (jsname) {

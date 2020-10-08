@@ -16,6 +16,8 @@ $(function() {
          * @example /hansong
          * @returns {string}
          */
+
+
         gfn_getContextPath : function () {
             const hostIndex = location.href.indexOf(location.host) + location.host.length;
             return location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));

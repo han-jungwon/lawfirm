@@ -8,9 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- FOOTER -->
 <footer class="container">
-    <p class="float-right"><a href="#">Back to top</a></p>
-    <p>&copy; 2017-2020 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    
+   	<strong>법무법인 한송</strong>
+   	&nbsp;&nbsp;&nbsp; 대표자 : 한정원 &nbsp;&nbsp;&nbsp; 사업자등록번호 : 
+   	<span>123-12-12345</span>
+    &nbsp;&nbsp;&nbsp; 주소 : 서울특별시 강남구 테헤란로 &nbsp;&nbsp;&nbsp;
+   	<strong>TEL: 02-123-1234</strong>
+    &nbsp;&nbsp;&nbsp;
+   	<span>FAX: 02-142-2345</span>
+   	<p>COPYRIGHT(C) HANSONG.KR. ALL RIGHTS RESERVED.</p>
+   	<p class="float-right"><a href="#">Back to top</a></p>
 </footer>
 <!-- end footer -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="resources/js/common.js?ver=4"></script>
+<script src="/hansong/resources/js/common.js?ver=4"></script>

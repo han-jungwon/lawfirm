@@ -304,8 +304,83 @@ ul {
 			<!-- /END THE FEATURETTES -->
 
 		</div>
+		<button type="button" id="test2">로그인</button>
 		<!-- /.container -->
 		<jsp:include page="./common/footer.jsp" />
+
 	</main>
+<script>
+	$(function () {
+		const main = {
+			init: function () {
+				/**
+				 *  ~~
+				 */
+				var _this = this;
+				$("#test2").click(function () {
+					//common.alertBox("gd",test,'gd');
+
+					let modalContent = "";
+					modalContent += "<div>";
+					modalContent += "	<button id = \"odd\">gd</button>";
+					modalContent += "	<button id = \"odd\">gd</button>";
+					modalContent += "	<strong>로그인이 되었습니다.</strong>";
+					modalContent += "</div>";
+					common.gfn_alert('c','알림',modalContent,'normal', null, false, true, _this.test, {val:'test'});
+
+				});
+				/**
+				 *  ~~
+				 */
+				// 동적 리소스
+				$(document).on("click", "#odd", function () {
+					console.log("정워나 알러뷰");
+				});
+			},
+
+			/**
+			 *
+			 */
+			test : function (result, jsonData) {
+				location.href=common.gfn_getContextPath()+"/main";
+				if(result == true) {
+					console.log(result);
+				}
+				if(jsonData.val == 'test') {
+					console.log(jsonData);
+				}
+			}
+		}
+		main.init();
+
+		/*  common 참고용
+		$("#test2").click(function () {
+			//common.alertBox("gd",test,'gd');
+
+			let modalContent = "";
+			modalContent += "<div>";
+			modalContent += "	<button id = \"odd\">gd</button>";
+			modalContent += "	<button id = \"odd\">gd</button>";
+			modalContent += "	<strong>로그인이 되었습니다.</strong>";
+			modalContent += "</div>";
+			common.gfn_alert('c','알림',modalContent,'normal', null, false, true, test, {val:'test'});
+
+		});
+		// 동적 리소스
+		$(document).on("click", "#odd", function () {
+			console.log("정워나 알러뷰");
+		});
+		function test(result,jsonData) {
+			location.href=common.gfn_getContextPath()+"/main";
+			if(result == true) {
+				console.log(result);
+			}
+			if(jsonData.val == 'test') {
+				console.log(jsonData);
+			}
+		}
+		 common 참고용 end */
+	})
+</script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -54,7 +55,6 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
    // 특정 URL에 대한 처리를 컨트롤러 클래스를 작성하지 않고 매핑할 수 있도록 해주는 부분임
    @Override
    public void addViewControllers(final ViewControllerRegistry registry) {
-      System.out.println("addViewControllers가 호출됩니다. ");
       registry.addViewController("/").setViewName("main");
    }
    

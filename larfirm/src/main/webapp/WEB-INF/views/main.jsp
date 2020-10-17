@@ -215,7 +215,7 @@ ul {
 				</div>
 				<div class="carousel-item">
 					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/배너3.jpg" border="0"
-								onclick="window.open('#')" style="cursor: pointer">
+							style="cursor: pointer">
 					<div class="container">
 						<div class="carousel-caption text-right">
 							<img  src="./resources/images/배너3-1.png" style="margin-right: 500px">

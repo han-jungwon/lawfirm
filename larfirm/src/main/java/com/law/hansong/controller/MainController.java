@@ -11,5 +11,10 @@ public class MainController {
     public String main(){
         return "main";
     }
+    
+    @RequestMapping("/memberinfo")
+    public String memberinfo(){
+        return "members/memberinfo";
+    }
 
 }

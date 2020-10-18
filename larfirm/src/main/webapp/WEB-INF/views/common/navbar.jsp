@@ -44,7 +44,7 @@
 
 <header class="pt-5">
     <nav class="navbar navbar-expand-xl navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/memberinfo">
         	<img src="/hansong/resources/images/로고.png" style="width: 200px;">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -92,7 +92,7 @@
             <li>
              <div class="dropdown">
                 <button class="btn click" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                	 onclick = "location.href = 'larfirm/menu/lawyer'">
+                	 onclick = "location.href = '/memberinfo'">
                     	공지사항
                 </button>
             </div>

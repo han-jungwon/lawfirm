@@ -10,9 +10,9 @@
 <meta name="author" content="Team. hansong">
 <jsp:include page="./common/header.jsp" />
 <!-- Site css -->
-<link rel="stylesheet" href="resources/css/carousel.css" />
+<link rel="stylesheet" href="/hansong/resources/css/carousel.css" >
 <link rel="canonical"
-	href="https://getbootstrap.com/docs/4.5/examples/carousel/">
+	href="https://getbootstrap.com/docs/4.5/examples/carousel/"/>
 <style>
 
 /* 반응형 화면  */
@@ -174,6 +174,22 @@ ul {
 	margin-left: 100px; margin-right: 100px;
 }
 
+/* 채팅영역 */
+.chat {
+	float: right;
+	position: fixed;
+	right: 0;
+	z-index: 999 !important
+}
+.chat_kakao {
+	bottom: 8em;
+	margin-right: 50px;
+}
+.chat_normal {
+	bottom: 5em;
+	margin-right: 60px;
+}
+
 
 </style>
 </head>
@@ -304,11 +320,46 @@ ul {
 			<!-- /END THE FEATURETTES -->
 
 		</div>
-		<button type="button" id="test2">로그인</button>
+		<button type="button" class="btn btn-outline-white chat chat_kakao" id="btnChatKaKao">
+			<img src="/hansong/resources/images/kakao.png" height="70px" width="70px">
+		</button>
+		<br>
+		<button type="button" class="btn btn-outline-white chat chat_normal" id="btnChatNormal" data-toggle="modal" data-target="#mdlChatNormal">
+			<svg width="50px" height="50px" viewBox="0 0 16 16" class="bi bi-chat-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
+				<path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+			</svg>
+		</button>
+		<button type="button" id="test2"></button>
 		<!-- /.container -->
 		<jsp:include page="./common/footer.jsp" />
 
 	</main>
+	<div class="modal fade" id ="mdlChatNormal">
+		<div class="modal-dialog  modal-dialog-centered">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h1 class="modal-title" style="font-size: large">실시간 상담</h1>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+
+				<!-- messages -->
+				<div class="modal-body" style="overflow-x: hidden; overflow-y: auto; height: 400px; word-break: break-all;">
+					<ul>상담내용dfasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+					</ul>
+				</div>
+
+				<!-- message-input -->
+				<div class="modal-footer">
+					<div class="form-group" style="display: contents;">
+						<textarea class="form-control" rows="2" id="txtChatContent" placeholder="내용을 입력하세요."></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <script>
 	$(function () {
 		const main = {

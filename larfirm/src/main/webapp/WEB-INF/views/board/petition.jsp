@@ -8,10 +8,8 @@
 <title>법무법인 송한</title>
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
-<link rel="stylesheet" href="../resources/css/joinform.css" />
 <link rel="stylesheet" href="resources/css/carousel.css" />
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
 
 
 <style>
@@ -51,24 +49,15 @@
 	height: 40px;
 }
 
-@media screen and ( max-width :700px) {
+@media ( max-width :700px) {
 	.sm_select {
 		display: block;
 	}
 	.big_tab {
 		display: none;
 	}
-}
-	
-@media screen and (max-width: 1280px) {
-	.sm_select {
-		display: block;
-	}
-	.big_tab {
-		display: none;
-	}	
-}
 
+}
 
 #ag {
 	font-size: 30px;
@@ -124,7 +113,7 @@
 	width: 150px;
 	height: 150px;
 	border-radius: 50%;
-	background: #f2f2f2 url('/hansong/resources/images/apology.png')
+	background: #f2f2f2 url('/hansong/resources/images/petition.png')
 		center center no-repeat;
 	margin-bottom: 20px;
 	transition: all 0.3s ease-out;
@@ -154,30 +143,69 @@
 	<div class="tabmenu">
 		<div class="big_tab">
 			<ul>
-				<li><a href="#tab01">변호사 소개</a></li>
-				<li><a href="#tab02">사무실 소개</a></li>
-				<li><a href="#tab03">찾아오시는 길</a></li>		
+				<li><a href="#tab01">언론보도</a></li>
+				<li><a href="#tab02">합의서</a></li>
+				<li><a href="#tab03">탄원서</a></li>
+				<li><a href="#tab04">반성문</a></li>
 			</ul>
 		</div>
 		<div class="sm_select">
 			<select name="" id="tabmenu">
-				<option value="#tab01">변호사 소개</option>
-				<option value="#tab02">사무실 소개</option>
-				<option value="#tab03">찾아오시는 길</option>
+				<option value="#tab01">언론보도</option>
+				<option value="#tab02">합의서</option>
+				<option value="#tab03">탄원서</option>
+				<option value="#tab04">반성문</option>
 			</select>
 		</div>
 	</div>
 
 	<div id="tab03" class="tab-contents">
-		<h2 id="ag">찾아오시는 길</h2>
+		<h2 id="ag">탄원서</h2>
 		<div class="container">
-		<!-- * 카카오맵 지도 -->
-		<!-- 지도 노드 -->
-		<div id="daumRoughmapContainer1603046769190" class="root_daum_roughmap root_daum_roughmap_landing"
-		style="width:100%;" ></div>
+			<div class="contents">
+				<ul class="business_icon">
+					<li><span class="icon"></span></li>
+					<li style="font-weight: bold;
+    					font-size: 20px;"> ● 탄원서</li>
+    					<br><br><br>
+					<li><p style="text-align: left">
+							 먼저 탄원인과 피탄원인 관계를 소명하고 탄원 취지 및 탄원 이유에 대한 내용을 기술하여 피탄원인이 최대한 선처받을 수 있도록 <br>
+							  용서를 구하는 것을 목적으로 하는 글로써, 일종의 증언적 효과를 기대할 수 있습니다.
+						</p></li>
+				</ul>
+
+			</div>
+
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성일</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="width: 70px">1</td>
+						<td style="width: 400px">탄원서 작성법</td>
+						<td style="width: 50px">20.10.01</td>
+						<td style="width: 100px">500</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+
+		<div class="container paging">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link" href="#">이전</a></li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">다음</a></li>
+			</ul>
+		</div>
 	</div>
-	</div>
-	
 	<jsp:include page="../common/footer.jsp" />
 </body>
 <script>
@@ -208,13 +236,6 @@
 					console.log(select_link);
 				});
 	});
-	
-	<!-- 카카오지도 실행 스크립트 -->
-		new daum.roughmap.Lander({
-			"timestamp" : "1603046769190",
-			"key" : "22i9a",
-			"mapHeight" : "360"
-		}).render();
 </script>
 
 </html>

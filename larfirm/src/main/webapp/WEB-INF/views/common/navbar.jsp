@@ -45,7 +45,7 @@
 <header class="pt-5">
     <nav class="navbar navbar-expand-xl navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="/memberinfo">
-        	<img src="/hansong/resources/images/로고.png" style="width: 200px;">
+        	<img src="/hansong/resources/images/logo.png" style="width: 200px;">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@
                     	법무법인 송한
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <button class="dropdown-item" type="button">변호사 소개</button>
+                    <button class="dropdown-item" type="button"  onclick="location.href='/hansong/menu/lawyer'">변호사 소개</button>
                     <button class="dropdown-item" type="button">사무실 소개</button>
                     <button class="dropdown-item" type="button">찾아오시는 길</button>
                 </div>

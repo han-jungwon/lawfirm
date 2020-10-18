@@ -16,5 +16,10 @@ public class MainController {
     public String memberinfo(){
         return "members/memberinfo";
     }
+    
+    @RequestMapping("/laywer")
+    public String laywer(){
+        return "menu/laywer";
+    }
 
 }

@@ -64,12 +64,6 @@
 
 
 /* 전문분야  */
-.business_con {
-	position: relative;
-	padding: 70px 0;
-	width: 1170px;
-	margin: 0 auto;
-}
 
 .business_icon {
 	position: Relative;
@@ -101,18 +95,18 @@
 	width: 150px;
 	height: 150px;
 	border-radius: 50%;
-	background: #f2f2f2 url('./resources/images/전자발찌1.png') center center
+	background: #f2f2f2 url('./resources/images/electronic anklet1.png') center center
 		no-repeat;
 	margin-bottom: 20px;
 	transition: all 0.3s ease-out;
 }
 
 .business_icon li:nth-child(2) span {
-	background-image: url('./resources/images/카메라촬영죄1.png');
+	background-image: url('./resources/images/camera1.png');
 }
 
 .business_icon li:nth-child(3) span {
-	background-image: url('./resources/images/성매매1.png');
+	background-image: url('./resources/images/prostitution1.png');
 	background-position: 49px center
 }
 
@@ -128,15 +122,15 @@ ul.business_icon {
 .business_icon li a:hover span {
 	transition: all 0.3s ease-out;
 	background-color: #182952;
-	background-image: url('./resources/images/전자발찌2.png')
+	background-image: url('./resources/images/electronic anklet2.png')
 }
 
 .business_icon li:nth-child(2) a:hover span {
-	background-image: url('./resources/images/카메라촬영죄2.png')
+	background-image: url('./resources/images/camera2.png')
 }
 
 .business_icon li:nth-child(3) a:hover span {
-	background-image: url('./resources/images/성매매2.png')
+	background-image: url('./resources/images/prostitution2.png')
 }
 ul {
     list-style-type: none;
@@ -206,7 +200,7 @@ ul {
 			</ol>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/배너1.jpg" border="0">
+					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/banner1.jpg" border="0">
 					<div class="container">
 						<div class="carousel-caption text-left">
 							<h1 style="font-weight:bold;">LAW FIRM SONGHAN</h1>
@@ -217,7 +211,7 @@ ul {
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/배너2.jpg" border="0">
+					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/banner2.jpg" border="0">
 					<div class="container">
 						<div class="carousel-caption">
 							<h1>LAW FIRM SONGHAN</h1>
@@ -230,7 +224,7 @@ ul {
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/배너3.jpg" border="0"
+					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/banner3.jpg" border="0"
 							style="cursor: pointer">
 					<div class="container">
 						<div class="carousel-caption text-right">
@@ -288,7 +282,7 @@ ul {
 				</div>
 				<div>
 					<div>
-						<img src="./resources/images/정원.png" border="0"
+						<img src="./resources/images/jungwon.png" border="0"
 							onclick="window.open('#')"
 							style="cursor: pointer; border-radius: 10%; margin-left: 100px; margin-right: 80px;">
 					</div>

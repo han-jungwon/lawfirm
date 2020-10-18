@@ -1,0 +1,160 @@
+@charset "UTF-8";
+
+/* 반응형 화면  */
+@media screen and (max-width: 1680px) {
+
+
+	}
+
+@media screen and (max-width: 1280px) {
+
+
+
+	}
+
+@media screen and (max-width: 980px) {
+		.camera{
+		margin-left: 0px !important; 
+		margin-right: 0px !important;
+		}	
+
+
+	}
+
+@media screen and (max-width: 736px) {
+		.bd-placeholder-img-lg {
+			font-size: 3.5rem;
+		}
+		ul.business_icon{
+			margin-left: 60px !important;
+		} 
+		.camera{
+		margin-left: 0px !important; 
+		margin-right: 0px !important;
+		}	
+
+
+	}
+
+@media screen and (max-width: 480px) {
+		ul.business_icon{
+			margin-left: 50px !important;
+		} 
+		.camera{
+		margin-left: 0px !important; 
+		margin-right: 0px !important;
+		}	
+
+	}
+
+
+/* 전문분야  */
+.business_con {
+	position: relative;
+	padding: 70px 0;
+	width: 1170px;
+	margin: 0 auto;
+}
+
+.business_icon {
+	position: Relative;
+	overflow: hidden;
+}
+
+.business_icon li {
+	float: left;
+	margin-right: 20px;
+	text-align: center;
+}
+
+.business_icon li:last-child {
+	margin-right: 0
+}
+
+.business_icon li a {
+	display: block;
+	font-size: 16px;
+	line-height: 100%;
+	color: #262626;
+	font-weight: 500;
+	letter-spacing: -0.5pt;
+	transition: all 0.3s ease-out;
+}
+
+.business_icon li span {
+	display: block;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	background: #f2f2f2 url('./resources/images/전자발찌1.png') center center
+		no-repeat;
+	margin-bottom: 20px;
+	transition: all 0.3s ease-out;
+}
+
+.business_icon li:nth-child(2) span {
+	background-image: url('./resources/images/카메라촬영죄1.png');
+}
+
+.business_icon li:nth-child(3) span {
+	background-image: url('./resources/images/성매매1.png');
+	background-position: 49px center
+}
+
+ul.business_icon {
+	margin-left: 200px;
+}
+
+.business_icon li a:hover {
+	transition: all 0.3s ease-out;
+	color: #182952;
+}
+
+.business_icon li a:hover span {
+	transition: all 0.3s ease-out;
+	background-color: #182952;
+	background-image: url('./resources/images/전자발찌2.png')
+}
+
+.business_icon li:nth-child(2) a:hover span {
+	background-image: url('./resources/images/카메라촬영죄2.png')
+}
+
+.business_icon li:nth-child(3) a:hover span {
+	background-image: url('./resources/images/성매매2.png')
+}
+ul {
+    list-style-type: none;
+}
+.specially {
+	font-size: 35px;
+	line-height: 100%;
+	font-weight: 700;
+	letter-spacing: -1.5pt;
+	color: #262626;
+	margin-bottom: 24px;
+	text-align: center;
+	position: relative;
+}
+
+.specially {
+	letter-spacing: inherit;
+	line-height: inherit;
+	font-weight: 300
+}
+
+.specially-1 {
+	font-size: 16px;
+	letter-spacing: -0.5pt;
+	line-height: 25px;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.featurette-heading{
+	margin-top: 80px;
+
+}
+.camera{
+	margin-left: 100px; margin-right: 100px;
+}

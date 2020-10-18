@@ -1,11 +1,13 @@
 package com.law.hansong.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,6 +66,8 @@ public class MemberController {
        
        return map;
     }
+    
+    
     /*
     @PostMapping
     public Member write(@RequestBody Member member, HttpServletRequest request) {
@@ -98,15 +102,15 @@ public class MemberController {
     public String welcome(){
         return "members/welcome";
     }
+    */
     
-    @GetMapping("/memberinfo")
-    public String memberInfo(Principal principal, ModelMap modelMap){
-       // 자기정보 가져오는거임
-        String loginId = principal.getName();
-        System.out.println(loginId);
-        Member member = memberService.getMemberByEmail(loginId);
-        modelMap.addAttribute("member", member);
-
-        return "members/memberinfo";
-    }*/
+	/*
+	 * @GetMapping("/memberinfo") public String memberInfo(Principal principal,
+	 * ModelMap modelMap){ // 자기정보 가져오는거임 String loginId = principal.getName();
+	 * System.out.println(loginId); Member member =
+	 * memberService.getMemberByEmail(loginId); modelMap.addAttribute("member",
+	 * member);
+	 * 
+	 * return "members/memberinfo"; }
+	 */
 }

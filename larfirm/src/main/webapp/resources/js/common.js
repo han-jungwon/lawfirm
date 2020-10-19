@@ -1,5 +1,11 @@
 
     const common = {
+        /** 공통 변수 */
+        gS_siteDomain : "songhan.kr",
+
+        /**
+         * 최초 실행
+         */
         init : function () {
             /* --------------------------------------------------------------------------------------
                 공통 라이브러리 추가
@@ -9,8 +15,23 @@
             _this.gfn_addJavascript('https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js');
             _this.gfn_addJavascript('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js');
             //_this.gfn_addJavascript('resources/js/~~.min.js');
-
+            $("#navBtnSearch").click(function () {
+                _this.gfn_googleSearch();
+            });
+            $("#navInputSearch").keydown(function (key) {
+                if(key.keyCode == 13) {
+                    _this.gfn_googleSearch();
+                }
+            });
         },
+        /**
+         * nav 검색 실행
+         * */
+        gfn_googleSearch : function() {
+            let sSearchParam = $("#navInputSearch").val();
+            location.href = "https://www.google.com/search?qt="+sSearchParam+"&q=site%3A"+this.gS_siteDomain+"+"+sSearchParam;
+        },
+
         /**
          * import 파일 : jquery.modal.css , jquery.modal.min.js
          * @description alert 커스텀  (ex. common.gfn_alert('alert','제목','내용','large', null, false, true, callback, param)

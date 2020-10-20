@@ -184,6 +184,14 @@ ul {
 	margin-right: 60px;
 }
 
+.image {
+	cursor: pointer;
+    border-radius: 10%;
+    margin-left: 100px;
+    margin-right: 80px;
+	width: 180px;
+	height: 240px;
+}
 
 </style>
 </head>
@@ -228,7 +236,7 @@ ul {
 							style="cursor: pointer">
 					<div class="container">
 						<div class="carousel-caption text-right">
-							<img  src="./resources/images/배너3-1.png" style="margin-right: 500px">
+							<img  src="./resources/images/banner3-1.png" style="margin-right: 500px">
 							<h1>LAW FIRM SONGHAN</h1>
 							<p>법무법인 송한은 언제나 의뢰인의 입장에서 생각하겠습니다.</p>
 						</div>
@@ -282,9 +290,8 @@ ul {
 				</div>
 				<div>
 					<div>
-						<img src="./resources/images/jungwon.png" border="0"
-							onclick="window.open('#')"
-							style="cursor: pointer; border-radius: 10%; margin-left: 100px; margin-right: 80px;">
+						<img class="image" src="/hansong/resources/images/jungwon.png" border="0"
+							onclick="window.open('#')">
 					</div>
 				</div>
 			</div>
@@ -292,20 +299,19 @@ ul {
 			<hr class="featurette-divider">
 
 			<div class="row featurette">
-				<div class="col-md-7">
-					<h2 class="featurette-heading">변호사 송민준</h2>
-
+				<div class="col-md-7 order-md-2">
+					<h2 class="featurette-heading">대표 변호사  송민준</h2>
+					
+					<p class="lead">사법시험 45회, 사법연수원 36기 수료 <br> 
+									前 법무법인 가든 소속변호사<br>
+									現  KH 자문변호사<br>
+									現 법무법인 송한 대표변호사</p>
 				</div>
-				<div class="col-md-5">
-					<svg
-						class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-						width="500" height="500" xmlns="http://www.w3.org/2000/svg"
-						preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
-						aria-label="Placeholder: 500x500">
-						<title>Placeholder</title>
-						<rect width="100%" height="100%" fill="#eee" />
-						<text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
-					</svg>
+				<div>
+					<div>
+						<img class="image" src="/hansong/resources/images/song.jpg" border="0"
+							onclick="window.open('#')">
+					</div>
 				</div>
 			</div>
 

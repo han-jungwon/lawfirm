@@ -62,8 +62,7 @@
 #ag {
 	font-size: 30px;
 	font-weight: bold;
-	margin-bottom: 30px;
-	justify-content: center;
+	justify-content: left;
 	display: flex;
 	
 }
@@ -118,6 +117,11 @@
 	margin-bottom: 20px;
 	transition: all 0.3s ease-out;
 }
+
+ul {
+	list-style: none;
+    padding-left: 0px;
+}
 </style>
 </head>
 <body>
@@ -126,7 +130,7 @@
 		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<img src="/hansong/resources/images/lawyer.jpg"
-					style="height: 250px; width: 2200px;">
+					style="height: 250px; width: 100%;">
 				<div class="container">
 					<div class="carousel-caption text-left">
 						<h1 style="font-weight: bold; font-size: 25px; color: white;">
@@ -160,8 +164,9 @@
 	</div>
 
 	<div id="tab02" class="tab-contents">
-		<h2 id="ag">합의서</h2>
+		
 		<div class="container">
+		<h2 id="ag">합의서</h2>
 			<div class="contents">
 				<ul class="business_icon">
 					<li><span class="icon"></span></li>

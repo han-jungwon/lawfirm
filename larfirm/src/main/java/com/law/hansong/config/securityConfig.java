@@ -34,7 +34,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
         http
         .csrf().disable()
         .authorizeRequests()
-        .antMatchers("/", "/main", "/members/loginerror", "/members/joinform", "/members/join", "/members/welcome", "/members/ex").permitAll()
+        .antMatchers("/", "/main", "/members/loginerror", "/members/joinform", "/members/join", "/members/welcome", "/members/ex","/boards").permitAll()
         .antMatchers("/securepage", "/members/**").hasRole("USER") // USER 라는 권한이 있어야 하는 URL
         .antMatchers("/swagger-ui.html").hasRole("ADMIN") // ADMIN 라는 권한이 있어야 하는 URL
         //.antMatchers("/abc/**").hasRole("ADMIN")
@@ -42,8 +42,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
         .and()
             .formLogin()         // 로그인 폼 세팅
             .loginPage("/members/loginform")  // 로그인 폼 컨트롤러 메서드
-            .usernameParameter("userId")      // <input> name 속성이 userId, password 일치하여야 함
-            .passwordParameter("password")
+            .usernameParameter("email")      // <input> name 속성이 userId, password 일치하여야 함
+            .passwordParameter("pwd")
             .loginProcessingUrl("/authenticate") // 로그인 프로세스를 처리하는 경로
             .failureForwardUrl("/members/loginerror?login_error=1") // 로그인 실패했을 경우 포워딩 경로
             .defaultSuccessUrl("/",true)      // 로그인 성공시 포워딩 경로

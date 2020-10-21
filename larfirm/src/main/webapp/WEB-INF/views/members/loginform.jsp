@@ -32,11 +32,11 @@ body {
 			<legend> 로그인</legend>
 			<div class="form-group">
 				<label for="email">이메일</label> <input type="email"
-					class="form-control" placeholder="Enter email" id="email" required>
+					class="form-control" placeholder="Enter email" id="email" name = "email" required>
 			</div>
 			<div class="form-group">
 				<label for="pwd">비밀번호</label> <input type="password"
-					class="form-control" placeholder="Enter password" id="pwd" required>
+					class="form-control" placeholder="Enter password" id="pwd" name = "pwd"required>
 			</div>
 			<div class="form-group form-check">
 				<label class="form-check-label"> <input

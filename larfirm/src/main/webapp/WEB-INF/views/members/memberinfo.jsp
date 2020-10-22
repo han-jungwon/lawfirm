@@ -7,7 +7,9 @@
   <head>
     <title>회원정보 확인 </title>
   </head>
+  <jsp:include page="../common/header.jsp" />
    <body>
+   
   <jsp:include page="../common/navbar.jsp" />
       <div>
         <div class="wrap wd668">

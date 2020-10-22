@@ -8,6 +8,7 @@
 <title>법무법인 송한</title>
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
+<link rel="stylesheet" href="../resources/css/joinform.css" />
 <link rel="stylesheet" href="resources/css/carousel.css" />
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 

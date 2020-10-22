@@ -95,7 +95,7 @@
 	width: 150px;
 	height: 150px;
 	border-radius: 50%;
-	background: #f2f2f2 url('./resources/images/electronic anklet1.png') center center
+	background: #f2f2f2 url('./resources/images/anklet1.png') center center
 		no-repeat;
 	margin-bottom: 20px;
 	transition: all 0.3s ease-out;
@@ -122,7 +122,7 @@ ul.business_icon {
 .business_icon li a:hover span {
 	transition: all 0.3s ease-out;
 	background-color: #182952;
-	background-image: url('./resources/images/electronic anklet2.png')
+	background-image: url('./resources/images/anklet2.png')
 }
 
 .business_icon li:nth-child(2) a:hover span {

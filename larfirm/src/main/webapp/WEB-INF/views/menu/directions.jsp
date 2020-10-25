@@ -137,7 +137,7 @@
 			<select name="" id="tabmenu">
 				<option value="#tab01">변호사 소개</option>
 				<option value="#tab02">사무실 소개</option>
-				<option value="#tab03">찾아오시는 길</option>
+				<option value="#tab03" selected>찾아오시는 길</option>
 			</select>
 		</div>
 	</div>
@@ -176,8 +176,7 @@
 </body>
 <script>
 	$(function() {
-		$('.big_tab li').first().addClass("activeClass");
-		$(".tab-contents").not(':first').hide();
+		$('.big_tab li').eq(2).addClass("activeClass");
 		$('.big_tab li').on(
 				'click',
 				function() {

@@ -34,7 +34,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
         http
         .csrf().disable()
         .authorizeRequests()
-        .antMatchers("/", "/main", "/members/loginerror", "/members/joinform", "/members/join", "/members/welcome", "/members/ex","/boards").permitAll()
+        .antMatchers("/", "/main", "/main/*", "/members/loginerror", "/members/joinform", "/members/join", "/members/welcome", "/members/ex","/boards/counsel","/boards/notice","/boards/agreement","/boards/apology","/boards/report","/boards/petition").permitAll()
         .antMatchers("/securepage", "/members/**").hasRole("USER") // USER 라는 권한이 있어야 하는 URL
         .antMatchers("/swagger-ui.html").hasRole("ADMIN") // ADMIN 라는 권한이 있어야 하는 URL
         //.antMatchers("/abc/**").hasRole("ADMIN")

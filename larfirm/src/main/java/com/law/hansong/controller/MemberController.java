@@ -38,6 +38,11 @@ public class MemberController {
         return "members/loginform";
     }
 
+    @GetMapping("/memberinfo")
+    public String memberinfo(){
+        return "members/memberinfo";
+    }
+
     @GetMapping("/loginerror")
     public String loginerror(@RequestParam("login_error")String loginError){
         return "members/loginerror";

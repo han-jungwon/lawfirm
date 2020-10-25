@@ -98,11 +98,18 @@
 	display: block;
 	margin-left: 40px;
 	max-width: 100%;
-	width: auto;
-	height: 300px;
+	width: auto; 
+	height:300px;
 }
 
-.lawyer_img dl {
+.lawyer_img dl { 
+	background: #0B0B3B;
+	padding: 35px 25px 30px 25px;
+	box-sizing: border-box;
+	text-align: right;
+	width: 300px;
+	height: 165px;
+	max-width: 100%; 
 	background: #0B0B3B;
 	padding: 35px 25px 30px 25px;
 	box-sizing: border-box;
@@ -112,7 +119,6 @@
 	max-width: 100%;
 }
 
-}
 .lawyer_img dt {
 	position: relative;
 	font-size: 18px;
@@ -134,11 +140,12 @@
 	line-height: 23px;
 }
 
+
 .lawyer_txt {
 	float: left;
 	width: calc(100% - 488px);
 	padding: 55px 0 55px 68px;
-	box-sizing: border-box;
+	box-sizing: border-box; 
 }
 
 .dot {
@@ -199,10 +206,9 @@ dt {
 
 	<div id="tab01" class="tab-contents">
 		<div class="container" style="margin-bottom: 20px">
-			<h2 id="ag">변호사 소개</h2>
-		</div>
 
-		<div class="container">
+			<h2 id="ag">변호사 소개</h2>
+
 			<div class="lawyer_con">
 				<div class="lawyer_info">
 					<div class="lawyer_img">
@@ -212,7 +218,7 @@ dt {
 								대표 변호사 <span class="bold">한정원</span>
 							</dt>
 							<dd>
-								인천 고등학교 졸업 <br> 한국대학교 법학과 졸업 <br> 사법연수원 36기
+								인천 고등학교 졸업 <br>한국대학교 법학과 졸업 <br>사법연수원 36기
 							</dd>
 						</dl>
 					</div>
@@ -231,18 +237,16 @@ dt {
 					</div>
 				</div>
 			</div>
-
-
 			<div class="lawyer_con">
 				<div class="lawyer_info">
 					<div class="lawyer_img">
-						<img src="/hansong/resources/images/song.jpg" alt="송민준 변호사">
+						<img src="/hansong/resources/images/song.jpg" alt="한정원 변호사">
 						<dl>
 							<dt>
 								대표 변호사 <span class="bold">송민준</span>
 							</dt>
 							<dd>
-								인천 고등학교 졸업 <br> 한국대학교 법학과 졸업 <br> 사법연수원 36기
+								인천 고등학교 졸업 <br>한국대학교 법학과 졸업 <br>사법연수원 36기
 							</dd>
 						</dl>
 					</div>
@@ -257,10 +261,44 @@ dt {
 						<p>- 前 서울법원 조정위원</p>
 						<p>- 現 (주)콜라 자문변호사 역임</p>
 						<p>- 現 KH 자문변호사</p>
-
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<div id="tab02" class="tab-contents">
+		<div class="container" style="margin-bottom: 20px">
+			<h2 id="ag2">사무실 소개</h2>
+			<br> <img class="image" alt="사무실 소개"
+				src="/hansong/resources/images/office.jpg">
+
+			<h3 style="font-size: 25px; font-weight: bold; margin-top: 30px;">
+				<span class="font_navy">Six</span> Competitive
+			</h3>
+			<p>법무법인 송한만의 특별한 6가지 경쟁력! 눈에 보이는 확실한 결과를 창출해 냅니다.</p>
+			<div class="container six_com" style="margin-top: 30px;">
+				<ul>
+					<li>노하우가 담긴<br> <span>전략</span>과 <span>기획</span>이<br>
+						만납니다.
+					</li>
+					<li><span>실제 사례</span>를<br> 직접 보여드림으로써<br> <span>신뢰감</span>을
+						드립니다.</li>
+					<li>실무진이<br> <span>전문성</span>있는 상담을<br> 진행합니다.
+					</li>
+				</ul>
+				<ul>
+					<li><span>의뢰인의 입장</span>에서<br> 최선의 결과를<br> 이끌어내고자
+						합니다.</li>
+					<li>조금 더 <span>자세히</span> <br> 조금 더 <span>꼼꼼히</span> <br>
+						살핍니다.
+					</li>
+					<li>사건 종결 후에도<br> <span>철저한 관리</span>를 통해<br> 걱정을 덜어
+						드립니다.
+					</li>
+				</ul>
+			</div>
+
 		</div>
 	</div>
 
@@ -294,9 +332,6 @@ dt {
 					console.log(select_link);
 				});
 	});
-	
-
-		
 </script>
 
 </html>

@@ -117,7 +117,6 @@
 	background: #f2f2f2 url('/hansong/resources/images/apology.png')
 		center center no-repeat;
 	margin-bottom: 20px;
-	transition: all 0.3s ease-out;
 }
 </style>
 </head>

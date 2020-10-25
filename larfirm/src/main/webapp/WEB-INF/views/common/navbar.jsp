@@ -5,30 +5,30 @@
   Time: 오전 12:37
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication var="principal" property="principal" />
 
 <style>
-.navbar{
+.navbar {
 	background-color: #FFFF !important;
 }
 
-.navbar-brand{
+.navbar-brand {
 	color: black !important;
 }
 
-.navbar-toggler-icon{
+.navbar-toggler-icon {
 	background-color: #0B0B3B;
 }
- 
 
-.click:hover{
-	color:navy;
-} 
+.click:hover {
+	color: navy;
+}
 
-.btn{
+.btn {
 	font-weight: bold;
 }
 
@@ -36,16 +36,16 @@
 	color: #0B0B3B;
 	border-color: #0B0B3B;
 }
+
 .btn-outline-success:hover {
-    color: #fff;
-    background-color: #0B0B3B;
-    border-color: #0B0B3B;
+	color: #fff;
+	background-color: #0B0B3B;
+	border-color: #0B0B3B;
 }
-
-
 </style>
 
-<header >
+
+<header>
     <nav class="navbar navbar-expand-xl navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="/hansong/main">
         	<img src="/hansong/resources/images/logo.png" style="width: 200px;">

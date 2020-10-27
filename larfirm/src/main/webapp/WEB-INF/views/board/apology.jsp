@@ -9,7 +9,6 @@
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
 <link rel="stylesheet" href="../resources/css/joinform.css" />
-<link rel="stylesheet" href="resources/css/carousel.css" />
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 
@@ -20,7 +19,6 @@
 
 .big_tab ul {
 	overflow: hidden;
-
 	width: 900px;
 	margin-left: 250px;
 }
@@ -57,16 +55,13 @@
 	.big_tab {
 		display: none;
 	}
-
 }
 
 #ag {
 	font-size: 30px;
 	font-weight: bold;
-	margin-bottom: 30px;
-	justify-content: center;
+	justify-content: left;
 	display: flex;
-	
 }
 
 .tab-contents {
@@ -114,8 +109,8 @@
 	width: 150px;
 	height: 150px;
 	border-radius: 50%;
-	background: #f2f2f2 url('/hansong/resources/images/apology.png')
-		center center no-repeat;
+	background: #f2f2f2 url('/hansong/resources/images/apology.png') center
+		center no-repeat;
 	margin-bottom: 20px;
 }
 </style>
@@ -160,18 +155,19 @@
 	</div>
 
 	<div id="tab04" class="tab-contents">
-		<h2 id="ag">반성문</h2>
 		<div class="container">
+			<h2 id="ag">반성문</h2>
 			<div class="contents">
 				<ul class="business_icon">
 					<li><span class="icon"></span></li>
-					<li style="font-weight: bold;
-    					font-size: 20px;"> ● 반성문</li>
-    					<br><br><br>
+					<li style="font-weight: bold; font-size: 20px;">● 반성문</li>
+					<br>
+					<br>
+					<br>
 					<li><p style="text-align: left">
-							죄를 인정하는 사안에 대하여 변호사 없이 자력으로 선처를 구할 수 있는 최선의 방법이고,<br> 
-							제대로 작성된 반성문은 법리적인 다툼이나 구제력보다도 좋은 효과를 기대할 수 있습니다.<br>
-							다년간 수많은 사건을 진행하며 여러 반성문을 검토하면서 작성된 내용입니다.
+							죄를 인정하는 사안에 대하여 변호사 없이 자력으로 선처를 구할 수 있는 최선의 방법이고,<br> 제대로
+							작성된 반성문은 법리적인 다툼이나 구제력보다도 좋은 효과를 기대할 수 있습니다.<br> 다년간 수많은 사건을
+							진행하며 여러 반성문을 검토하면서 작성된 내용입니다.
 						</p></li>
 				</ul>
 

@@ -9,8 +9,8 @@
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
 <link rel="stylesheet" href="../resources/css/joinform.css" />
-<link rel="stylesheet" href="resources/css/carousel.css" />
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
 
 
 <style>
@@ -67,7 +67,7 @@
 	}
 }
 
-#ag {
+#ag{
 	font-size: 30px;
 	font-weight: bold;
 	justify-content: left;
@@ -98,18 +98,18 @@
 	display: block;
 	margin-left: 40px;
 	max-width: 100%;
-	width: auto; 
-	height:300px;
+	width: auto;
+	height: 300px;
 }
 
-.lawyer_img dl { 
+.lawyer_img dl {
 	background: #0B0B3B;
 	padding: 35px 25px 30px 25px;
 	box-sizing: border-box;
 	text-align: right;
 	width: 300px;
 	height: 165px;
-	max-width: 100%; 
+	max-width: 100%;
 	background: #0B0B3B;
 	padding: 35px 25px 30px 25px;
 	box-sizing: border-box;
@@ -140,12 +140,11 @@
 	line-height: 23px;
 }
 
-
 .lawyer_txt {
 	float: left;
 	width: calc(100% - 488px);
 	padding: 55px 0 55px 68px;
-	box-sizing: border-box; 
+	box-sizing: border-box;
 }
 
 .dot {
@@ -162,6 +161,83 @@
 dt {
 	color: white;
 }
+
+/* ********************** 사무실소개 **********************/
+/* 이미지 반응형  */
+.image {
+	max-width: 100%;
+	width: auto;
+	height: 300px;
+}
+
+.font_navy {
+	font-size: 30px;
+	font-weight: bold;
+	color: navy;
+}
+
+.six_com {
+	text-align: center;
+	background: #f4f4f4;
+	padding: 60px 0;
+	margin-top: 30px;
+	max-width: 100%;
+}
+
+.six_com li {
+	display: inline-block;
+	letter-spacing: -0.5pt;
+	width: 170px;
+	height: 170px;
+	border-radius: 50%;
+	background: #8181F7;
+	color: #fff;
+	line-height: 26px;
+	position: Relative;
+	margin: 0 60px 0 0;
+	padding: 55px 0 0 0;
+	box-sizing: Border-box;
+}
+
+.six_com li span {
+	font-weight: 500;
+	letter-spacing: inherit;
+	line-height: inherit;
+	text-decoration: underline;
+}
+
+.six_com li:nth-child(2n) {
+	background: #8258FA;
+}
+
+.en {
+	font-size: 16px;
+	color: navy;
+	font-weight: 600;
+	text-align: center;
+	letter-spacing: 6px;
+	margin-bottom: 10px !important;
+}
+
+/******************* 찾아오시는길  *****************/
+.navybold {
+	font-weight: bold;
+	font-size : 23px;
+	color : navy;
+}
+
+.bold {
+	font-weight: bold;
+	font-size: 23px;
+}
+
+.address { 
+	font-weight: bold;
+	font-size: 15px;
+	margin-right: 10px;
+
+}
+
 </style>
 </head>
 <body>
@@ -240,7 +316,7 @@ dt {
 			<div class="lawyer_con">
 				<div class="lawyer_info">
 					<div class="lawyer_img">
-						<img src="/hansong/resources/images/song.jpg" alt="한정원 변호사">
+					 	<img src="/hansong/resources/images/song.jpg" alt="송민준 변호사"> 
 						<dl>
 							<dt>
 								대표 변호사 <span class="bold">송민준</span>
@@ -269,7 +345,7 @@ dt {
 
 	<div id="tab02" class="tab-contents">
 		<div class="container" style="margin-bottom: 20px">
-			<h2 id="ag2">사무실 소개</h2>
+			<h2 id="ag">사무실 소개</h2>
 			<br> <img class="image" alt="사무실 소개"
 				src="/hansong/resources/images/office.jpg">
 
@@ -302,6 +378,31 @@ dt {
 		</div>
 	</div>
 
+	<div id="tab03" class="tab-contents">
+		<div class="container" style="margin-bottom: 20px">
+			<h2 id="ag">찾아오시는 길</h2>
+			<br> <span class="navybold">위치와 연락처</span> <span class="bold">를
+				소개해 드립니다.</span>
+		</div>
+		<div class="container">
+			<!-- * 카카오맵 지도 -->
+			<!-- 지도 노드 -->
+			<div id="daumRoughmapContainer1603046769190"
+				class="root_daum_roughmap root_daum_roughmap_landing"
+				style="width: 100%;"></div>
+
+			<div class="container" style="margin-top: 30px">
+				<ul>
+					<li><span class="address">ADDRESS</span> 서울 강남구 테헤란로14길 6 남도빌딩
+					</li>
+					<li><span class="address">TEL</span> 02-123-1234
+						&nbsp;&nbsp;&nbsp; <span class="address">FAX</span> 02-142-2345
+						&nbsp;&nbsp;&nbsp; <span class="address">PARKING</span> 탄천주차장 1번
+						출입구 이용(유료)</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 	<jsp:include page="../common/footer.jsp" />
 </body>
 <script>
@@ -332,6 +433,13 @@ dt {
 					console.log(select_link);
 				});
 	});
+	
+	/* 카카오지도 실행 스크립트 */
+	new daum.roughmap.Lander({
+		"timestamp" : "1603046769190",
+		"key" : "22i9a",
+		"mapHeight" : "360"
+	}).render();
 </script>
 
 </html>

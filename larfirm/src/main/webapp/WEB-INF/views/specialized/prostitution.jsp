@@ -9,7 +9,6 @@
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
 <link rel="stylesheet" href="../resources/css/joinform.css" />
-<link rel="stylesheet" href="resources/css/carousel.css" />
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 
@@ -428,8 +427,7 @@ td.dot.left {
 </body>
 <script>
 	$(function() {
-		$('.big_tab li').first().addClass("activeClass");
-		$(".tab-contents").not(':first').hide();
+		$('.big_tab li').eq(2).addClass("activeClass");
 		$('.big_tab li').on(
 				'click',
 				function() {

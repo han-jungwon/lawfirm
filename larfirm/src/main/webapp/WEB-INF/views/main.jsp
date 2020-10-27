@@ -28,10 +28,10 @@
 	}
 
 @media screen and (max-width: 980px) {
-		.camera{
+	.camera{
 		margin-left: 0px !important; 
 		margin-right: 0px !important;
-		}	
+		}
 
 
 	}
@@ -43,10 +43,10 @@
 		ul.business_icon{
 			margin-left: 60px !important;
 		} 
-		.camera{
+				.camera{
 		margin-left: 0px !important; 
 		margin-right: 0px !important;
-		}	
+		}
 
 
 	}
@@ -224,10 +224,6 @@ ul {
 						<div class="carousel-caption">
 							<h1>LAW FIRM SONGHAN</h1>
 							<p>2500건 이상의 사건 수임과 다양한 성공사례가 증명합니다.</p>
-							<!-- <p>
-								<a id = "learn_button"class="btn btn-lg btn-primary" href="#" role="button">Learn
-									more</a>
-							</p> -->
 						</div>
 					</div>
 				</div>
@@ -261,13 +257,13 @@ ul {
 				<h3 class="specially">전문분야</h3>
 				<p class="specially-1">한송만의 노하우가 담긴 전략과 기획으로 형사법 분야의 최고가 되겠습니다.</p>
 				<ul class="business_icon">
-					<li><a href="#"> <span class="icon"></span> 전자발찌
+					<li><a href="/hansong/main/anklet"> <span class="icon"></span> 전자발찌
+					</a></li>
+			
+					<li><a class="camera" href="/hansong/main/camera"> <span class="icon"></span> 카메라 촬영죄
 					</a></li>
 
-					<li><a class="camera" href="#"> <span class="icon"></span> 카메라 촬영죄
-					</a></li>
-
-					<li><a href="#"> <span class="icon"></span> 성매매
+					<li><a href="/hansong/main/prostitution"> <span class="icon"></span> 성매매
 					</a></li>
 				</ul>
 			</div>
@@ -291,7 +287,7 @@ ul {
 				<div>
 					<div>
 						<img class="image" src="/hansong/resources/images/jungwon.png" border="0"
-							onclick="window.open('#')">
+							 onclick="location.href='/hansong/main/lawyer'">
 					</div>
 				</div>
 			</div>
@@ -310,7 +306,7 @@ ul {
 				<div>
 					<div>
 						<img class="image" src="/hansong/resources/images/song.jpg" border="0"
-							onclick="window.open('#')">
+							 onclick="location.href='/hansong/main/lawyer'">
 					</div>
 				</div>
 			</div>

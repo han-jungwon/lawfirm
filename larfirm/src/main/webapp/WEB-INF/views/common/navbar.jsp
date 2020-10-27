@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication var="principal" property="principal" />
 
@@ -83,12 +83,10 @@
             </li>
             <li>
              <div class="dropdown">
-                <button class="btn click" type="button" id="dropdownMenuCounsel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn click" type="button" id="dropdownMenuCounsel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                	onclick="location.href = '/hansong/boards/counsel'">
                     	온라인 상담
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuCounsel">
-                    <button class="dropdown-item" type="button" onclick="location.href='/hansong/boards/counsel'">온라인 상담</button>
-                </div>
             </div>
             </li>
             <li>

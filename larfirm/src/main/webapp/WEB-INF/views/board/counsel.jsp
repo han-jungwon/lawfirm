@@ -7,45 +7,9 @@
 <head>
 <title>법무법인 송한</title>
 <jsp:include page="../common/header.jsp" />
+<link rel="stylesheet" href="../resources/css/joinform.css" />
+
 <style>
-.big_tab ul {
-	overflow: hidden;
-	width: 900px;
-}
-
-.big_tab ul li {
-	width: 25%;
-	box-sizing: border-box;
-	float: left;
-	list-style-type: none;
-	border: 1px solid #ccc;
-	text-align: center;
-	line-height: 40px;
-}
-
-.big_tab ul li.activeClass {
-	font-weight: bold;
-	font-size: 20px;
-	border-bottom-color: white ;
-}
-
-.sm_select {
-	display: none;
-}
-
-.sm_select select {
-	width: 100%;
-	height: 40px;
-}
-
-@media ( max-width :500px) {
-	.sm_select {
-		display: block;
-	}
-	.big_tab {
-		display: none;
-	}
-}
 
 .tab-contents{
     margin-top: 50px;
@@ -66,34 +30,24 @@
 </head>
 <body>
 	<jsp:include page="../common/navbar.jsp" />
-	<div id="demo" class="carousel slide" data-ride="carousel">
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+
 		<div class="carousel-inner">
+
 			<div class="carousel-item active">
-				<img src="/hansong/resources/images/lawyer.jpg"
-					style="height: 250px; width: 2200px;">
+				<img class="bd-placeholder-img"
+					src="/hansong/resources/images/lawyer.jpg"
+					style="height: 250px; width: 100%;">
 				<div class="container">
 					<div class="carousel-caption text-left">
-						<h1 style="font-weight: bold; font-size: 25px; color:white;">
-														LAW FIRM SONGHAN</h1>
+						<h1 style="font-weight: bold; font-size: 25px; color: white;">
+							LAW FIRM SONGHAN</h1>
 						<br>
-						<p style="font-weight: bold; color:white; margin-top: 30px;">
-													의뢰인 중심 법률 서비스, 여기는 법무법인 한송입니다.</p>
+						<p style="font-weight: bold; color: white; margin-top: 30px;">
+							의뢰인 중심 법률 서비스, 여기는 법무법인 한송입니다.</p>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="tabmenu">
-		<div class="big_tab">
-			<ul>
-				<li><a href="#tab01">온라인상담</a></li>
-			</ul>
-		</div>
-		<div class="sm_select">
-			<select name="" id="tabmenu">
-				<option value="#tab01">온라인상담</option>
-			</select>
 		</div>
 	</div>
 
@@ -147,11 +101,11 @@
 
 <div class="container paging">
 <ul class="pagination">
-  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="#">이전</a></li>
   <li class="page-item"><a class="page-link" href="#">1</a></li>
   <li class="page-item"><a class="page-link" href="#">2</a></li>
   <li class="page-item"><a class="page-link" href="#">3</a></li>
-  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  <li class="page-item"><a class="page-link" href="#">다음</a></li>
 </ul>
 </div>
 	</div>

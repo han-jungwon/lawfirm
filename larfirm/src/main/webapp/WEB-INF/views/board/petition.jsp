@@ -9,7 +9,6 @@
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
 <link rel="stylesheet" href="../resources/css/joinform.css" />
-<link rel="stylesheet" href="resources/css/carousel.css" />
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 
@@ -20,7 +19,6 @@
 
 .big_tab ul {
 	overflow: hidden;
-
 	width: 900px;
 	margin-left: 250px;
 }
@@ -57,16 +55,13 @@
 	.big_tab {
 		display: none;
 	}
-
 }
 
 #ag {
 	font-size: 30px;
 	font-weight: bold;
-	margin-bottom: 30px;
-	justify-content: center;
+	justify-content: left;
 	display: flex;
-	
 }
 
 .tab-contents {
@@ -114,8 +109,8 @@
 	width: 150px;
 	height: 150px;
 	border-radius: 50%;
-	background: #f2f2f2 url('/hansong/resources/images/petition.png')
-		center center no-repeat;
+	background: #f2f2f2 url('/hansong/resources/images/petition.png') center
+		center no-repeat;
 	margin-bottom: 20px;
 	transition: all 0.3s ease-out;
 }
@@ -161,17 +156,18 @@
 	</div>
 
 	<div id="tab03" class="tab-contents">
-		<h2 id="ag">탄원서</h2>
 		<div class="container">
+			<h2 id="ag">탄원서</h2>
 			<div class="contents">
-				<ul class="business_icon">
+				<ul class="business_icon petition">
 					<li><span class="icon"></span></li>
-					<li style="font-weight: bold;
-    					font-size: 20px;"> ● 탄원서</li>
-    					<br><br><br>
+					<li style="font-weight: bold; font-size: 20px;">● 탄원서</li>
+					<br>
+					<br>
+					<br>
 					<li><p style="text-align: left">
-							 먼저 탄원인과 피탄원인 관계를 소명하고 탄원 취지 및 탄원 이유에 대한 내용을 기술하여 피탄원인이 최대한 선처받을 수 있도록 <br>
-							  용서를 구하는 것을 목적으로 하는 글로써, 일종의 증언적 효과를 기대할 수 있습니다.
+							먼저 탄원인과 피탄원인 관계를 소명하고 탄원 취지 및 탄원 이유에 대한 내용을 기술하여 피탄원인이 최대한 선처받을 수
+							있도록 <br> 용서를 구하는 것을 목적으로 하는 글로써, 일종의 증언적 효과를 기대할 수 있습니다.
 						</p></li>
 				</ul>
 

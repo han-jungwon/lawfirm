@@ -36,10 +36,10 @@ public class ContextDataSource {
 
 	      dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:XE");
 
-	      dataSource.setUsername("scott");
-
-	      dataSource.setPassword("tiger");
-
+	      //dataSource.setUsername("scott");
+	      dataSource.setUsername("mybatis");
+	      //dataSource.setPassword("tiger");
+	      dataSource.setPassword("mybatis");
 	      dataSource.setDefaultAutoCommit(false);
 
 	      return dataSource;

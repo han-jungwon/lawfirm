@@ -8,11 +8,14 @@
 <title>법무법인 송한</title>
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
-<link rel="stylesheet" href="resources/css/carousel.css" />
+<link rel="stylesheet" href="../resources/css/joinform.css" />
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 
 <style>
+
+
+
 .tab-contents{
     margin-top: 50px;
     margin-bottom: 200px;
@@ -27,11 +30,6 @@
     display: flex;
 	margin-top: 50px;
 }
-
-
-
-
-
 
 </style>
 </head>
@@ -104,11 +102,11 @@
 
 <div class="container paging">
 <ul class="pagination">
-  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="#">이전</a></li>
   <li class="page-item"><a class="page-link" href="#">1</a></li>
   <li class="page-item"><a class="page-link" href="#">2</a></li>
   <li class="page-item"><a class="page-link" href="#">3</a></li>
-  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  <li class="page-item"><a class="page-link" href="#">다음</a></li>
 </ul>
 </div>
 	</div>

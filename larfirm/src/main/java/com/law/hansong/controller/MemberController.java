@@ -1,14 +1,17 @@
 package com.law.hansong.controller;
 
-import java.security.Principal;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -88,7 +91,7 @@ public class MemberController {
        return Collections.singletonMap("success", deleteCount > 0 ? "true" : "false");
     }
     */
-/*
+
     // 사용자가 입력한 name, email, password가 member에 저장된다.
     @PostMapping("/join")
     public void join(@ModelAttribute Member member, HttpServletResponse response) throws Exception {
@@ -107,7 +110,7 @@ public class MemberController {
     public String welcome(){
         return "members/welcome";
     }
-    */
+    
     
 	/*
 	 * @GetMapping("/memberinfo") public String memberInfo(Principal principal,

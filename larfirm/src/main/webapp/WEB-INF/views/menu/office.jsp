@@ -9,7 +9,6 @@
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
 <link rel="stylesheet" href="../resources/css/joinform.css" />
-<link rel="stylesheet" href="resources/css/carousel.css" />
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <style>
@@ -190,7 +189,27 @@
 		Competitive
 		</h3>
 		<p>법무법인 송한만의 특별한 6가지 경쟁력! 눈에 보이는 확실한 결과를 창출해 냅니다.</p>
-		
+		<div class="container six_com" style="margin-top: 30px;">
+				<ul>
+					<li>노하우가 담긴<br> <span>전략</span>과 <span>기획</span>이<br>
+						만납니다.
+					</li>
+					<li><span>실제 사례</span>를<br> 직접 보여드림으로써<br> <span>신뢰감</span>을
+						드립니다.</li>
+					<li>실무진이<br> <span>전문성</span>있는 상담을<br> 진행합니다.
+					</li>
+				</ul>
+				<ul>
+					<li><span>의뢰인의 입장</span>에서<br> 최선의 결과를<br> 이끌어내고자
+						합니다.</li>
+					<li>조금 더 <span>자세히</span> <br> 조금 더 <span>꼼꼼히</span> <br>
+						살핍니다.
+					</li>
+					<li>사건 종결 후에도<br> <span>철저한 관리</span>를 통해<br> 걱정을 덜어
+						드립니다.
+					</li>
+				</ul>
+			</div>
 		</div>
 		<div class="container">
 
@@ -202,8 +221,7 @@
 </body>
 <script>
 	$(function() {
-		$('.big_tab li').first().addClass("activeClass");
-		$(".tab-contents").not(':first').hide();
+		$('.big_tab li').eq(1).addClass("activeClass");
 		$('.big_tab li').on(
 				'click',
 				function() {

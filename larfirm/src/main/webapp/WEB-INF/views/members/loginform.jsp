@@ -54,7 +54,7 @@ body {
 				</div>
 			</div>
 			<div class="form-group">
-				<div id="google-login">
+				<div id="kakao-login">
 					<button type="submit" class="btn btn-primary">카카오톡계정으로 로그인</button>
 				</div>
 			</div>

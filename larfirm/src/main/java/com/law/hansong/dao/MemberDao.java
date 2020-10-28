@@ -21,6 +21,10 @@ public class MemberDao {
    public List<Member> getMemberList() {
       return sqlSession.selectList("Member.SELECT_ALL_MEMBER");
    }
+
+public int insertMember(Member m) {
+	return sqlSession.insert("Member.INSERT_MEMBER",m);
+}
    
    
    

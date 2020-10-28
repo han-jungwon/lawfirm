@@ -11,15 +11,15 @@
 
    <select id="SELECT_ALL_BY_EMAIL" parameterType ="String" resultType="Member">
       SELECT id, name, password, email, create_date, modify_date 
-        FROM member2 WHERE email = #{email}
+        FROM member WHERE email = #{email}
    </select>
    <select id="SELECT_ALL_MEMBER" resultType="Member">
       select id, name, email, create_date, modify_date
       from member2
    </select>
    <insert id="INSERT_MEMBER" parameterType ="Member">
-      insert into springbootToy.member (id, name, password, email, create_date, modify_date) 
-      values ( #{id}, '사용자', #{password}, #{email}, now(), now())
+   		INSERT INTO MEMBER(ID,NAME,PASSWORD,EMAIL,PHONE,REGI_ID,REGI_DT,UPDT_ID,UPDT_DT)
+   		VALUES(MEMBER_SEQ.nextval,#{name},#{password},#{email},#{phone},MEMBER_SEQ.CURRVAL, sysdate,MEMBER_SEQ.CURRVAL,sysdate )
    </insert>
    
    <select id="IS_CAN_JOIN_EMAIL" parameterType="String" resultType="String">
@@ -28,7 +28,7 @@
    
    <insert id="INSERT_MEMBER_ROLE" parameterType ="MemberRole">
       insert into member_role (id, member_id, role_name) 
-      values ((select ifnull(max(id),0)+1 from member_role), #{memberId}, 'ROLE_USER')
+      values (MEMBER_ROLE_SEQ.NEXTVAL, MEMBER_SEQ.CURRVAL, 'ROLE_USER')
    </insert>
    
    

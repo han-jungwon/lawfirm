@@ -19,7 +19,7 @@ import com.law.hansong.service.security.CustomUserDetailsService;
 public class securityConfig extends WebSecurityConfigurerAdapter {
    @Autowired
     CustomUserDetailsService customUserDetailsService;
-   
+
     //   /webjars/** 경로에 대한 요청은 인증/인가 처리하지 않도록 무시합니다.
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -34,8 +34,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
         http
         .csrf().disable()
         .authorizeRequests()
-        .antMatchers("/", "/main", "/main/*", "/members/loginerror", "/members/joinform", "/members/join", "/members/welcome", "/members/ex","/boards/counsel","/boards/notice","/boards/agreement","/boards/apology","/boards/report","/boards/petition").permitAll()
-        .antMatchers("/securepage", "/members/**").hasRole("USER") // USER 라는 권한이 있어야 하는 URL
+        .antMatchers("/", "/main", "/main/*", "/members/loginerror", "/members/joinform", "/members", "/members/ex","/boards/counsel","/boards/notice","/boards/agreement","/boards/apology","/boards/report","/boards/petition").permitAll()
+        .antMatchers("/members/**").hasRole("USER") // USER 라는 권한이 있어야 하는 URL
         .antMatchers("/swagger-ui.html").hasRole("ADMIN") // ADMIN 라는 권한이 있어야 하는 URL
         //.antMatchers("/abc/**").hasRole("ADMIN")
         .anyRequest().authenticated()

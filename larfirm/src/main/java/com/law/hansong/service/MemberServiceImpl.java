@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
         List<UserRoleEntity> list = new ArrayList<>();
 
         for(MemberRole memberRole : memberRoles) {
-            list.add(new UserRoleEntity(loginUserId, memberRole.getRoleName()));
+            list.add(new UserRoleEntity(loginUserId, memberRole.getRole_name()));
         }
         return list;
     }
@@ -83,5 +83,10 @@ public class MemberServiceImpl implements MemberService {
         return member;
     }
     */
+
+	@Override
+	public void addMember(Member member, boolean b) {
+		
+	}
 
 }

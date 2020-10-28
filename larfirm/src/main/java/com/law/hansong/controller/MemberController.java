@@ -1,14 +1,12 @@
 package com.law.hansong.controller;
 
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +54,20 @@ public class MemberController {
         return "members/joinform";
     }
     
+    
+
+	
+	 // 사용자가 입력한 name, email, password, phone가 member에 저장된다.
+	 
+	 @PostMapping 
+	 public String memberJoin(@ModelAttribute Member member){ 
+		 System.out.println(member);
+		 member.setPassword(passwordEncoder.encode(member.getPassword()));
+		 memberService.addMember(member, false); 
+		 System.out.println(member); 
+		 return "members/loginform"; 
+	 }
+
     @ApiOperation(value="회원리스트") // swagger 설명
     @ApiResponses({  // 응답 메시지에 대한 설명
        @ApiResponse(code=200, message = "OK"),
@@ -93,11 +105,11 @@ public class MemberController {
     */
 
     // 사용자가 입력한 name, email, password가 member에 저장된다.
-    @PostMapping("/join")
+  /*  @PostMapping("/join")
     public void join(@ModelAttribute Member member, HttpServletResponse response) throws Exception {
        System.out.println("오나");
         member.setPassword(passwordEncoder.encode(member.getPassword()));
-        String msg = memberService.addMember(member, false);
+        String msg = memberService.Member(member, false);
         PrintWriter out = response.getWriter();
       out.println("<script>");
       out.println("alert('"+msg+"');");
@@ -109,7 +121,35 @@ public class MemberController {
     @GetMapping("/welcome")
     public String welcome(){
         return "members/welcome";
-    }
+    }*/
+    
+    
+	
+	
+
+
+	
+
+    
+	  
+	/*
+	 * @RequestMapping("/join") public String join(Member m, Model model) {
+	 * System.out.println(m);
+	 * System.out.println(passwordEncoder.encode(m.getPassword()));
+	 * 
+	 * String encPwd = passwordEncoder.encode(m.getPassword());
+	 * m.setPassword(encPwd);
+	 * 
+	 * 
+	 * System.out.println(m);
+	 * 
+	 * // 이제 서비스로 이동 int result = memberService.insertMember(m); if(result > 0) {
+	 * return "redirect:home.do"; }else { model.addAttribute("msg","회원가입실패"); return
+	 * "common/errorPage"; }
+	 * 
+	 * }
+	 */
+    
     
     
 	/*

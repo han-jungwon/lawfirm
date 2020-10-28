@@ -104,3 +104,4 @@ ul{list-style:none; }
   .join_form table td a.btn_confirm{width: 100px; height: 35px;line-height: 35px; font-size: 12px;margin:5px 0 0 ;}
   .join_form table input.send_number + a{margin:0 0 0 5px;}
 }
+.btn-info {background-color: #08088A !important; border-color: #08088A !important;}

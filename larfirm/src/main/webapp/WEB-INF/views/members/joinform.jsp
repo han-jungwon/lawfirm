@@ -35,22 +35,23 @@ body {
 									<tbody>
 										<tr>
 											<th><span>이메일</span></th>
-											<td><input type="email" name="email"
-												placeholder="Email을 입력하세요."></td>
+											<td>
+											<input type="email" name="email" id="email" placeholder="Email을 입력하세요." required>																	
+											</td>
 										</tr>
 										<tr>
 											<th><span>이름</span></th>
-											<td><input type="text" name="name" placeholder=""></td>
+											<td><input type="text" name="name" placeholder="" required></td>
 										</tr>
 										<tr>
 											<th><span>비밀번호</span></th>
 											<td><input type="password" name="password"
-												placeholder="비밀번호를 입력해주세요."></td>
+												placeholder="비밀번호를 입력해주세요." required></td>
 										</tr>
 										<tr>
 											<th><span>비밀번호 확인</span></th>
 											<td><input type="password" name="check-password"
-												placeholder="비밀번호를 확인하세요"></td>
+												placeholder="비밀번호를 확인하세요" required></td>
 										</tr>
 										<!--            <tr class="email">
                                     <th><span>이메일</span></th>
@@ -69,7 +70,7 @@ body {
 										<tr>
 											<th><span>휴대폰 번호</span></th>
 											<td><input type="tel" name="phone"
-												placeholder="휴대폰 번호를 입력하세요."></td>
+												placeholder="휴대폰 번호를 입력하세요." required></td>
 										</tr>
 									</tbody>
 								</table>
@@ -128,4 +129,5 @@ body {
 	</div>
 	<jsp:include page="../common/footer.jsp" />
 </body>
+
 </html>

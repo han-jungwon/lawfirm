@@ -9,31 +9,40 @@
 <mapper namespace="Member">
 
 
-   <select id="SELECT_ALL_BY_EMAIL" parameterType ="String" resultType="Member">
-      SELECT id, name, password, email, create_date, modify_date 
-        FROM member WHERE email = #{email}
-   </select>
-   <select id="SELECT_ALL_MEMBER" resultType="Member">
-      select id, name, email, create_date, modify_date
-      from member2
-   </select>
-   <insert id="INSERT_MEMBER" parameterType ="Member">
-   		INSERT INTO MEMBER(ID,NAME,PASSWORD,EMAIL,PHONE,REGI_ID,REGI_DT,UPDT_ID,UPDT_DT)
-   		VALUES(MEMBER_SEQ.nextval,#{name},#{password},#{email},#{phone},MEMBER_SEQ.CURRVAL, sysdate,MEMBER_SEQ.CURRVAL,sysdate )
-   </insert>
-   
-   <select id="IS_CAN_JOIN_EMAIL" parameterType="String" resultType="String">
-      select email from member where email = #{email}
-   </select>
-   
-   <insert id="INSERT_MEMBER_ROLE" parameterType ="MemberRole">
-      insert into member_role (id, member_id, role_name) 
-      values (MEMBER_ROLE_SEQ.NEXTVAL, MEMBER_SEQ.CURRVAL, 'ROLE_USER')
-   </insert>
-   
-   
-   <select id="SELECT_ROLE_ALL_BY_EMAIL" parameterType="String" resultType="MemberRole">
-      SELECT mr.id, mr.member_id, mr.role_name 
-        FROM member2_role mr JOIN member2 m ON mr.member_id = m.id WHERE m.email = #{email}
-   </select>
+	<select id="SELECT_ALL_BY_EMAIL" parameterType="String"
+		resultType="Member">
+		SELECT ID,NAME,PASSWORD,EMAIL, PHONE,REGI_ID,REGI_DT,UPDT_ID,UPDT_DT
+		FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	<select id="SELECT_ALL_MEMBER" resultType="Member">
+		SELECT ID,NAME,PASSWORD,EMAIL, PHONE,REGI_ID,REGI_DT,UPDT_ID,UPDT_DT
+		from MEMBER
+	</select>
+	<insert id="INSERT_MEMBER" parameterType="Member">
+		INSERT INTO
+		MEMBER(ID,NAME,PASSWORD,EMAIL,PHONE,REGI_ID,REGI_DT,UPDT_ID,UPDT_DT)
+		VALUES(MEMBER_SEQ.nextval,#{name},#{password},#{email},#{phone},MEMBER_SEQ.CURRVAL,SYSDATE,MEMBER_SEQ.CURRVAL,SYSDATE)
+	</insert>
+
+	<!-- <select id="EMAIL_CHECK" parameterType="String" resultType="String"> 
+		select email from member where email = #{email} </select> -->
+
+	<select id="CHECK_MAIL" parameterType="string" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM MEMBER
+		WHERE EMAIL=#{email}
+	</select>
+	<insert id="INSERT_MEMBER_ROLE">
+		INSERT INTO MEMBER_ROLE(ID,MEMBER_ID,ROLE_NAME)
+		VALUES(MEMBER_ROLE_SEQ.NEXTVAL, MEMBER_SEQ.CURRVAL,'ROLE_USER')
+	</insert>
+
+
+	<select id="SELECT_ROLE_ALL_BY_EMAIL" parameterType="String"
+		resultType="MemberRole">
+		SELECT mr.id, mr.member_id, mr.role_name
+		FROM member2_role mr JOIN member2 m ON mr.member_id = m.id WHERE m.email =
+		#{email}
+	</select>
 </mapper>

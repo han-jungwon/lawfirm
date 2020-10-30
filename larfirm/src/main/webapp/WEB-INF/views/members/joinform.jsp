@@ -35,23 +35,23 @@ body {
 									<tbody>
 										<tr>
 											<th><span>이메일</span></th>
-											<td>
-											<input type="email" name="email" id="email" placeholder="Email을 입력하세요." required>																	
-											</td>
+											<td><input type="email" name="email" id="email"
+												placeholder="Email을 입력하세요."></td>
 										</tr>
 										<tr>
 											<th><span>이름</span></th>
-											<td><input type="text" name="name" placeholder="" required></td>
+											<td><input type="text" name="name" id="name"
+												placeholder=""></td>
 										</tr>
 										<tr>
 											<th><span>비밀번호</span></th>
-											<td><input type="password" name="password"
-												placeholder="비밀번호를 입력해주세요." required></td>
+											<td><input type="password" name="password" id="password"
+												value="" placeholder="비밀번호를 입력해주세요."></td>
 										</tr>
 										<tr>
 											<th><span>비밀번호 확인</span></th>
-											<td><input type="password" name="check-password"
-												placeholder="비밀번호를 확인하세요" required></td>
+											<td><input type="password" id="password2" value=""
+												placeholder="비밀번호를 확인하세요"></td>
 										</tr>
 										<!--            <tr class="email">
                                     <th><span>이메일</span></th>
@@ -69,8 +69,8 @@ body {
                                 </tr> -->
 										<tr>
 											<th><span>휴대폰 번호</span></th>
-											<td><input type="tel" name="phone"
-												placeholder="휴대폰 번호를 입력하세요." required></td>
+											<td><input type="tel" name="phone" id="phone"
+												placeholder="휴대폰 번호를 입력하세요."></td>
 										</tr>
 									</tbody>
 								</table>
@@ -115,8 +115,8 @@ body {
 
 							</div>
 							<div class="btn_wrap">
-								<!-- <a href="#" style="height: 60px; width: 170px; margin-bottom: 100px;">가입하기</a> -->
-								<button type="submit">가입하기</button>
+								<button id=join type="submit"
+									style="height: 60px; width: 170px; margin-bottom: 100px;">가입하기</button>
 							</div>
 						</div>
 						<!-- form_txtInput E -->
@@ -129,5 +129,92 @@ body {
 	</div>
 	<jsp:include page="../common/footer.jsp" />
 </body>
+<script>
+$(function(){
+	var rule_value = 0;
+	$("#account_rule_btn").click(function() {
+		rule_value += 50;
+		$(".progress-bar").css("width", rule_value + "%");
+		$(".progress-bar").text(rule_value + "%");
+		$("#account_rule_btn").off('click');
+	});
+	$("#info_rule_btn").click(function() {
+		rule_value += 50;
+		$(".progress-bar").css("width", rule_value + "%");
+		$(".progress-bar").text(rule_value + "%");
+		$("#info_rule_btn").off('click');
+	});
+	
+	
+	//비밀번호 확인
+		$('#password2').blur(function(){
+		   if($('#password').val() != $('#password2').val()){
+		    	if($('#password2').val()!=''){
+			    alert("비밀번호가 일치하지 않습니다.");
+		    	    $('#password2').val('');
+		          $('#password2').focus();
+		       }
+		    }
+		})  	   
+	
+/* 가입하기 버튼 눌렀을 때 */	
+	$('#join').click(function() {
+		
+		if($('#email').val()==""){
+			alert("이메일을 입력해 주세요");
+			$('#email').focus();
+			return false;
+			
+		}
+		
+		var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		if(!checkEmail.test($('#email').val())){
+			alert("적합하지 않은 이메일 형식입니다.");
+			$('#email').focus();
+			return false;
+		}
+		
+	
+		if ($('#name').val() == "") {
+			alert("이름을 입력하세요");
+			$('#name').focus();
+			return false;
+		}
+	
+		if($('#password').val()==""){
+			alert("비밀번호를 입력하세요.");
+			$('#password').focus();
+			return false;
+		}		
+	
+		var checkPassword = /^\w{4,15}$/;
+		if(!checkPassword.test($('#password').val())){
+			alert("비밀번호를 4~15자리의 영문 대소문자와 숫자로만 입력해주세요.");
+			$('#password').focus();
+			return false;
+		}
+		
+		if($('#password2').val()==""){
+			alert("비밀번호를 확인해주세요.");
+			$('#password2').focus();
+			return false;
+		}	
+	
+		if($('#phone').val()==""){
+			alert("휴대폰 번호를 입력하세요.");
+			$('#phone').focus();
+			return false;
+		}	
+		
+		if(rule_value != 100){
+			alert("약관을 읽어주세요");
+			return false;			
+		}
+		
+		alert("회원가입이 완료되었습니다.");
+		});
+	});
 
+
+</script>
 </html>

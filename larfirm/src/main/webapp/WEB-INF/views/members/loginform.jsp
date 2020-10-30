@@ -7,6 +7,7 @@
 <html>
 <head>
 <title>로그인</title>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <jsp:include page="../common/header.jsp" />
 
 
@@ -54,9 +55,7 @@ body {
 				</div>
 			</div>
 			<div class="form-group">
-				<div id="kakao-login">
-					<button type="submit" class="btn btn-primary">카카오톡계정으로 로그인</button>
-				</div>
+				<a id="kakao-login-btn"></a>
 			</div>
 		</fieldset>
 	</form>
@@ -64,4 +63,28 @@ body {
 
 <jsp:include page="../common/footer.jsp" />
 </body>
+<script>
+
+// 사용할 앱의 JavaScript 키를 설정해 주세요. 
+Kakao.init('ef00ed0db2057c8b32419a7a16ca7795'); 
+//여기서 아까 발급받은 키 중 javascript키를 사용해준다. 
+// 카카오 로그인 버튼을 생성합니다. 
+Kakao.Auth.createLoginButton({ 
+	container: '#kakao-login-btn',
+	success: function(authObj) { 
+	alert(JSON.stringify(authObj)); 
+	},
+		fail: function(err) {
+			alert(JSON.stringify(err));
+			} 
+	});
+
+
+
+
+
+
+
+
+</script>
 </html>

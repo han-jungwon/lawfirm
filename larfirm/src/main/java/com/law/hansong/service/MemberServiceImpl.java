@@ -68,7 +68,7 @@ public class MemberServiceImpl implements MemberService {
 		result += memberRoleDao.addMemberRole();
 		
 		if(result < 2) { // 뭔가 하나 실패함
-			return -1;
+			return -2;
 		}
 		
 		return result; 

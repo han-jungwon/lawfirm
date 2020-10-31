@@ -87,6 +87,34 @@
             return !this.gfn_isNull(value);
         },
         /**
+         * @description Api 인증키 가져오기
+         * @param authProvider ( 'kakao' , 'google' )
+         * @param callback ( init function )
+         */
+        gfn_getAuthKey : function(authProvider, callback) {
+            $.ajax({
+                url : this.gfn_getContextPath()+"/commons/keys",
+                data: {authProvider:authProvider},
+                cache : false,
+                dataType : "json",
+                method : "GET",
+                async : false
+            })
+                .done(function (json) {
+                    callback(json.key);
+                })
+                .fail(function (xhr, status, errorThrown) {
+                    // errorThrown : 오류명, status : 상태
+                    console.log(authProvider+" : " + errorThrown);
+                })
+                .always(function (xhr, status) {
+
+                })
+        },
+
+
+
+        /**
          * @description ContextPath 를 가져온다.
          * @example /hansong
          * @returns {string}

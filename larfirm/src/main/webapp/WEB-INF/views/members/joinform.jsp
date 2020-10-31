@@ -131,89 +131,101 @@ body {
 </body>
 <script>
 $(function(){
-	var rule_value = 0;
-	$("#account_rule_btn").click(function() {
-		rule_value += 50;
-		$(".progress-bar").css("width", rule_value + "%");
-		$(".progress-bar").text(rule_value + "%");
-		$("#account_rule_btn").off('click');
-	});
-	$("#info_rule_btn").click(function() {
-		rule_value += 50;
-		$(".progress-bar").css("width", rule_value + "%");
-		$(".progress-bar").text(rule_value + "%");
-		$("#info_rule_btn").off('click');
-	});
-	
-	
-	//비밀번호 확인
-		$('#password2').blur(function(){
-		   if($('#password').val() != $('#password2').val()){
-		    	if($('#password2').val()!=''){
-			    alert("비밀번호가 일치하지 않습니다.");
-		    	    $('#password2').val('');
-		          $('#password2').focus();
-		       }
-		    }
-		})  	   
-	
-/* 가입하기 버튼 눌렀을 때 */	
-	$('#join').click(function() {
-		
-		if($('#email').val()==""){
-			alert("이메일을 입력해 주세요");
-			$('#email').focus();
-			return false;
-			
+	const joinform = {
+		init: function () {
+			let rule_value = 0;
+			const _this = this;
+			$("#account_rule_btn").click(function() {
+				rule_value += 50;
+				$(".progress-bar").css("width", rule_value + "%");
+				$(".progress-bar").text(rule_value + "%");
+				$("#account_rule_btn").off('click');
+			});
+			$("#info_rule_btn").click(function() {
+				rule_value += 50;
+				$(".progress-bar").css("width", rule_value + "%");
+				$(".progress-bar").text(rule_value + "%");
+				$("#info_rule_btn").off('click');
+			});
+			//비밀번호 확인
+			$('#password2').blur(function(){
+				if($('#password').val() != $('#password2').val()){
+					if($('#password2').val()!=''){
+						alert("비밀번호가 일치하지 않습니다.");
+						$('#password2').val('');
+						$('#password2').focus();
+					}
+				}
+			})
+			/* 가입하기 버튼 눌렀을 때 */
+			$('#join').click(function() {
+				_this.joinClick();
+			});
+		},
+
+		joinClick : function () {
+			if($('#email').val()==""){
+				alert("이메일을 입력해 주세요");
+				$('#email').focus();
+				return false;
+
+			}
+
+			var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			if(!checkEmail.test($('#email').val())){
+				alert("적합하지 않은 이메일 형식입니다.");
+				$('#email').focus();
+				return false;
+			}
+
+
+			if ($('#name').val() == "") {
+				alert("이름을 입력하세요");
+				$('#name').focus();
+				return false;
+			}
+
+			if($('#password').val()==""){
+				alert("비밀번호를 입력하세요.");
+				$('#password').focus();
+				return false;
+			}
+
+			var checkPassword = /^\w{4,15}$/;
+			if(!checkPassword.test($('#password').val())){
+				alert("비밀번호를 4~15자리의 영문 대소문자와 숫자로만 입력해주세요.");
+				$('#password').focus();
+				return false;
+			}
+
+			if($('#password2').val()==""){
+				alert("비밀번호를 확인해주세요.");
+				$('#password2').focus();
+				return false;
+			}
+
+			if($('#phone').val()==""){
+				alert("휴대폰 번호를 입력하세요.");
+				$('#phone').focus();
+				return false;
+			}
+
+			if(rule_value != 100){
+				alert("약관을 읽어주세요");
+				return false;
+			}
+
+			alert("회원가입이 완료되었습니다.");
 		}
-		
-		var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-		if(!checkEmail.test($('#email').val())){
-			alert("적합하지 않은 이메일 형식입니다.");
-			$('#email').focus();
-			return false;
-		}
-		
+	}
+	joinform.init();
+
+
+})
 	
-		if ($('#name').val() == "") {
-			alert("이름을 입력하세요");
-			$('#name').focus();
-			return false;
-		}
+
 	
-		if($('#password').val()==""){
-			alert("비밀번호를 입력하세요.");
-			$('#password').focus();
-			return false;
-		}		
-	
-		var checkPassword = /^\w{4,15}$/;
-		if(!checkPassword.test($('#password').val())){
-			alert("비밀번호를 4~15자리의 영문 대소문자와 숫자로만 입력해주세요.");
-			$('#password').focus();
-			return false;
-		}
-		
-		if($('#password2').val()==""){
-			alert("비밀번호를 확인해주세요.");
-			$('#password2').focus();
-			return false;
-		}	
-	
-		if($('#phone').val()==""){
-			alert("휴대폰 번호를 입력하세요.");
-			$('#phone').focus();
-			return false;
-		}	
-		
-		if(rule_value != 100){
-			alert("약관을 읽어주세요");
-			return false;			
-		}
-		
-		alert("회원가입이 완료되었습니다.");
-		});
-	});
+
 
 
 </script>

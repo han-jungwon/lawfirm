@@ -41,8 +41,8 @@
 
 	<select id="SELECT_ROLE_ALL_BY_EMAIL" parameterType="String"
 		resultType="MemberRole">
-		SELECT mr.id, mr.member_id, mr.role_name
-		FROM member2_role mr JOIN member2 m ON mr.member_id = m.id WHERE m.email =
+		SELECT MR.ID, MR.MEMBER_ID, MR.ROLE_NAME
+		FROM MEMBER_ROLE MR JOIN MEMBER M ON MR.MEMBER_ID = M.ID WHERE M.EMAIL =
 		#{email}
 	</select>
 </mapper>

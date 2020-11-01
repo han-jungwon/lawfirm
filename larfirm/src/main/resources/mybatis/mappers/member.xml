@@ -39,10 +39,8 @@
 	</insert>
 
 
-	<select id="SELECT_ROLE_ALL_BY_EMAIL" parameterType="String"
-		resultType="MemberRole">
-		SELECT MR.ID, MR.MEMBER_ID, MR.ROLE_NAME
-		FROM MEMBER_ROLE MR JOIN MEMBER M ON MR.MEMBER_ID = M.ID WHERE M.EMAIL =
-		#{email}
+	<select id="SELECT_ROLE_ALL_BY_EMAIL" parameterType="String" resultType="MemberRole">
+		SELECT mr.id, mr.member_id MEMBER_ID, mr.role_name ROLE_NAME
+		FROM MEMBER_ROLE MR INNER JOIN MEMBER M ON MR.MEMBER_ID = M.ID WHERE M.EMAIL = #{email}
 	</select>
 </mapper>

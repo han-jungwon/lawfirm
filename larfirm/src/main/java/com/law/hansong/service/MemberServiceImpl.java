@@ -3,6 +3,9 @@ package com.law.hansong.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.law.hansong.exception.BusinessLogicException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,7 @@ import com.law.hansong.service.security.UserRoleEntity;
 
 @Service
 public class MemberServiceImpl implements MemberService {
+	private Logger log = LoggerFactory.getLogger(getClass());
 	// 생성자에 위해 주입되는 객체이고, 해당 객체를 초기화할 필요가 이후에 없기 때문에 final로 선언하였다.
 	// final로 선언하고 초기화를 안한 필드는 생성자에서 초기화를 해준다.
 	// private final MemberDao memberDao;
@@ -33,19 +37,20 @@ public class MemberServiceImpl implements MemberService {
 	 */
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserEntity getUser(String loginUserId) {
 		Member member = memberDao.getMemberByEmail(loginUserId);
 		return new UserEntity(member.getEmail(), member.getPassword());
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<UserRoleEntity> getUserRoles(String loginUserId) {
 		List<MemberRole> memberRoles = memberRoleDao.getRolesByEmail(loginUserId);
 		List<UserRoleEntity> list = new ArrayList<>();
 
 		for (MemberRole memberRole : memberRoles) {
+			log.info(memberRole.toString());
 			list.add(new UserRoleEntity(loginUserId, memberRole.getRole_name()));
 		}
 		return list;
@@ -59,6 +64,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = BusinessLogicException.class)
 	public int addMember(Member member) {
 		int result = memberDao.checkMail(member.getEmail());
 		if(result > 0) { // id가 이미 존재
@@ -68,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
 		result += memberRoleDao.addMemberRole();
 		
 		if(result < 2) { // 뭔가 하나 실패함
-			return -2;
+			throw new BusinessLogicException("회원 등록 중 문제가 발생했습니다. 관리자에게 문의 바랍니다.", true);
 		}
 		
 		return result; 

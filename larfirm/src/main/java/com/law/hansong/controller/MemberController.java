@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ import io.swagger.annotations.ApiResponses;
 @Controller
 @RequestMapping(path = "/members")
 public class MemberController {
+	private Logger log = LoggerFactory.getLogger(getClass());
+
     // 스프링 컨테이너가 생성자를 통해 자동으로 주입한다.
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
@@ -69,12 +73,10 @@ public class MemberController {
 	public String memberJoin(@ModelAttribute Member member) {
 		System.out.println(member);
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
-		int result = memberService.addMember(member);
+		memberService.addMember(member);
 
-		System.out.println(member);
-		if(result < 2) {
-			return "members/loginerror";
-		}
+		log.info(member.toString());
+
 		return "members/loginform";
 
 	}

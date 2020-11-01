@@ -1,11 +1,10 @@
 package com.law.hansong.controller;
 
+import com.law.hansong.exception.BusinessLogicException;
+import com.law.hansong.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/main")
@@ -25,6 +24,7 @@ public class MainController {
     public String office() {
         return "menu/office";
     }
+
     @GetMapping("/directions")
     public String directions() {
         return "menu/directions";
@@ -44,6 +44,12 @@ public class MainController {
     public String prostitution() {
         return "specialized/prostitution";
     }
+    @GetMapping("/test")
+    public String test() {
+        if(true)
+        throw new ObjectNotFoundException("회원",false);
 
+        return "menu/lawyer";
+    }
 
 }

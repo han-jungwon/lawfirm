@@ -133,8 +133,10 @@ body {
 $(function(){
 	const joinform = {
 		init: function () {
-			let rule_value = 0;
 			const _this = this;
+			
+			// 약관 확인
+			let rule_value = 0;
 			$("#account_rule_btn").click(function() {
 				rule_value += 50;
 				$(".progress-bar").css("width", rule_value + "%");
@@ -147,11 +149,13 @@ $(function(){
 				$(".progress-bar").text(rule_value + "%");
 				$("#info_rule_btn").off('click');
 			});
+			
+			
 			//비밀번호 확인
 			$('#password2').blur(function(){
 				if($('#password').val() != $('#password2').val()){
 					if($('#password2').val()!=''){
-						alert("비밀번호가 일치하지 않습니다.");
+						 common.gfn_alert('alert', '알림', '비밀번호가 틀립니다.', 'small', null, false, true);
 						$('#password2').val('');
 						$('#password2').focus();
 					}
@@ -165,7 +169,7 @@ $(function(){
 
 		joinClick : function () {
 			if($('#email').val()==""){
-				alert("이메일을 입력해 주세요");
+				common.gfn_alert('alert', '알림', '이메일을 입력하세요.', 'small', null, false, true);
 				$('#email').focus();
 				return false;
 
@@ -173,49 +177,49 @@ $(function(){
 
 			var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 			if(!checkEmail.test($('#email').val())){
-				alert("적합하지 않은 이메일 형식입니다.");
+				common.gfn_alert('alert', '알림', '적합하지 않은 이메일 형식입니다.', 'small', null, false, true);
 				$('#email').focus();
 				return false;
 			}
 
 
 			if ($('#name').val() == "") {
-				alert("이름을 입력하세요");
+				common.gfn_alert('alert', '알림', '이름을 입력하세요.', 'small', null, false, true);
 				$('#name').focus();
 				return false;
 			}
 
 			if($('#password').val()==""){
-				alert("비밀번호를 입력하세요.");
+				common.gfn_alert('alert', '알림', '비밀번호를 입력하세요.', 'small', null, false, true);
 				$('#password').focus();
 				return false;
 			}
 
 			var checkPassword = /^\w{4,15}$/;
 			if(!checkPassword.test($('#password').val())){
-				alert("비밀번호를 4~15자리의 영문 대소문자와 숫자로만 입력해주세요.");
+				common.gfn_alert('alert', '알림', '비밀번호를 4~15자리의 영문 대소문자와 숫자로만 입력해주세요.', 'small', null, false, true);
 				$('#password').focus();
 				return false;
 			}
 
 			if($('#password2').val()==""){
-				alert("비밀번호를 확인해주세요.");
+				common.gfn_alert('alert', '알림', '비밀번호를 확인해주세요.', 'small', null, false, true);
 				$('#password2').focus();
 				return false;
 			}
 
 			if($('#phone').val()==""){
-				alert("휴대폰 번호를 입력하세요.");
+				common.gfn_alert('alert', '알림', '휴대폰 번호를 입력하세요.', 'small', null, false, true);
 				$('#phone').focus();
 				return false;
 			}
 
 			if(rule_value != 100){
-				alert("약관을 읽어주세요");
+				common.gfn_alert('alert', '알림', '약관을 읽어주세요.', 'small', null, false, true);
 				return false;
 			}
 
-			alert("회원가입이 완료되었습니다.");
+			common.gfn_alert('alert', '알림', '회원가입이 완료되었습니다.', 'small', null, false, true);
 		}
 	}
 	joinform.init();

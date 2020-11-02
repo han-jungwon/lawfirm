@@ -51,7 +51,7 @@ body {
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary">로그인</button>
-					<button type="submit" class="btn btn-primary"
+					<button type="button" class="btn btn-primary"
 						onclick="location.href='/hansong/members/joinform'">회원가입
 					</button>
 				</div>

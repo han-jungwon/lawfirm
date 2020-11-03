@@ -37,14 +37,12 @@ public class MemberServiceImpl implements MemberService {
 	 */
 
 	@Override
-	@Transactional(readOnly = true)
 	public UserEntity getUser(String loginUserId) {
 		Member member = memberDao.getMemberByEmail(loginUserId);
 		return new UserEntity(member.getEmail(), member.getPassword());
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public List<UserRoleEntity> getUserRoles(String loginUserId) {
 		List<MemberRole> memberRoles = memberRoleDao.getRolesByEmail(loginUserId);
 		List<UserRoleEntity> list = new ArrayList<>();
@@ -57,14 +55,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	@Transactional
 	public List<Member> getUserList() {
 		List<Member> memberList = memberDao.getMemberList();
 		return memberList;
 	}
 
 	@Override
-	@Transactional(rollbackFor = BusinessLogicException.class)
 	public int addMember(Member member) {
 		int result = memberDao.checkMail(member.getEmail());
 		if(result > 0) { // id가 이미 존재

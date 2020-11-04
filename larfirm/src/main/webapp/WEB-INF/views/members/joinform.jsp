@@ -5,9 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <title>법무법인 송한</title>
 </head>
 <jsp:include page="../common/header.jsp" />
+<jsp:include page="./joinform_account_rule.jsp" />
+<jsp:include page="./joinform_info_rule.jsp" />
 <link rel="stylesheet" href="../resources/css/joinform.css" />
 <style>
 body {
@@ -17,8 +20,7 @@ body {
 
 <body>
 	<jsp:include page="../common/navbar.jsp" />
-	<jsp:include page="./joinform_account_rule.jsp" />
-	<jsp:include page="./joinform_info_rule.jsp" />
+	
 	<div>
 		<div>
 			<form method="post" action="/hansong/members">
@@ -114,8 +116,13 @@ body {
 								</div>
 
 							</div>
+							
+							<div class="form-group">
+								<div class="g-recaptcha"
+									data-sitekey="6LcnB94ZAAAAAJyGmoNL2E4Mp7pcBwtz_AeP63xb"></div>
+							</div>
 							<div class="btn_wrap">
-								<button id=join type="submit"
+								<button id=join type="button"
 									style="height: 60px; width: 170px; margin-bottom: 100px;">가입하기</button>
 							</div>
 						</div>
@@ -131,12 +138,11 @@ body {
 </body>
 <script>
 $(function(){
+	var rule_value = 0;
 	const joinform = {
-		init: function () {
+		init: function () {			
 			const _this = this;
-			
 			// 약관 확인
-			let rule_value = 0;
 			$("#account_rule_btn").click(function() {
 				rule_value += 50;
 				$(".progress-bar").css("width", rule_value + "%");
@@ -155,77 +161,110 @@ $(function(){
 			$('#password2').blur(function(){
 				if($('#password').val() != $('#password2').val()){
 					if($('#password2').val()!=''){
-						 common.gfn_alert('alert', '알림', '비밀번호가 틀립니다.', 'small', null, false, true);
+						 common.gfn_alert('alert', '알림', '비밀번호가 틀립니다.', 'small');
 						$('#password2').val('');
 						$('#password2').focus();
 					}
 				}
-			})
+			});
+			
 			/* 가입하기 버튼 눌렀을 때 */
 			$('#join').click(function() {
 				_this.joinClick();
 			});
+			
+			$('#add_member_form').submit(function() {
+				_this.recaptcha();
+			});
+			
 		},
 
 		joinClick : function () {
-			if($('#email').val()==""){
-				common.gfn_alert('alert', '알림', '이메일을 입력하세요.', 'small', null, false, true);
+			if(rule_value != 100){
+				common.gfn_alert('alert', '알림', '약관을 읽어주세요.', 'small');
+				return false;
+			}
+			if(common.gfn_isNull($('#email').val())){
+				common.gfn_alert('alert', '알림', '이메일을 입력하세요.', 'small');
 				$('#email').focus();
 				return false;
 
 			}
-
 			var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 			if(!checkEmail.test($('#email').val())){
-				common.gfn_alert('alert', '알림', '적합하지 않은 이메일 형식입니다.', 'small', null, false, true);
+				common.gfn_alert('alert', '알림', '적합하지 않은 이메일 형식입니다.', 'small');
 				$('#email').focus();
 				return false;
 			}
+			
+			if(captcha != 0) {
+				return false;
+			} 
 
 
-			if ($('#name').val() == "") {
-				common.gfn_alert('alert', '알림', '이름을 입력하세요.', 'small', null, false, true);
+			if (common.gfn_isNull($('#name').val())) {
+				common.gfn_alert('alert', '알림', '이름을 입력하세요.', 'small');
 				$('#name').focus();
 				return false;
 			}
 
-			if($('#password').val()==""){
-				common.gfn_alert('alert', '알림', '비밀번호를 입력하세요.', 'small', null, false, true);
+			if(common.gfn_isNull($('#password').val())){
+				common.gfn_alert('alert', '알림', '비밀번호를 입력하세요.', 'small');
 				$('#password').focus();
 				return false;
 			}
 
 			var checkPassword = /^\w{4,15}$/;
 			if(!checkPassword.test($('#password').val())){
-				common.gfn_alert('alert', '알림', '비밀번호를 4~15자리의 영문 대소문자와 숫자로만 입력해주세요.', 'small', null, false, true);
+				common.gfn_alert('alert', '알림', '비밀번호를 4~15자리의 영문 대소문자와 숫자로만 입력해주세요.', 'small');
 				$('#password').focus();
 				return false;
 			}
 
-			if($('#password2').val()==""){
-				common.gfn_alert('alert', '알림', '비밀번호를 확인해주세요.', 'small', null, false, true);
+			if(common.gfn_isNull($('#password2').val())){
+				common.gfn_alert('alert', '알림', '비밀번호를 확인해주세요.', 'small');
 				$('#password2').focus();
 				return false;
 			}
 
-			if($('#phone').val()==""){
-				common.gfn_alert('alert', '알림', '휴대폰 번호를 입력하세요.', 'small', null, false, true);
+			if(common.gfn_isNull($('#phone').val())){
+				common.gfn_alert('alert', '알림', '휴대폰 번호를 입력하세요.', 'small');
 				$('#phone').focus();
 				return false;
 			}
 
-			if(rule_value != 100){
-				common.gfn_alert('alert', '알림', '약관을 읽어주세요.', 'small', null, false, true);
-				return false;
-			}
+			var captcha = 1;
+			$.ajax({
+	            url: common.gfn_getContextPath()+"/members/idCheck",
+	            type: 'post',
+	            data: {
+	                recaptcha: $("#g-recaptcha-response").val()
+	            },
+	            success: function(data) {
+	                switch (data) {
+	                    case 0:
+	                        console.log("자동 가입 방지 봇 통과");
+	                		break;
+	                    case 1:
+	                        alert("자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.");
+	                        break;
+	                    default:
+	                        alert("자동 가입 방지 봇을 실행 하던 중 오류가 발생 했습니다. [Error bot Code : " + Number(data) + "]");
+	                   		break;
+	                }
+	            }, error : function(){
+	            	console.log('captcha 에러');
+	            }
+			});  
 
-			common.gfn_alert('alert', '알림', '회원가입이 완료되었습니다.', 'small', null, false, true);
+			
 		}
+
 	}
 	joinform.init();
 
 
-})
+});
 	
 
 	

@@ -24,9 +24,6 @@
 		VALUES(MEMBER_SEQ.nextval,#{name},#{password},#{email},#{phone},MEMBER_SEQ.CURRVAL,SYSDATE,MEMBER_SEQ.CURRVAL,SYSDATE)
 	</insert>
 
-	<!-- <select id="EMAIL_CHECK" parameterType="String" resultType="String"> 
-		select email from member where email = #{email} </select> -->
-
 	<select id="CHECK_MAIL" parameterType="string" resultType="int">
 		SELECT
 		COUNT(*)
@@ -37,7 +34,6 @@
 		INSERT INTO MEMBER_ROLE(ID,MEMBER_ID,ROLE_NAME)
 		VALUES(MEMBER_ROLE_SEQ.NEXTVAL, MEMBER_SEQ.CURRVAL,'ROLE_USER')
 	</insert>
-
 
 	<select id="SELECT_ROLE_ALL_BY_EMAIL" parameterType="String" resultType="MemberRole">
 		SELECT mr.id, mr.member_id MEMBER_ID, mr.role_name ROLE_NAME

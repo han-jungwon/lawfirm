@@ -324,6 +324,15 @@
             <version>2.6.1</version>
         </dependency>
         
+        
+        <!-- 구글 리캡챠 -->
+        <dependency>
+            <groupId>net.tanesha.recaptcha4j</groupId>
+            <artifactId>recaptcha4j</artifactId>
+            <version>0.0.7</version>
+        </dependency>
+ 
+
 	</dependencies>
     <build>
         <plugins>

@@ -1,21 +1,27 @@
 package com.law.hansong.controller;
 
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.law.hansong.argumentresolver.HeaderInfo;
 import com.law.hansong.dto.Member;
 import com.law.hansong.service.MemberService;
+import com.law.hansong.service.security.VerifyRecaptcha;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -98,6 +104,22 @@ public class MemberController {
 		System.out.println("-----------------------------------------------------");
 
 		return map;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "VerifyRecaptcha", method = RequestMethod.POST)
+	public int VerifyRecaptcha(HttpServletRequest request) {
+	    VerifyRecaptcha.setSecretKey("6LcnB94ZAAAAAJyGmoNL2E4Mp7pcBwtz_AeP63xb");
+	    String gRecaptchaResponse = request.getParameter("recaptcha");
+	    try {
+	       if(VerifyRecaptcha.verify(gRecaptchaResponse))
+	          return 0; // 성공
+	       else return 1; // 실패
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return -1; //에러
+	    }
 	}
 
 /*

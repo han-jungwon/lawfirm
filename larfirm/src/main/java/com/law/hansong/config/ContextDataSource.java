@@ -48,10 +48,9 @@ public class ContextDataSource {
         dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
         dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:XE");
 
-        dataSource.setUsername("scott");
-        //dataSource.setUsername("mybatis");
-        dataSource.setPassword("tiger");
-        //dataSource.setPassword("mybatis");
+
+        dataSource.setUsername("mybatis");
+        dataSource.setPassword("mybatis");
         dataSource.setDefaultAutoCommit(false);
 
         return dataSource;
@@ -105,6 +104,7 @@ public class ContextDataSource {
         txAttributes.setProperty("create*", transactionAttributesDefinition);
         txAttributes.setProperty("add*", transactionAttributesDefinition);
         txAttributes.setProperty("delete*", transactionAttributesDefinition);
+        txAttributes.setProperty("*", transactionAttributesDefinition);
 
         txAdvice.setTransactionAttributes(txAttributes);
         txAdvice.setTransactionManager(transactionManager);

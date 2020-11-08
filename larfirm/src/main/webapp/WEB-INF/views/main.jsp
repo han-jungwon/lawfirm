@@ -362,22 +362,13 @@ ul {
 <script>
 	$(function () {
 		const main = {
+			ws : null,
 			init: function () {
 
 				const _this = this;
 
 				$("#btnChatNormal").click(function () {
-					$("#imgChatNormal").hide();
-					$("#spanChatNormal").show();
-					<sec:authorize access="isAuthenticated()">
-						console.log("${principal.username}");
-					</sec:authorize>
-					<sec:authorize access="isAnonymous()">
-					console.log("익명");
-					</sec:authorize>
-					//var ws = new WebSocket("ws://localhost:8088/chat/boot?")
-					$("#mdlChatNormal").modal('show');
-
+					_this.btnChatNormalClick();
 				})
 
 				$("#test2").click(function () {
@@ -399,6 +390,44 @@ ul {
 				$(document).on("click", "#odd", function () {
 					console.log("정워나 알러뷰");
 				});
+			},
+			btnChatNormalClick : function() {
+				$("#imgChatNormal").hide();
+				$("#spanChatNormal").show();
+				if(common.gfn_isNull(common.gfn_getUserId())) {
+					common.gfn_alert('c','알림',"로그인을 먼저 해주세요.",'small');
+					return;
+				}
+
+
+				this.ws = new WebSocket("ws://localhost:8088/hansong/boot?id="+common.gfn_getUserId());
+
+				$("#mdlChatNormal").modal('show');
+				$("#imgChatNormal").show();
+				$("#spanChatNormal").hide();
+
+				// 웹 소켓 연결 시 호출되는 이벤트
+				this.ws.open = function (event) {
+					if(common.gfn_isNull(event.data)) {
+						console.log(event.data);
+					}
+				}
+				// 웹 소켓에서 메시지가 날라왔을 때 호출되는 이벤트이다.
+				this.ws.onmessage = function (event) {
+					response(event.data);
+				}
+
+				// 웹 소켓이 닫혔을 때 호출되는 이벤트입니다.
+				this.ws.onclose = function(event) {
+					common.gfn_alert('c','알림',"상담이 종료되었습니다.",'small');
+				}
+			},
+			/**
+			 * @description message 보냄
+			 * @param sMessage(String)
+			 */
+			chatSend : function(sMessage) {
+				this.ws.send(sMessage);
 			},
 
 			/**

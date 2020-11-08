@@ -112,7 +112,40 @@
                 })
         },
 
+        /**
+         * @description UserId
+         * @returns {string}
+         */
+        gfn_getUserId : function() {
+            return this.gfn_isNull($("#navUserId").val()) ? "":$("#navUserId").val();
+        },
 
+        /**
+         * @description id로 유저정보 가져오기 ajax 자체를 반환함.
+         *             ex)$.when(common.gfn_getUserInfo()).done(function (data, textStatus, jqXHR) {
+                                if(common.gfn_isNotNull(data)) {
+                                    $("#navUserName").val(data.name);
+                                    // jqXhR.status는 성공시 200
+                                }
+                          });
+         * @param sUserId(String)
+         * @returns {{getAllResponseHeaders: function(): (*|null), abort: function(*=): *, setRequestHeader: function(*=, *): this, readyState: number, getResponseHeader: function(*): (null|*), overrideMimeType: function(*): *}|*}
+         */
+        gfn_getUserInfo : function(sUserId) {
+            if(this.gfn_isNull(sUserId)) {
+                sUserId = this.gfn_getUserId();
+            }
+            if(this.gfn_isNull(sUserId)) {
+                return;
+            }
+            return $.ajax({
+                url : this.gfn_getContextPath()+"/v1/members/"+sUserId,
+                dataType: "json",
+                cache: false,
+                method: "GET",
+                async : false
+            })
+        },
 
         /**
          * @description ContextPath 를 가져온다.

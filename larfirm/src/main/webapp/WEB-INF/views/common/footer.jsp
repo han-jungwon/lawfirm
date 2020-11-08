@@ -30,7 +30,12 @@
 				const _this = this;
 				$("#mypage").click(function () {
 					common.gfn_alert('confirm', '알림', '로그아웃 하시겠습니까?', 'small', null, false, true, _this.callback_mypage)
-				})
+				});
+				$.when(common.gfn_getUserInfo()).done(function (data, textStatus, jqXHR) {
+					if(common.gfn_isNotNull(data)) {
+						$("#navUserName").val(data.name);
+					}
+				});
 			},
 			callback_mypage : function (result) {
 				if (result === true) {

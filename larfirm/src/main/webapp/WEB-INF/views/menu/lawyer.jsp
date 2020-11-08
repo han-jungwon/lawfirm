@@ -79,6 +79,23 @@
 	margin-bottom: 200px;
 }
 
+.navybold {
+	font-weight: bold;
+	font-size : 23px;
+	color : navy;
+}
+
+.bold {
+	font-weight: bold;
+	font-size: 23px;
+}
+
+.address { 
+	font-weight: bold;
+	font-size: 15px;
+	margin-right: 10px;
+
+}
 .lawyer_info {
 	border: 1px solid #ddd;
 	box-sizing: border-box;
@@ -273,7 +290,7 @@ dt {
 		</div>
 		<div class="sm_select">
 			<select name="" id="tabmenu">
-				<option value="#tab01">변호사 소개</option>
+				<option value="#tab01" selected>변호사 소개</option>
 				<option value="#tab02">사무실 소개</option>
 				<option value="#tab03">찾아오시는 길</option>
 			</select>
@@ -380,9 +397,9 @@ dt {
 
 	<div id="tab03" class="tab-contents">
 		<div class="container" style="margin-bottom: 20px">
-			<h2 id="ag">찾아오시는 길</h2>
-			<br> <span class="navybold">위치와 연락처</span> <span class="bold">를
-				소개해 드립니다.</span>
+			<h2 id="ag">찾아오시는 길</h2> <br> 
+			<span class="navybold">위치와 연락처</span> 
+			<span class="bold">를 소개해 드립니다.</span>
 		</div>
 		<div class="container">
 			<!-- * 카카오맵 지도 -->
@@ -393,12 +410,18 @@ dt {
 
 			<div class="container" style="margin-top: 30px">
 				<ul>
-					<li><span class="address">ADDRESS</span> 서울 강남구 테헤란로14길 6 남도빌딩
+					<li>
+						<span class="address">ADDRESS</span> 
+						서울 강남구 테헤란로14길 6 남도빌딩
 					</li>
-					<li><span class="address">TEL</span> 02-123-1234
-						&nbsp;&nbsp;&nbsp; <span class="address">FAX</span> 02-142-2345
-						&nbsp;&nbsp;&nbsp; <span class="address">PARKING</span> 탄천주차장 1번
-						출입구 이용(유료)</li>
+					<li>
+						<span class="address">TEL</span>
+						 02-123-1234 &nbsp;&nbsp;&nbsp; 
+						 <span class="address">FAX</span> 
+						 02-142-2345 &nbsp;&nbsp;&nbsp; 
+						 <span class="address">PARKING</span> 
+						 탄천주차장 1번 출입구 이용(유료)
+					</li>
 				</ul>
 			</div>
 		</div>

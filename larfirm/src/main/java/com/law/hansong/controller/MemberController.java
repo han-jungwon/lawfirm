@@ -76,7 +76,7 @@ public class MemberController {
 
 	// 사용자가 입력한 name, email, password, phone가 member에 저장된다.
 	@PostMapping
-	public String memberJoin(@ModelAttribute Member member) {
+	public String memberJoin(@ModelAttribute Member member, @RequestParam(name = "news_letter", required = false, defaultValue = "0") int news_letter) {
 		System.out.println(member);
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		memberService.addMember(member);
@@ -106,19 +106,19 @@ public class MemberController {
 		return map;
 	}
 	
-	
 	@ResponseBody
 	@RequestMapping(value = "VerifyRecaptcha", method = RequestMethod.POST)
 	public int VerifyRecaptcha(HttpServletRequest request) {
-	    VerifyRecaptcha.setSecretKey("6LcnB94ZAAAAAJyGmoNL2E4Mp7pcBwtz_AeP63xb");
+	    VerifyRecaptcha.setSecretKey("6LcnB94ZAAAAAD44IadSFKC47xxrR3QAzqoM9kUz");
 	    String gRecaptchaResponse = request.getParameter("recaptcha");
+	    //0 = 성공, 1 = 실패, -1 = 오류
 	    try {
 	       if(VerifyRecaptcha.verify(gRecaptchaResponse))
-	          return 0; // 성공
-	       else return 1; // 실패
+	          return 0;
+	       else return 1;
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        return -1; //에러
+	        return -1;
 	    }
 	}
 

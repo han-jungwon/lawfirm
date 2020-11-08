@@ -33,8 +33,9 @@ body {
       display: inline-block;
       background: white;
       color: #444;
-      width: 190px;
+      width: 220px;
       border-radius: 5px;
+      margin-bottom: 10px;
       border: thin solid #888;
       box-shadow: 1px 1px 1px grey;
       white-space: nowrap;
@@ -47,7 +48,8 @@ body {
       font-weight: normal;
     }
     span.icon {
-      background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
+      background: url('/hansong/resources/images/g-logo.png') transparent 5px 50% no-repeat;
+      background-size: 35px;
       display: inline-block;
       vertical-align: middle;
       width: 42px;
@@ -56,7 +58,7 @@ body {
     span.buttonText {
       display: inline-block;
       vertical-align: middle;
-      padding-left: 42px;
+      padding-left: 10px;
       padding-right: 42px;
       font-size: 14px;
       font-weight: bold;
@@ -64,22 +66,6 @@ body {
       font-family: 'Roboto', sans-serif;
     }
     
-    
-/*     span.icon {
-      background: url('/hansong/resources/images/google.png') transparent 5px 50% no-repeat;
-      display: inline-block;
-      vertical-align: middle;
-      width: 42px;
-      height: 42px;
-    } */
-    
-/*     span.buttonText {
-      font-size: 16px;
-      font-weight: bold;
-      /* Use the Roboto font that is loaded in the <head> */
-      font-family: 'Roboto', sans-serif;
-      }  */
- 
  
 </style>
 </head>
@@ -244,6 +230,7 @@ body {
     				console.log('User signed out.');
     			});
     		},
+    		
     		/*  cookie 관련 */
     		initCookie : function() {
     			// 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
@@ -256,16 +243,16 @@ body {
                  
                 $("#saveCheck").change(function(){ // 체크박스에 변화가 있다면,
                     if($("#saveCheck").is(":checked")){ // ID 저장하기 체크했을 때,
-                        this.setCookie("key", $("#email").val(), 7); // 7일 동안 쿠키 보관
+                    	loginform.setCookie("key", $("#email").val(), 7); // 7일 동안 쿠키 보관
                     }else{ // ID 저장하기 체크 해제 시,
-                        this.deleteCookie("key");
+                    	loginform.deleteCookie("key");
                     }
                 });
                  
                 // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
                 $("#email").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
                     if($("#saveCheck").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-                        this.setCookie("key", $("#email").val(), 7); // 7일 동안 쿠키 보관
+                    	loginform.setCookie("key", $("#email").val(), 7); // 7일 동안 쿠키 보관
                     }
                 });
     		},

@@ -23,7 +23,7 @@ body {
 	
 	<div>
 		<div>
-			<form method="post" action="/hansong/members">
+			<form method="post" id="join_member_form" action="/hansong/members">
 				<div class="wrap wd668">
 					<div class="container">
 						<div class="form_txtInput">
@@ -117,10 +117,12 @@ body {
 
 							</div>
 							
-							<div class="form-group">
-								<div class="g-recaptcha"
+					 	<div class="form-group">
+								<div class="g-recaptcha" 
 									data-sitekey="6LcnB94ZAAAAAJyGmoNL2E4Mp7pcBwtz_AeP63xb"></div>
-							</div>
+							
+							</div> 
+							
 							<div class="btn_wrap">
 								<button id=join type="button"
 									style="height: 60px; width: 170px; margin-bottom: 100px;">가입하기</button>
@@ -138,7 +140,7 @@ body {
 </body>
 <script>
 $(function(){
-	var rule_value = 0;
+	let rule_value = 0;
 	const joinform = {
 		init: function () {			
 			const _this = this;
@@ -173,17 +175,15 @@ $(function(){
 				_this.joinClick();
 			});
 			
-			$('#add_member_form').submit(function() {
-				_this.recaptcha();
-			});
-			
 		},
 
-		joinClick : function () {
+		joinClick : function () { 
+			
 			if(rule_value != 100){
 				common.gfn_alert('alert', '알림', '약관을 읽어주세요.', 'small');
 				return false;
 			}
+			
 			if(common.gfn_isNull($('#email').val())){
 				common.gfn_alert('alert', '알림', '이메일을 입력하세요.', 'small');
 				$('#email').focus();
@@ -197,10 +197,6 @@ $(function(){
 				return false;
 			}
 			
-			if(captcha != 0) {
-				return false;
-			} 
-
 
 			if (common.gfn_isNull($('#name').val())) {
 				common.gfn_alert('alert', '알림', '이름을 입력하세요.', 'small');
@@ -233,42 +229,41 @@ $(function(){
 				return false;
 			}
 
-			var captcha = 1;
 			$.ajax({
-	            url: common.gfn_getContextPath()+"/members/idCheck",
+	            url: common.gfn_getContextPath()+"/members/VerifyRecaptcha",
 	            type: 'post',
 	            data: {
 	                recaptcha: $("#g-recaptcha-response").val()
 	            },
-	            success: function(data) {
+	            success: function(data) {   
 	                switch (data) {
 	                    case 0:
 	                        console.log("자동 가입 방지 봇 통과");
+	                        $('#join_member_form').submit();
 	                		break;
 	                    case 1:
-	                        alert("자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.");
+	                    	common.gfn_alert('alert', '알림', '자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.', 'small');
 	                        break;
 	                    default:
-	                        alert("자동 가입 방지 봇을 실행 하던 중 오류가 발생 했습니다. [Error bot Code : " + Number(data) + "]");
+	                    	common.gfn_alert('alert', '알림', '자동 가입 방지 봇을 실행 하던 중 오류가 발생 했습니다. [Error bot Code : '
+	                    		+ Number(data) +']','small');
 	                   		break;
 	                }
 	            }, error : function(){
 	            	console.log('captcha 에러');
 	            }
-			});  
+			});   
 
 			
 		}
-
+		
+		
 	}
+	
 	joinform.init();
-
 
 });
 	
-
-	
-
 
 
 </script>

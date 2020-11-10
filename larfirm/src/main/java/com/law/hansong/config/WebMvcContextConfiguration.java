@@ -33,7 +33,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableWebMvc // 기본적인 것 자동 설정
 @EnableSwagger2
 @PropertySource({"classpath:common/savefolder.properties","classpath:common/key.properties"})
-@ComponentScan(basePackages = {"com.law.hansong.controller", "com.law.hansong.exception"}) // 스캔시키기
+@ComponentScan(basePackages = {"com.law.hansong.controller", "com.law.hansong.exception","com.law.hansong.restcontroller"}) // 스캔시키기
 public class WebMvcContextConfiguration implements WebMvcConfigurer {
    //dispatcherServlet이 읽어들일 대상들
    

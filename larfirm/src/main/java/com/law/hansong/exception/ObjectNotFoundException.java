@@ -15,6 +15,12 @@ public class ObjectNotFoundException extends RuntimeException{
         this.historyBack = historyBack;
     }
 
+    public ObjectNotFoundException(String message) {
+        this.message = String.format("요청하신 %s 정보를 찾을 수 없습니다.", message);
+        this.historyBack = false;
+    }
+
+
     public ObjectNotFoundException() {
         this.message = "요청하신 정보를 찾을 수 없습니다.";
         this.historyBack = false;

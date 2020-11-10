@@ -104,6 +104,7 @@ public class ContextDataSource {
         txAttributes.setProperty("create*", transactionAttributesDefinition);
         txAttributes.setProperty("add*", transactionAttributesDefinition);
         txAttributes.setProperty("delete*", transactionAttributesDefinition);
+        txAttributes.setProperty("*", transactionAttributesDefinition);
 
         txAdvice.setTransactionAttributes(txAttributes);
         txAdvice.setTransactionManager(transactionManager);

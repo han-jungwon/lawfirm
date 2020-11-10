@@ -12,7 +12,7 @@
 		FROM BOARD
 		ORDER BY ID DESC
 	</select>
-	
+	<!--
 	<update id="updateCount" parameterType="_int">
 		UPDATE BOARD
 		SET BOARD_COUNT = BOARD_COUNT +1
@@ -65,11 +65,11 @@
 		AND R_STATUS='Y'
 		ORDER BY RID DESC
 	</select>
-	
+
 	<insert id="insertReply" parameterType="Reply">
 		INSERT INTO REPLY VALUES
 		(SEQ_RID.NEXTVAL,#{rContent},#{refBid},#{rWriter},SYSDATE,SYSDATE,DEFAULT)
-	</insert>
+	</insert>-->
 </mapper>
 
 

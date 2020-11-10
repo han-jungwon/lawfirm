@@ -7,12 +7,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.law.hansong.argumentresolver.HandlerMapArgumentResolver;
@@ -119,6 +114,11 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
       ApiInfo apiInfo =
             new ApiInfo("Swagger Sample", "APIs Sample", "Sample Doc 0.1v", "", contact, "This sentence will be display.", "/");
       return apiInfo;
+   }
+
+   @Override
+   public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+      configurer.favorPathExtension(false);
    }
    
 }

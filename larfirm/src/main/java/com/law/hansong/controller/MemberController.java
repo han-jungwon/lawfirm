@@ -44,11 +44,12 @@ public class MemberController {
 
     @ResponseBody
 	@GetMapping("/idCheck")
-	public int idCheck(@RequestParam("email") String email, @RequestParam("name") String name) {
+	public int idCheck(@RequestParam("email") String email, @RequestParam("name") String name
+						,@RequestParam("password") String password) {
 		Member member = Member.builder()
 								.email(email)
 								.name(name)
-								.password(passwordEncoder.encode(email))
+								.password(passwordEncoder.encode(password))
 								.build();
 
     	return memberService.addMember(member);

@@ -24,6 +24,10 @@ public class BoardController {
     // 스프링 컨테이너가 생성자를 통해 자동으로 주입한다.
     private final BoardService boardService;
 
+    public BoardController(BoardService boardService) {
+        this.boardService = boardService;
+    }
+
     @GetMapping("/counsel")
     public String counsel() {
         return "board/counsel";
@@ -49,7 +53,7 @@ public class BoardController {
         return "board/petition";
     }
 
-    
+    /*
     // 게시글 목록조회
     @GetMapping("/list")
 	public ModelAndView boardList(ModelAndView mv,
@@ -68,6 +72,6 @@ public class BoardController {
 		mv.addObject("pi", pi);
 		mv.setViewName("board/boardListView");
 		return mv;
-}
+}*/
 
 }

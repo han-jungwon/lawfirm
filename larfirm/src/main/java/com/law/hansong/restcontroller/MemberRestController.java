@@ -5,6 +5,7 @@ import com.law.hansong.exception.ObjectNotFoundException;
 import com.law.hansong.service.MemberService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class MemberRestController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping(value = "/{email}")
+    @GetMapping(value = "/{email:.+}")
     public EntityModel<Member> getUser(@PathVariable String email) {
         Optional<Member> member = Optional.ofNullable(memberService.getMemberByEmail(email));
 

@@ -115,7 +115,7 @@ body {
 				</div>
 			</fieldset>
 		</form>
-		<form style="display: none" id="frmOauthLgoin" method="post" action="/hansong/authenticate">
+		<form style="display: none" id="frmOauthLogin" method="post" action="/hansong/authenticate">
 			<input type="hidden" class="form-control" placeholder="Enter email"
 				id="oauthEmail" name="email" required> <input type="hidden"
 				class="form-control" placeholder="Enter password" id="oauthPwd"
@@ -149,7 +149,8 @@ body {
                            success : function (res) {
                                $.ajax({
                                    url : common.gfn_getContextPath()+"/members/idCheck",
-                                   data : {"email" : res.id
+                                   data : {"email" : res.kakao_account.email
+									      , "password" : res.id
                                           , "name" : res.properties.nickname},
                                    cache : false,
                                    dataType : "json",
@@ -160,9 +161,9 @@ body {
                                        if(rdata == -2) { // 문제발생
                                            this.fail();
                                        } else { // 로그인 로직 태움
-                                           $("#oauthEmail").val(res.id);
+                                           $("#oauthEmail").val(res.kakao_account.email);
                                            $("#oauthPwd").val(res.id);
-                                           $("#frmOauthLgoin").submit();
+                                           $("#frmOauthLogin").submit();
                                            // 카카오 로그아웃
                                            Kakao.API.request({
                                                url : "/v1/user/logout",
@@ -203,19 +204,21 @@ body {
     		attachSignin : function(element) {
     			auth2.attachClickHandler(element, {}, function(googleUser) {
     				var profile = googleUser.getBasicProfile();
-    				var id = profile.getId();
-    				var name = profile.getName();
+
+    				const id = profile.getEmail();
+					const pw = profile.getId();
+    				const name = profile.getName();
     				loginform.signOut();
     				$.ajax({
     					url : common.gfn_getContextPath()+"/members/idCheck",
-    					data : {"email":id, "name":name},
+    					data : {"email":id, "name":name, "password":pw},
     					success : function(rdata) {
-    						if(rdata == -2) { //없는 아이디
+    						if(rdata == -2) { //에러인 경우
     							 this.fail();
     						} else {
     							$("#oauthEmail").val(id);
-                                $("#oauthPwd").val(id);
-                                $("#frmOauthLgoin").submit();
+                                $("#oauthPwd").val(pw);
+                                $("#frmOauthLogin").submit();
     						}
     					}
     				})

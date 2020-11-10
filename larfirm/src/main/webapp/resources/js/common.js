@@ -1,4 +1,3 @@
-
     const common = {
         /** 공통 변수 */
         gS_siteDomain : "songhan.kr",
@@ -140,7 +139,6 @@
             }
             return $.ajax({
                 url : this.gfn_getContextPath()+"/v1/members/"+sUserId,
-                dataType: "json",
                 cache: false,
                 method: "GET",
                 async : false

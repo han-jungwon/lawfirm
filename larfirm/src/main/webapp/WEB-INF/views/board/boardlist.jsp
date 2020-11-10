@@ -4,9 +4,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판</title>
 </head>
 <body>
 
 </body>
+<script>
+	$(function(){
+		if($("BOARD_CATEGORY").val="0"){
+			$('#h3_category').text("")
+			
+			
+		}
+		
+		
+		
+		
+	});
+
+
+
+
+
+</script>
 </html>

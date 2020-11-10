@@ -53,7 +53,7 @@
 		</div>
 	</div>
 	
-	<div id="tab01" class="tab-contents">
+
 	<div class="container">
   <h2 style="font-size: 30px;
     font-weight: bold;">공지사항</h2>     
@@ -63,39 +63,20 @@
         <th>번호</th>
         <th>제목</th>
         <th>조회수</th>
+        <th>등록일</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>[공지]</td>
-        <td>공지를 알려드립니다.</td>
-        <td>26</td>
-      </tr>
+      
+      <c:forEach var="list" items="${list}">
       	<tr>
-        <td>5</td>
-        <td>방문안내</td>
-        <td>26</td>
+      		<td><c:out value="${list.id}"/></td>
+      		<td><c:out value="${list.board_title}"/></td>
+      		<td><c:out value="${list.board_count}"/></td>
+      		<td><c:out value="${list.regi_dt}"/></td>    	
       	</tr>
-       <tr>
-        <td>4</td>
-        <td>온라인 상담 오류 안내</td>
-        <td>22</td>
-      </tr>
-       <tr>
-        <td>3</td>
-        <td>상담관련 안내</td>
-        <td>32</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>법무법인 송한</td>
-        <td>50</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>안녕하세요.</td>
-        <td>26</td>
-      </tr>
+      </c:forEach>
+	 </thead>
+    <tbody>
+     
     </tbody>
   </table>
 </div>
@@ -109,9 +90,29 @@
   <li class="page-item"><a class="page-link" href="#">다음</a></li>
 </ul>
 </div>
-	</div>
+
 	<jsp:include page="../common/footer.jsp" />
 </body>
+<script>
+$(function(){
+	if($("BOARD_CATEGORY").val=="0"){
+		$('#h3_category').text("공지사항");			
+	}else if($("BOARD_CATEGORY").val()=="1"){
+		$('#h3_category').text("언론보도");
+	}else if($("BOARD_CATEGORY").val()=="2"){
+		$('#h3_category').text("합의서");
+	}else if($("BOARD_CATEGORY").val()=="3"){
+		$('#h3_category').text("탄원서");
+	}else{
+		$('#h3_category').text("반성문");
+	}
+	$("#search_select").val("${search_select}").prop("selected",true);
+	$("#search_text").val("#{search_text}");
+});
 
+
+
+
+</script>
 </html>
 

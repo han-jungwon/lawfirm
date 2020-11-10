@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>법무법인 송한</title>
+<title>언론보도</title>
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
 <link rel="stylesheet" href="../resources/css/joinform.css" />
@@ -397,8 +397,8 @@ ul {
 </body>
 <script>
 	$(function() {
-		$('.big_tab li').first().addClass("activeClass");
-		$(".tab-contents").not(':first').hide();
+		$('.big_tab li').eq(0).addClass("activeClass");
+		$(".tab-contents").not(':eq(0)').hide();
 		$('.big_tab li').on(
 				'click',
 				function() {

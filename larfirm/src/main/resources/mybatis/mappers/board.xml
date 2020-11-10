@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="Board">
+	
+	<select id="selectList" resultType="Board">
+		SELECT ID,
+			   BOARD_TITLE,
+			   BOARD_COUNT,
+			   REGI_DT		
+		FROM BOARD
+		ORDER BY ID DESC
+	</select>
+	
+	<update id="updateCount" parameterType="_int">
+		UPDATE BOARD
+		SET BOARD_COUNT = BOARD_COUNT +1
+		WHERE ID=#{Id}
+	</update>
+	
+	<select id="selectBoard" resultMap="boardResultSet">
+		SELECT * 
+		FROM BOARD
+		WHERE BID=#{bId}
+		AND B_STATUS='Y'
+	</select>
+	
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO BOARD
+		VALUES(SEQ_BID.NEXTVAL,#{bTitle},#{bWriter},#{bContent},
+			   #{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT)
+	</insert>
+	
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD
+		SET BTITLE=#{bTitle}
+		   ,BCONTENT=#{bContent}
+		   ,ORIGINAL_FILENAME=#{originalFileName}
+		   ,RENAME_FILENAME=#{renameFileName}
+		   ,B_MODIFY_DATE=SYSDATE
+		WHERE BID=#{bId}
+	</update>
+
+	<update id="deleteBoard" parameterType="_int">
+		UPDATE BOARD
+		SET B_STATUS='N'
+		WHERE BID=#{bId}
+	</update>
+	
+	<select id="selectTopList" resultMap="boardResultSet">
+		<![CDATA[
+		SELECT *
+		FROM (SELECT *
+			  FROM board
+			  ORDER BY BCOUNT desc)
+		WHERE ROWNUM <= 5
+		]]>
+	</select>
+	
+	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">
+		SELECT *
+		FROM REPLY
+		WHERE REF_BID=#{bId}
+		AND R_STATUS='Y'
+		ORDER BY RID DESC
+	</select>
+	
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO REPLY VALUES
+		(SEQ_RID.NEXTVAL,#{rContent},#{refBid},#{rWriter},SYSDATE,SYSDATE,DEFAULT)
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+

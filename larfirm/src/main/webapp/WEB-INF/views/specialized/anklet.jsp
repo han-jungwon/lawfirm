@@ -493,7 +493,7 @@ td.dot.left {
 		</div>
 		<div class="sm_select">
 			<select name="" id="tabmenu">
-				<option value="#tab01">전자발찌</option>
+				<option value="#tab01 selected">전자발찌</option>
 				<option value="#tab02">카메라촬영죄</option>
 				<option value="#tab03">성매매란</option>
 			</select>

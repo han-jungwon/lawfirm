@@ -37,7 +37,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/", "/main","/v1/**", "/main/*","/members/VerifyRecaptcha", "/members/loginerror"
                 , "/members/idCheck", "/members/joinform", "/members", "/members/ex","/boards/counsel","/boards/notice"
                 ,"/boards/agreement","/boards/apology","/boards/report","/boards/petition","/commons/keys").permitAll()
-        .antMatchers("/members/**").hasRole("USER") // USER 라는 권한이 있어야 하는 URL
+        .antMatchers("/members/**","/boot").hasRole("USER") // USER 라는 권한이 있어야 하는 URL
         .antMatchers("/swagger-ui.html").hasRole("ADMIN") // ADMIN 라는 권한이 있어야 하는 URL
         //.antMatchers("/abc/**").hasRole("ADMIN")
         .anyRequest().authenticated()

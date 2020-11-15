@@ -346,7 +346,7 @@ ul {
 
 				<!-- messages -->
 				<div class="modal-body" style="overflow-x: hidden; overflow-y: auto; height: 400px; word-break: break-all;">
-					<ul>상담내용dfasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+					<ul>
 					</ul>
 				</div>
 
@@ -370,6 +370,21 @@ ul {
 				$("#btnChatNormal").click(function () {
 					_this.btnChatNormalClick();
 				})
+				// modal out -> socket close
+				$("#mdlChatNormal").on("hidden.bs.modal",function (e) {
+					common.gfn_alert('confirm','알림',"정말로 나가시겠습니까?",'small', null, false, true, _this.chatClose);
+				})
+
+				// enter 입력 시 채팅 보내기
+				$(window).on('keyup',function (e) {
+					if(e.which == 13) {
+						var message = _this.newMessage();
+						if(common.gfn_isNotNull(message)) {
+							_this.chatSend(message);
+						}
+						return false;
+					}
+				})
 
 				$("#test2").click(function () {
 					//common.alertBox("gd",test,'gd');
@@ -391,6 +406,16 @@ ul {
 					console.log("정워나 알러뷰");
 				});
 			},
+
+			// 상담 나가기 시
+			chatClose : function(result, json) {
+				if(result) {
+					main.chatSend(common.gfn_getUserId()+"님이 퇴장하셨습니다.");
+					main.ws.close();
+				}
+			},
+
+			// 일반상담 클릭 시 socket open
 			btnChatNormalClick : function() {
 				$("#imgChatNormal").hide();
 				$("#spanChatNormal").show();
@@ -414,7 +439,7 @@ ul {
 				}
 				// 웹 소켓에서 메시지가 날라왔을 때 호출되는 이벤트이다.
 				this.ws.onmessage = function (event) {
-					response(event.data);
+					main.chatResponse(event.data);
 				}
 
 				// 웹 소켓이 닫혔을 때 호출되는 이벤트입니다.
@@ -428,6 +453,45 @@ ul {
 			 */
 			chatSend : function(sMessage) {
 				this.ws.send(sMessage);
+			},
+
+			chatResponse : function(rtext) {
+				var arr = rtext.split('&');
+				var message = arr[1];
+
+				var out = "님이 퇴장하셨습니다.";
+				var inin = "님이 입장하셨습니다.";
+				var output = "";
+				// 입장과 퇴장의 경우 css가 가운데로 위치해야 함.
+				console.log(message);
+				if(message.indexOf(out) > -1 || message.indexOf(inin) > -1) {
+					var index = message.lastIndexOf('.');
+					output = "<li class = 'inout'><p></p></li>";
+					message = message.substring(0, index);
+				} else {
+					var name = arr[0];
+					output = "<li class = 'replies'>"
+							+"<sup>" + name + "</sup><p></p></li>";
+				}
+				$(".modal-body > ul").append(output);
+				$('.modal-body > ul > li').last().find('p').text(message);
+
+			},
+
+			newMessage : function() {
+				var message = $("#txtChatContent").val();
+
+				if(common.gfn_isNull($.trim(message))) {
+					return false;
+				}
+
+				var output = "<li class='sent'>"
+							+"<p></p></li>";
+				$(".modal-body > ul").append(output);
+				$('.modal-body > ul > li').last().find('p').text(message);
+				$("#txtChatContent").val(null);
+
+				return message;
 			},
 
 			/**

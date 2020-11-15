@@ -18,6 +18,10 @@ public class MemberRoleDao {
       
       return sqlSession.selectList("Member.SELECT_ROLE_ALL_BY_EMAIL", email);
    }
+   
+   public int addMemberRole() {
+	  return sqlSession.insert("Member.INSERT_MEMBER_ROLE");
+   }
    /*
    //private NamedParameterJdbcTemplate jdbc;
    // BeanPropertyRowMapper는 Role클래스의 프로퍼티를 보고 자동으로 칼럼과 맵핑해주는 RowMapper객체를 생성한다.

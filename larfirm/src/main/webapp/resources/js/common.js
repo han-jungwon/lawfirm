@@ -1,5 +1,10 @@
-
     const common = {
+        /** 공통 변수 */
+        gS_siteDomain : "songhan.kr",
+
+        /**
+         * 최초 실행
+         */
         init : function () {
             /* --------------------------------------------------------------------------------------
                 공통 라이브러리 추가
@@ -9,8 +14,23 @@
             _this.gfn_addJavascript('https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js');
             _this.gfn_addJavascript('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js');
             //_this.gfn_addJavascript('resources/js/~~.min.js');
-
+            $("#navBtnSearch").click(function () {
+                _this.gfn_googleSearch();
+            });
+            $("#navInputSearch").keydown(function (key) {
+                if(key.keyCode == 13) {
+                    _this.gfn_googleSearch();
+                }
+            });
         },
+        /**
+         * nav 검색 실행
+         * */
+        gfn_googleSearch : function() {
+            let sSearchParam = $("#navInputSearch").val();
+            location.href = "https://www.google.com/search?qt="+sSearchParam+"&q=site%3A"+this.gS_siteDomain+"+"+sSearchParam;
+        },
+
         /**
          * import 파일 : jquery.modal.css , jquery.modal.min.js
          * @description alert 커스텀  (ex. common.gfn_alert('alert','제목','내용','large', null, false, true, callback, param)
@@ -65,6 +85,66 @@
         gfn_isNotNull : function(value) {
             return !this.gfn_isNull(value);
         },
+        /**
+         * @description Api 인증키 가져오기
+         * @param authProvider ( 'kakao' , 'google' )
+         * @param callback ( init function )
+         */
+        gfn_getAuthKey : function(authProvider, callback) {
+            $.ajax({
+                url : this.gfn_getContextPath()+"/commons/keys",
+                data: {authProvider:authProvider},
+                cache : false,
+                dataType : "json",
+                method : "GET",
+                async : false
+            })
+                .done(function (json) {
+                    callback(json.key);
+                })
+                .fail(function (xhr, status, errorThrown) {
+                    // errorThrown : 오류명, status : 상태
+                    console.log(authProvider+" : " + errorThrown);
+                })
+                .always(function (xhr, status) {
+
+                })
+        },
+
+        /**
+         * @description UserId
+         * @returns {string}
+         */
+        gfn_getUserId : function() {
+            return this.gfn_isNull($("#navUserId").val()) ? "":$("#navUserId").val();
+        },
+
+        /**
+         * @description id로 유저정보 가져오기 ajax 자체를 반환함.
+         *             ex)$.when(common.gfn_getUserInfo()).done(function (data, textStatus, jqXHR) {
+                                if(common.gfn_isNotNull(data)) {
+                                    $("#navUserName").val(data.name);
+                                    // jqXhR.status는 성공시 200
+                                }
+                          });
+         * @param sUserId(String)
+         * @returns {{getAllResponseHeaders: function(): (*|null), abort: function(*=): *, setRequestHeader: function(*=, *): this, readyState: number, getResponseHeader: function(*): (null|*), overrideMimeType: function(*): *}|*}
+         */
+        gfn_getUserInfo : function(sUserId) {
+            if(this.gfn_isNull(sUserId)) {
+                sUserId = this.gfn_getUserId();
+            }
+            if(this.gfn_isNull(sUserId)) {
+                return;
+            }
+            return $.ajax({
+                url : this.gfn_getContextPath()+"/v1/members/"+sUserId,
+                cache: false,
+                method: "GET",
+                async : false
+            })
+        },
+
         /**
          * @description ContextPath 를 가져온다.
          * @example /hansong

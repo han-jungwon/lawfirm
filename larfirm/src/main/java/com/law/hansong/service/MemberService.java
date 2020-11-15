@@ -11,5 +11,12 @@ public interface MemberService extends UserDbService{
 	   UserEntity getUser(String loginUserId);
 	   List<Member> getUserList();
 	   //String addMember(Member member, boolean bool);
-	   //Member getMemberByEmail(String loginId);
+	   Member getMemberByEmail(String email);
+	
+	   int addMember(Member member);
+	
+
+	   
+	
+	
 	}

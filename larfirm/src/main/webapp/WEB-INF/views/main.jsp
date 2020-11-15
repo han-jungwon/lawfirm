@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +12,9 @@
 <meta name="author" content="Team. hansong">
 <jsp:include page="./common/header.jsp" />
 <!-- Site css -->
-<link rel="stylesheet" href="resources/css/carousel.css" />
+<link rel="stylesheet" href="/hansong/resources/css/carousel.css" >
 <link rel="canonical"
-	href="https://getbootstrap.com/docs/4.5/examples/carousel/">
+	href="https://getbootstrap.com/docs/4.5/examples/carousel/"/>
 <style>
 
 /* 반응형 화면  */
@@ -28,10 +30,10 @@
 	}
 
 @media screen and (max-width: 980px) {
-		.camera{
+	.camera{
 		margin-left: 0px !important; 
 		margin-right: 0px !important;
-		}	
+		}
 
 
 	}
@@ -43,10 +45,10 @@
 		ul.business_icon{
 			margin-left: 60px !important;
 		} 
-		.camera{
+				.camera{
 		margin-left: 0px !important; 
 		margin-right: 0px !important;
-		}	
+		}
 
 
 	}
@@ -64,12 +66,6 @@
 
 
 /* 전문분야  */
-.business_con {
-	position: relative;
-	padding: 70px 0;
-	width: 1170px;
-	margin: 0 auto;
-}
 
 .business_icon {
 	position: Relative;
@@ -101,18 +97,18 @@
 	width: 150px;
 	height: 150px;
 	border-radius: 50%;
-	background: #f2f2f2 url('./resources/images/전자발찌1.png') center center
+	background: #f2f2f2 url('./resources/images/anklet1.png') center center
 		no-repeat;
 	margin-bottom: 20px;
 	transition: all 0.3s ease-out;
 }
 
 .business_icon li:nth-child(2) span {
-	background-image: url('./resources/images/카메라촬영죄1.png');
+	background-image: url('./resources/images/camera1.png');
 }
 
 .business_icon li:nth-child(3) span {
-	background-image: url('./resources/images/성매매1.png');
+	background-image: url('./resources/images/prostitution1.png');
 	background-position: 49px center
 }
 
@@ -128,15 +124,15 @@ ul.business_icon {
 .business_icon li a:hover span {
 	transition: all 0.3s ease-out;
 	background-color: #182952;
-	background-image: url('./resources/images/전자발찌2.png')
+	background-image: url('./resources/images/anklet2.png')
 }
 
 .business_icon li:nth-child(2) a:hover span {
-	background-image: url('./resources/images/카메라촬영죄2.png')
+	background-image: url('./resources/images/camera2.png')
 }
 
 .business_icon li:nth-child(3) a:hover span {
-	background-image: url('./resources/images/성매매2.png')
+	background-image: url('./resources/images/prostitution2.png')
 }
 ul {
     list-style-type: none;
@@ -174,6 +170,30 @@ ul {
 	margin-left: 100px; margin-right: 100px;
 }
 
+/* 채팅영역 */
+.chat {
+	float: right;
+	position: fixed;
+	right: 0;
+	z-index: 999 !important
+}
+.chat_kakao {
+	bottom: 8em;
+	margin-right: 50px;
+}
+.chat_normal {
+	bottom: 5em;
+	margin-right: 60px;
+}
+
+.image {
+	cursor: pointer;
+    border-radius: 10%;
+    margin-left: 100px;
+    margin-right: 80px;
+	width: 180px;
+	height: 240px;
+}
 
 </style>
 </head>
@@ -190,7 +210,7 @@ ul {
 			</ol>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/배너1.jpg" border="0">
+					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/banner1.jpg" border="0">
 					<div class="container">
 						<div class="carousel-caption text-left">
 							<h1 style="font-weight:bold;">LAW FIRM SONGHAN</h1>
@@ -201,24 +221,20 @@ ul {
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/배너2.jpg" border="0">
+					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/banner2.jpg" border="0">
 					<div class="container">
 						<div class="carousel-caption">
 							<h1>LAW FIRM SONGHAN</h1>
 							<p>2500건 이상의 사건 수임과 다양한 성공사례가 증명합니다.</p>
-							<!-- <p>
-								<a id = "learn_button"class="btn btn-lg btn-primary" href="#" role="button">Learn
-									more</a>
-							</p> -->
 						</div>
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/배너3.jpg" border="0"
+					<img class="bd-placeholder-img" width="100%" height="100%" src="./resources/images/banner3.jpg" border="0"
 							style="cursor: pointer">
 					<div class="container">
 						<div class="carousel-caption text-right">
-							<img  src="./resources/images/배너3-1.png" style="margin-right: 500px">
+							<img  src="./resources/images/banner3-1.png" style="margin-right: 500px">
 							<h1>LAW FIRM SONGHAN</h1>
 							<p>법무법인 송한은 언제나 의뢰인의 입장에서 생각하겠습니다.</p>
 						</div>
@@ -243,13 +259,13 @@ ul {
 				<h3 class="specially">전문분야</h3>
 				<p class="specially-1">한송만의 노하우가 담긴 전략과 기획으로 형사법 분야의 최고가 되겠습니다.</p>
 				<ul class="business_icon">
-					<li><a href="#"> <span class="icon"></span> 전자발찌
+					<li><a href="/hansong/main/anklet"> <span class="icon"></span> 전자발찌
+					</a></li>
+			
+					<li><a class="camera" href="/hansong/main/camera"> <span class="icon"></span> 카메라 촬영죄
 					</a></li>
 
-					<li><a class="camera" href="#"> <span class="icon"></span> 카메라 촬영죄
-					</a></li>
-
-					<li><a href="#"> <span class="icon"></span> 성매매
+					<li><a href="/hansong/main/prostitution"> <span class="icon"></span> 성매매
 					</a></li>
 				</ul>
 			</div>
@@ -272,9 +288,8 @@ ul {
 				</div>
 				<div>
 					<div>
-						<img src="./resources/images/정원.png" border="0"
-							onclick="window.open('#')"
-							style="cursor: pointer; border-radius: 10%; margin-left: 100px; margin-right: 80px;">
+						<img class="image" src="/hansong/resources/images/jungwon.png" border="0"
+							 onclick="location.href='/hansong/main/lawyer'">
 					</div>
 				</div>
 			</div>
@@ -282,20 +297,19 @@ ul {
 			<hr class="featurette-divider">
 
 			<div class="row featurette">
-				<div class="col-md-7">
-					<h2 class="featurette-heading">변호사 송민준</h2>
-
+				<div class="col-md-7 order-md-2">
+					<h2 class="featurette-heading">대표 변호사  송민준</h2>
+					
+					<p class="lead">사법시험 45회, 사법연수원 36기 수료 <br> 
+									前 법무법인 가든 소속변호사<br>
+									現  KH 자문변호사<br>
+									現 법무법인 송한 대표변호사</p>
 				</div>
-				<div class="col-md-5">
-					<svg
-						class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-						width="500" height="500" xmlns="http://www.w3.org/2000/svg"
-						preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
-						aria-label="Placeholder: 500x500">
-						<title>Placeholder</title>
-						<rect width="100%" height="100%" fill="#eee" />
-						<text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
-					</svg>
+				<div>
+					<div>
+						<img class="image" src="/hansong/resources/images/song.jpg" border="0"
+							 onclick="location.href='/hansong/main/lawyer'">
+					</div>
 				</div>
 			</div>
 
@@ -304,19 +318,74 @@ ul {
 			<!-- /END THE FEATURETTES -->
 
 		</div>
-		<button type="button" id="test2">로그인</button>
+		<button type="button" class="btn btn-outline-white chat chat_kakao" id="btnChatKaKao">
+			<img src="/hansong/resources/images/kakao.png" height="70px" width="70px">
+		</button>
+		<br>
+		<button type="button" class="btn btn-outline-white chat chat_normal" id="btnChatNormal" ><!-- data-toggle="modal" data-target="#mdlChatNormal" -->
+			<svg id = "imgChatNormal" width="50px" height="50px" viewBox="0 0 16 16" class="bi bi-chat-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
+				<path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+			</svg>
+			<span id = "spanChatNormal" style="display: none;" class="spinner-border spinner-border-sm"></span>
+		</button>
+		<button type="button" id="test2"></button>
 		<!-- /.container -->
 		<jsp:include page="./common/footer.jsp" />
 
 	</main>
+	<div class="modal fade" id ="mdlChatNormal">
+		<div class="modal-dialog  modal-dialog-centered">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h1 class="modal-title" style="font-size: large">실시간 상담</h1>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+
+				<!-- messages -->
+				<div class="modal-body" style="overflow-x: hidden; overflow-y: auto; height: 400px; word-break: break-all;">
+					<ul>
+					</ul>
+				</div>
+
+				<!-- message-input -->
+				<div class="modal-footer">
+					<div class="form-group" style="display: contents;">
+						<textarea class="form-control" rows="2" id="txtChatContent" placeholder="내용을 입력하세요."></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <script>
 	$(function () {
 		const main = {
+			ws : null,
 			init: function () {
-				/**
-				 *  ~~
-				 */
-				var _this = this;
+
+				const _this = this;
+
+				$("#btnChatNormal").click(function () {
+					_this.btnChatNormalClick();
+				})
+				// modal out -> socket close
+				$("#mdlChatNormal").on("hidden.bs.modal",function (e) {
+					common.gfn_alert('confirm','알림',"정말로 나가시겠습니까?",'small', null, false, true, _this.chatClose);
+				})
+
+				// enter 입력 시 채팅 보내기
+				$(window).on('keyup',function (e) {
+					if(e.which == 13) {
+						var message = _this.newMessage();
+						if(common.gfn_isNotNull(message)) {
+							_this.chatSend(message);
+						}
+						return false;
+					}
+				})
+
 				$("#test2").click(function () {
 					//common.alertBox("gd",test,'gd');
 
@@ -336,6 +405,93 @@ ul {
 				$(document).on("click", "#odd", function () {
 					console.log("정워나 알러뷰");
 				});
+			},
+
+			// 상담 나가기 시
+			chatClose : function(result, json) {
+				if(result) {
+					main.chatSend(common.gfn_getUserId()+"님이 퇴장하셨습니다.");
+					main.ws.close();
+				}
+			},
+
+			// 일반상담 클릭 시 socket open
+			btnChatNormalClick : function() {
+				$("#imgChatNormal").hide();
+				$("#spanChatNormal").show();
+				if(common.gfn_isNull(common.gfn_getUserId())) {
+					common.gfn_alert('c','알림',"로그인을 먼저 해주세요.",'small');
+					return;
+				}
+
+
+				this.ws = new WebSocket("ws://localhost:8088/hansong/boot?id="+common.gfn_getUserId());
+
+				$("#mdlChatNormal").modal('show');
+				$("#imgChatNormal").show();
+				$("#spanChatNormal").hide();
+
+				// 웹 소켓 연결 시 호출되는 이벤트
+				this.ws.open = function (event) {
+					if(common.gfn_isNull(event.data)) {
+						console.log(event.data);
+					}
+				}
+				// 웹 소켓에서 메시지가 날라왔을 때 호출되는 이벤트이다.
+				this.ws.onmessage = function (event) {
+					main.chatResponse(event.data);
+				}
+
+				// 웹 소켓이 닫혔을 때 호출되는 이벤트입니다.
+				this.ws.onclose = function(event) {
+					common.gfn_alert('c','알림',"상담이 종료되었습니다.",'small');
+				}
+			},
+			/**
+			 * @description message 보냄
+			 * @param sMessage(String)
+			 */
+			chatSend : function(sMessage) {
+				this.ws.send(sMessage);
+			},
+
+			chatResponse : function(rtext) {
+				var arr = rtext.split('&');
+				var message = arr[1];
+
+				var out = "님이 퇴장하셨습니다.";
+				var inin = "님이 입장하셨습니다.";
+				var output = "";
+				// 입장과 퇴장의 경우 css가 가운데로 위치해야 함.
+				console.log(message);
+				if(message.indexOf(out) > -1 || message.indexOf(inin) > -1) {
+					var index = message.lastIndexOf('.');
+					output = "<li class = 'inout'><p></p></li>";
+					message = message.substring(0, index);
+				} else {
+					var name = arr[0];
+					output = "<li class = 'replies'>"
+							+"<sup>" + name + "</sup><p></p></li>";
+				}
+				$(".modal-body > ul").append(output);
+				$('.modal-body > ul > li').last().find('p').text(message);
+
+			},
+
+			newMessage : function() {
+				var message = $("#txtChatContent").val();
+
+				if(common.gfn_isNull($.trim(message))) {
+					return false;
+				}
+
+				var output = "<li class='sent'>"
+							+"<p></p></li>";
+				$(".modal-body > ul").append(output);
+				$('.modal-body > ul > li').last().find('p').text(message);
+				$("#txtChatContent").val(null);
+
+				return message;
 			},
 
 			/**

@@ -1,6 +1,8 @@
 package com.law.hansong.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,22 @@ public class MemberDao {
    public List<Member> getMemberList() {
       return sqlSession.selectList("Member.SELECT_ALL_MEMBER");
    }
-   
+
+
+
+	public int addMember(Member member) {
+		 return sqlSession.insert("Member.INSERT_MEMBER",member);
+	}
+	
+	public int checkMail(String email) {
+		return sqlSession.selectOne("Member.CHECK_MAIL",email);
+	}
+
+   		
+		/*
+		 * public Object addMember(Member member) { return
+		 * sqlSession.insert("Member.INSERT_MEMBER",member); }
+		 */
    
    
    /*

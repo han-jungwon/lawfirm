@@ -20,6 +20,30 @@
    	<p class="float-right"><a href="#">Back to top</a></p>
 </footer>
 <!-- end footer -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/hansong/resources/js/jquery.modal.min.js"></script>
 <script src="/hansong/resources/js/common.js?ver=7"></script>
+<script>
+	$(function () {
+		const navbar = {
+			init: function () {
+				const _this = this;
+				$("#mypage").click(function () {
+					common.gfn_alert('confirm', '알림', '로그아웃 하시겠습니까?', 'small', null, false, true, _this.callback_mypage)
+				});
+				$.when(common.gfn_getUserInfo()).done(function (data, textStatus, jqXHR) {
+					if(common.gfn_isNotNull(data)) {
+						$("#navUserName").val(data.name);
+					}
+				});
+			},
+			callback_mypage : function (result) {
+				if (result === true) {
+					location.href = common.gfn_getContextPath() + "/logout";
+				}
+
+			}
+		}
+		navbar.init();
+	});
+</script>

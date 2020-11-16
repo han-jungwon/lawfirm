@@ -4,29 +4,43 @@
 
 <mapper namespace="Board">
 	
-	<select id="selectList" resultType="Board">
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD	
+	</select>
+	
+	<select id="selectList" resultType="Board" parameterType="java.util.Map">
 		SELECT ID,
 			   BOARD_TITLE,
 			   BOARD_COUNT,
+			   REGI_ID,
 			   REGI_DT		
 		FROM BOARD
-		ORDER BY ID DESC
+		WHERE BOARD_CATEGORY=#{board_category}
+
 	</select>
-	<!--
-	<update id="updateCount" parameterType="_int">
+	
+	<update id="readcount_update" parameterType="_int">
 		UPDATE BOARD
-		SET BOARD_COUNT = BOARD_COUNT +1
-		WHERE ID=#{Id}
+		SET BOARD_READCOUNT = BOARD_READCOUNT +1
+		WHERE ID=#{id}
 	</update>
 	
-	<select id="selectBoard" resultMap="boardResultSet">
-		SELECT * 
+	
+	<select id="getDetail" resultType="Board" parameterType="_int">
+		SELECT ID,
+			   BOARD_CATEGORY,
+			   BOARD_TITLE,
+			   BOARD_CONTENT,
+			   REGI_ID,
+			   REGI_DT			   
 		FROM BOARD
-		WHERE BID=#{bId}
-		AND B_STATUS='Y'
+		WHERE ID=#{id}
 	</select>
 	
-	<insert id="insertBoard" parameterType="Board">
+	
+	
+	<!-- <insert id="insertBoard" parameterType="Board">
 		INSERT INTO BOARD
 		VALUES(SEQ_BID.NEXTVAL,#{bTitle},#{bWriter},#{bContent},
 			   #{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT)
@@ -69,7 +83,7 @@
 	<insert id="insertReply" parameterType="Reply">
 		INSERT INTO REPLY VALUES
 		(SEQ_RID.NEXTVAL,#{rContent},#{refBid},#{rWriter},SYSDATE,SYSDATE,DEFAULT)
-	</insert>-->
+	</insert> -->
 </mapper>
 
 

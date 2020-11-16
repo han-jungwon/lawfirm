@@ -14,16 +14,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Board {
 	private Long id;
-	private String board_catagory;
+	private String member_name;
+	private String board_comment;
+	private String board_category;
 	private String board_title;
 	private String board_content;
 	private int board_count;
 	private int board_re_ref;
 	private int board_re_seq;
+	private int board_re_lev;
 	private int board_readcount;
 	private Long regi_id;
 	private Date regi_dt;
 	private Long updt_id;
-	private Date updt_dt;	
+	private Date updt_dt;
+
 }
 

@@ -15,49 +15,63 @@ import com.law.hansong.dto.PageInfo;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-	private Logger log = LoggerFactory.getLogger(getClass());
+    private Logger log = LoggerFactory.getLogger(getClass());
 
-	@Autowired
-	private BoardDao boardDao;
+    private final BoardDao boardDao;
+
+    public BoardServiceImpl(BoardDao boardDao) {
+        this.boardDao = boardDao;
+    }
+
+    @Override
+    public Map<String, Object> getBoardList(int page, int BOARD_CATEGORY) {
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        int limit = 10;
+
+        // 갯수
+        int listCount = boardDao.getListCount();
+
+        // 총 페이지 수
+        int maxPage = (listCount + limit -1) / limit;
+
+        // 현재 페이지에 보여줄 시작 페이지 수
+        int startPage = ((page -1) / 10) * 10 + 1;
+
+        // 현재 페이지에 보여줄 마지막 페이지 수(10, 20, 30...)
+        int endPage = startPage + 10 - 1;
+
+        if(endPage > maxPage) {
+            endPage = maxPage;
+        }
+
+        int startrow = (page - 1) * limit + 1;
+        int endrow = startrow + limit - 1;
+
+        paramMap.put("board_category", BOARD_CATEGORY);
+        paramMap.put("start", startrow);
+        paramMap.put("end", endrow);
+        // 게시판 목록
+        List<Board> boardList = boardDao.getBoardList(paramMap);
+
+        // 반환 값
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("boardList", boardList);
+        resultMap.put("maxPage", maxPage);
+        resultMap.put("startPage", startPage);
+        resultMap.put("listCount", listCount);
+        resultMap.put("limit", limit);
+
+        return resultMap;
+
+    }
 
 
-	@Override
-	public int getListCount(int BOARD_CATEGORY) {
-		return boardDao.getListCount();
-	}
+    @Override
+    public Board getDetail(int id) {
+        return boardDao.getDetail(id);
+    }
 
 
-
-	@Override 
-	public List<Board> getBoardList(int page, int limit, int BOARD_CATEGORY) {
-	Map<String, Object> map = new HashMap<String, Object>();
-	String field = ""; 
-	String field2 = "";
-
-	int startrow = (page-1)*limit+1;
-	int endrow = startrow+limit-1;
-	map.put("board_category", BOARD_CATEGORY); 
-	map.put("field2", field2);
-	map.put("field",field); 
-	map.put("start", startrow); 
-	map.put("end", endrow);
-	System.out.println(map); 
-	log.info(map.get("board_category").toString());
-
-	return boardDao.getBoardList(map);
-
-	}
-
-
-
-
-	@Override
-	public Board getDetail(int id) {
-		return boardDao.getDetail(id);
-	}
-
-
-	
 }
 
 

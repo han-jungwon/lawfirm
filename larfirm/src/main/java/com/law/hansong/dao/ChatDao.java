@@ -18,6 +18,10 @@ public class ChatDao {
 	public int createChat() {
 		return sqlSession.insert("Chat.createChat");
 	}
-	
+
+	// 참가자 생성
+	public int createParticipant(String id) {
+		return sqlSession.insert("Chat.createParticipant", id);
+	}
 	
 }

@@ -2,6 +2,7 @@ package com.law.hansong.exception;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,13 +45,25 @@ public class CustomizeExceptionHandler {
     // DB
     @ExceptionHandler({SQLException.class, DataAccessException.class})
     public ModelAndView handler() {
-        ExceptionResponse es = new ExceptionResponse(new Date(), "데이터에 문제가 발생했습니다. 관리자에게 문의바랍니다.","Error", false);
+        ExceptionResponse es = new ExceptionResponse(new Date(), "데이터에 문제가 발생했습니다. 관리자에게 문의바랍니다.","500", false);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("error/default");
         mav.addObject("es",es);
 
         return mav;
     }
+
+    // 권한
+    @ExceptionHandler(AuthenticationException.class)
+    public ModelAndView handler(AuthenticationException e) {
+        ExceptionResponse es = new ExceptionResponse(new Date(), e.getMessage(),"401", true);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("error/default");
+        mav.addObject("es",es);
+
+        return mav;
+    }
+
 
     // default
     @ExceptionHandler(Exception.class)

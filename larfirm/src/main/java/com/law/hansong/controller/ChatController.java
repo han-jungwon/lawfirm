@@ -5,6 +5,8 @@ import com.law.hansong.service.ChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
@@ -36,6 +38,7 @@ public class ChatController {
         logger.info("Open session id : " + session.getId());
         logger.info("session 쿼리 스트링 : " + session.getQueryString());
         logger.info("Principal : " + session.getUserPrincipal().getName());
+
         String queryString = session.getQueryString();
         String id = queryString.substring(queryString.indexOf("=")+1);
 
@@ -45,7 +48,8 @@ public class ChatController {
                                     .session(session)
                                 .build();
         sessionList.add(user);
-        //chatService.createChat(id);
+
+        chatService.createChat(id);
         String message = id + "님이 입장하셨습니다.";
         sendAllSessionToMessage(session, message);
     }

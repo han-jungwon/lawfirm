@@ -421,6 +421,8 @@ ul {
 				$("#spanChatNormal").show();
 				if(common.gfn_isNull(common.gfn_getUserId())) {
 					common.gfn_alert('c','알림',"로그인을 먼저 해주세요.",'small');
+					$("#imgChatNormal").show();
+					$("#spanChatNormal").hide();
 					return;
 				}
 

@@ -3,6 +3,7 @@ package com.law.hansong.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -18,7 +19,7 @@ import com.law.hansong.service.security.CustomUserDetailsService;
 @EnableWebSecurity
 public class securityConfig extends WebSecurityConfigurerAdapter {
    @Autowired
-    CustomUserDetailsService customUserDetailsService;
+    private CustomUserDetailsService customUserDetailsService;
 
     //   /webjars/** 경로에 대한 요청은 인증/인가 처리하지 않도록 무시합니다.
     @Override

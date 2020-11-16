@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.law.hansong.dao.MemberDao;
 import com.law.hansong.dao.MemberRoleDao;
 import com.law.hansong.dto.Member;

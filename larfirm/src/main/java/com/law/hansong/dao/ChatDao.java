@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -15,13 +16,13 @@ public class ChatDao {
 	private SqlSessionTemplate sqlSession;
 	
 	// 채팅방 생성
-	public int createChat() {
-		return sqlSession.insert("Chat.createChat");
+	public int createChat(String id) {
+		return sqlSession.insert("Chat.createChat", id);
 	}
 
 	// 참가자 생성
-	public int createParticipant(String id) {
-		return sqlSession.insert("Chat.createParticipant", id);
+	public int createParticipant(Map<String, String> map) {
+		return sqlSession.insert("Chat.createParticipant", map);
 	}
 	
 }

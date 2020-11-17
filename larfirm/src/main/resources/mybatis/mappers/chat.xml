@@ -9,9 +9,42 @@
 <mapper namespace="Chat">
 
 
-	<select id="SELECT_ALL_BY_EMAIL" parameterType="String" >
-		SELECT ID,NAME,PASSWORD,EMAIL, PHONE,REGI_ID,REGI_DT,UPDT_ID,UPDT_DT
-		FROM MEMBER WHERE EMAIL = #{email}
-	</select>
+	<insert id="createChat" parameterType="String">
+		<![CDATA[
+			INSERT INTO CHAT(ID
+							, CONDITION
+							, REGI_ID
+							, REGI_DT
+							, UPDT_ID
+							, UPDT_DT)
+					  VALUES(CHAT_SEQ.nextval
+							, 0
+							, #{id}
+							,sysdate
+							, #{id}
+							,sysdate)
+		]]>
+	</insert>
+	<insert id="createParticipant" parameterType="Map">
+		<![CDATA[
+		INSERT INTO PARTICIPANT(ID
+								, CHAT_ID
+								, REGI_ID
+								, REGI_DT)
+						VALUES (PARTICIPANT_SEQ.nextval
+		]]>
+		<choose>
+			<when test='participantId != null and participantId != ""'>
+								,#{participantId}
+			</when>
+			<otherwise>
+								, chat_seq.currval
+			</otherwise>
+			</choose>
+		<![CDATA[
+								, #{id}
+								, sysdate)
+		]]>
+	</insert>
 
 </mapper>

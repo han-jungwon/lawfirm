@@ -427,7 +427,7 @@ ul {
 				}
 
 
-				this.ws = new WebSocket("ws://localhost:8088/hansong/boot?id="+common.gfn_getUserId());
+				this.ws = new WebSocket("ws://localhost:8088/hansong/boot");
 
 				$("#mdlChatNormal").modal('show');
 				$("#imgChatNormal").show();

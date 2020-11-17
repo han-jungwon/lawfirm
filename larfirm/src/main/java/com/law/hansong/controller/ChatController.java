@@ -35,21 +35,17 @@ public class ChatController {
 
     @OnOpen
     public void onOpen(Session session) {
-        logger.info("Open session id : " + session.getId());
-        logger.info("session 쿼리 스트링 : " + session.getQueryString());
-        logger.info("Principal : " + session.getUserPrincipal().getName());
-
-        String queryString = session.getQueryString();
-        String id = queryString.substring(queryString.indexOf("=")+1);
+        String participantId = session.getQueryString();
+        String id = session.getUserPrincipal().getName();
 
         logger.info("id = " + id);
         ChatUser user = ChatUser.builder()
-                                    .id(id)
-                                    .session(session)
-                                .build();
+               .id(id)
+               .session(session)
+               .build();
         sessionList.add(user);
 
-        chatService.createChat(id);
+        chatService.createChat(id, participantId);
         String message = id + "님이 입장하셨습니다.";
         sendAllSessionToMessage(session, message);
     }

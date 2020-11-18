@@ -1,5 +1,7 @@
 package com.law.hansong.service;
 
+import com.law.hansong.common.CommonUtil;
+import com.law.hansong.controller.ChatController;
 import com.law.hansong.dao.ChatDao;
 import com.law.hansong.dao.MemberRoleDao;
 import com.law.hansong.dto.MemberRole;
@@ -22,7 +24,8 @@ public class ChatServiceImpl implements ChatService {
     }
 
     // 채팅 생성
-    public void createChat(String id, String participantId) {
+    @Override
+    public void createChat(String id, String chatId) {
         int result = 0;
 
         List<MemberRole> rolesByEmail = memberRoleDao.getRolesByEmail(id);
@@ -33,7 +36,7 @@ public class ChatServiceImpl implements ChatService {
         }
 
         // 유저일경우 chat방 생성
-        if(participantId == null || "".equals(participantId)) {
+        if(chatId == null || "".equals(chatId)) {
             result = chatDao.createChat(id);
             if (result < 1) {
                 throw new BusinessLogicException("채팅연결 중 에러가 발생했습니다. 관리자에게 문의바랍니다.(1)", true);
@@ -42,7 +45,7 @@ public class ChatServiceImpl implements ChatService {
 
         Map<String,String> map = new HashMap<>();
         map.put("id", id);
-        map.put("participantId", participantId);
+        map.put("participantId", chatId);
 
         // 참가자 추가
         result = chatDao.createParticipant(map);
@@ -50,5 +53,12 @@ public class ChatServiceImpl implements ChatService {
             throw new BusinessLogicException("채팅연결 중 에러가 발생했습니다. 관리자에게 문의바랍니다.(2)", true);
         }
 
+    }
+    @Override
+    public String sendMessage(String message, String participantId) {
+        message = CommonUtil.gm_xssFilter(message);
+
+
+        return "";
     }
 }

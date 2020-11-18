@@ -24,9 +24,9 @@ public class Board {
 	private int board_re_seq;
 	private int board_re_lev;
 	private int board_readcount;
-	private Long regi_id;
+	private String regi_id;
 	private Date regi_dt;
-	private Long updt_id;
+	private String updt_id;
 	private Date updt_dt;
 
 }

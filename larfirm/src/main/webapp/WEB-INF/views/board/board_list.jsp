@@ -9,8 +9,6 @@
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
 <link rel="stylesheet" href="../resources/css/joinform.css" />
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
 
 <style>
 
@@ -34,10 +32,16 @@
 	color : white !important;
 	margin-bottom: 10px;
 }
+
+.pagination { 
+    place-content: center;
+    margin-top: 100px;
+}
 </style>
 </head>
 <body>
 	<jsp:include page="../common/navbar.jsp" />
+	
 	<div id="demo" class="carousel slide" data-ride="carousel">
 		<div class="carousel-inner">
 			<div class="carousel-item active">
@@ -60,7 +64,7 @@
 	<div id="tab01" class="tab-contents">
 	<div class="container">
   <h3 id="h3_category" style="font-size: 30px; font-weight: bold;"></h3>
-  <a href ="/hansong/members/board_add?BOARD_CATEGORY=${BOARD_CATEGORY}" id="add_board_button" 
+  <a href ="/hansong/boards/board_add?BOARD_CATEGORY=${BOARD_CATEGORY}" id="add_board_button" 
 			class="write btn float-right">글쓰기</a>
  <input type="hidden" id="BOARD_CATEGORY" name ="BOARD_CATEGORY" value="${BOARD_CATEGORY}"> 
   <table class="table">
@@ -73,15 +77,15 @@
         <th style="width: 50px">등록일</th>
       </tr>
       
-      <c:forEach var="board_list" items="${board_list}">
+      <c:forEach var="boardList" items="${boardList}">
       	<tr>
-      		<td><c:out value="${board_list.id}"/></td>
+      		<td><c:out value="${boardList.id}"/></td>
       		<td>
-      			<a href="/hansong/boards/board_view?id=${board_list.id}"><c:out value="${board_list.board_title}" /></a>
+      			<a href="/hansong/boards/board_view?id=${boardList.id}"><c:out value="${boardList.board_title}" /></a>
 			</td>
-      		<td><c:out value="${board_list.board_count}"/></td>
-      		<td><c:out value="${board_list.regi_id }"/></td>
-      		<td><fmt:formatDate value="${board_list.regi_dt}" pattern="yyyy.MM.dd"/></td>    	
+      		<td><c:out value="${boardList.board_count}"/></td>
+      		<td><c:out value="${boardList.regi_id }"/></td>
+      		<td><fmt:formatDate value="${boardList.regi_dt}" pattern="yyyy.MM.dd"/></td>    	
       	</tr>
       </c:forEach>
 	 </thead>
@@ -101,45 +105,46 @@
 </ul>
 </div> -->
 
+ <c:if test="${listCount > 0 }">		
+			<div class="center-block">
+				<div class="row">
+					<div class="col">
+						<ul class="pagination">
+							<c:if test="${page <= 1 }">
+								<li class="page-item"><a class="page-link" href="#">이전&nbsp;</a>
+								</li>
+							</c:if>
+							<c:if test="${page > 1 }">
+								<li class="page-item"><a
+									href="/hansong/boards/board_list?page=${page-1}&BOARD_CATEGORY=${BOARD_CATEGORY}" class="page-link">이전</a>
+									&nbsp;</li>
+							</c:if>
 
-	<!-- 페이징 처리 -->
-<%-- 				<div class="container paging">
-				<c:if test="${ pi.currentPage eq 1 }">
-					[이전] &nbsp;
-				</c:if>
-				<c:if test="${ pi.currentPage ne 1 }">
-					<c:url var="before" value="/hansong/boards/board_list">
-						<c:param name="currentPage" value="${ pi.currentPage - 1 }"/>
-					</c:url>
-					<a href="${ before }">[이전]</a> &nbsp;
-				</c:if>
-				
-				<!-- 페이지 -->
-				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-					<c:if test="${ p eq pi.currentPage }">
-						<font color="red" size="4"><b>[${ p }]</b></font>
-					</c:if>
-					
-					<c:if test="${ p ne pi.currentPage }">
-						<c:url var="pagination" value="/hansong/boards/board_list">
-							<c:param name="currentPage" value="${ p }"/>
-						</c:url>
-						<a href="${ pagination }">${ p }</a> &nbsp;
-					</c:if>
-				</c:forEach>
-				
-				<!-- [다음] -->
-				<c:if test="${ pi.currentPage eq pi.maxPage }">
-					[다음]
-				</c:if>
-				<c:if test="${ pi.currentPage ne pi.maxPage }">
-					<c:url var="after" value="/hansong/boards/board_list">
-						<c:param name="currentPage" value="${ pi.currentPage + 1 }"/>
-					</c:url> 
-					<a href="${ after }">[다음]</a>
-				</c:if>
+							<c:forEach var="a" begin="${startPage}" end="${endPage}">
+								<c:if test="${a == page }">
+									<li class="page-item"><a class="page-link" href="#">${a}</a>
+									</li>
+								</c:if>
+								<c:if test="${a != page }">
+									<li class="page-item"><a href="/hansong/boards/board_list?page=${a}&BOARD_CATEGORY=${BOARD_CATEGORY}"
+										class="page-link">${a}</a></li>
+								</c:if>
+							</c:forEach>
+
+							<c:if test="${page >= maxPage }">
+								<li class="page-item"><a class="page-link" href="#">&nbsp;다음</a>
+								</li>
+							</c:if>
+							<c:if test="${page < maxPage }">
+								<li class="page-item"><a
+									href="/hansong/boards/board_list?page=${page+1}&BOARD_CATEGORY=${BOARD_CATEGORY}" class="page-link">&nbsp;다음</a>
+								</li>
+							</c:if>
+						</ul>
+					</div>
 				</div>
-		 --%>
+			</div>
+		</c:if> 
 				
 	
 	</div>

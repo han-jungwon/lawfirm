@@ -6,12 +6,11 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.law.hansong.dao.BoardDao;
 import com.law.hansong.dto.Board;
-import com.law.hansong.dto.PageInfo;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -23,9 +22,12 @@ public class BoardServiceImpl implements BoardService {
         this.boardDao = boardDao;
     }
 
+    
+    // 게시글 리스트
     @Override
     public Map<String, Object> getBoardList(int page, int BOARD_CATEGORY) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
+        
         int limit = 10;
 
         // 갯수
@@ -39,6 +41,7 @@ public class BoardServiceImpl implements BoardService {
 
         // 현재 페이지에 보여줄 마지막 페이지 수(10, 20, 30...)
         int endPage = startPage + 10 - 1;
+       
 
         if(endPage > maxPage) {
             endPage = maxPage;
@@ -47,25 +50,32 @@ public class BoardServiceImpl implements BoardService {
         int startrow = (page - 1) * limit + 1;
         int endrow = startrow + limit - 1;
 
+        
         paramMap.put("board_category", BOARD_CATEGORY);
         paramMap.put("start", startrow);
         paramMap.put("end", endrow);
+        
         // 게시판 목록
         List<Board> boardList = boardDao.getBoardList(paramMap);
-
+        
+      
         // 반환 값
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("boardList", boardList);
         resultMap.put("maxPage", maxPage);
         resultMap.put("startPage", startPage);
+        resultMap.put("endPage", endPage);
         resultMap.put("listCount", listCount);
         resultMap.put("limit", limit);
+        
 
         return resultMap;
 
     }
 
 
+    
+    // 게시글 상세보기
     @Override
     public Board getDetail(int id) {
         return boardDao.getDetail(id);

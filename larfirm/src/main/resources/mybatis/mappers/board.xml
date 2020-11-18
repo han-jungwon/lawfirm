@@ -10,14 +10,33 @@
 	</select>
 	
 	<select id="selectList" resultType="Board" parameterType="java.util.Map">
-		SELECT ID,
-			   BOARD_TITLE,
-			   BOARD_COUNT,
-			   REGI_ID,
-			   REGI_DT		
-		FROM BOARD
-		WHERE BOARD_CATEGORY=#{board_category}
-
+		<![CDATA[
+		 SELECT ID
+		 		, BOARD_TITLE
+		 		, BOARD_COUNT
+		 		, REGI_ID
+		 		, REGI_DT
+		 		, RNUM 
+		   FROM (
+				 SELECT a.ID
+		        	   , a.BOARD_TITLE
+		           	   , a.BOARD_COUNT
+		               , a.REGI_ID
+		               , a.REGI_DT 
+				 	   , ROWNUM RNUM
+				  FROM (
+				        SELECT ID
+				        	   , BOARD_TITLE
+				           	   , BOARD_COUNT
+				               , REGI_ID
+				               , REGI_DT     
+				          FROM BOARD
+				         WHERE BOARD_CATEGORY=#{board_category}
+				         ORDER BY ID DESC
+				        ) a 
+				) 
+		  WHERE RNUM BETWEEN  #{start} and #{end}
+		]]>
 	</select>
 	
 	<update id="readcount_update" parameterType="_int">

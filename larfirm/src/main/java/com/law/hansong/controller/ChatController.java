@@ -35,7 +35,7 @@ public class ChatController {
 
     @OnOpen
     public void onOpen(Session session) {
-        String participantId = session.getQueryString();
+        String chatId = session.getQueryString();
         String id = session.getUserPrincipal().getName();
 
         logger.info("id = " + id);
@@ -45,15 +45,14 @@ public class ChatController {
                .build();
         sessionList.add(user);
 
-        chatService.createChat(id, participantId);
+        chatService.createChat(id, chatId);
         String message = id + "님이 입장하셨습니다.";
         sendAllSessionToMessage(session, message);
     }
 
     @OnError
     public void onError(Throwable e, Session session) {
-        e.printStackTrace();
-        logger.info("error socket...");
+        logger.info("error socket..."+e.getMessage());
         remove(session);
     }
 
@@ -77,6 +76,9 @@ public class ChatController {
     @OnMessage
     public void onMessage(String message, Session session) {
         logger.info("onMessage : " + message);
+
+        String returnValue = chatService.sendMessage(message, session.getUserPrincipal().getName());
+
         sendAllSessionToMessage(session, message);
     }
 

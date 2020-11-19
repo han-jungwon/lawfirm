@@ -39,7 +39,7 @@
 		]]>
 	</select>
 	
-	<update id="readcount_update" parameterType="_int">
+	<update id="readCountUpdate" parameterType="_int">
 		UPDATE BOARD
 		SET BOARD_READCOUNT = BOARD_READCOUNT +1
 		WHERE ID=#{id}
@@ -59,13 +59,13 @@
 	
 	
 	
-	<!-- <insert id="insertBoard" parameterType="Board">
+	<insert id="insert" parameterType="Board">
 		INSERT INTO BOARD
-		VALUES(SEQ_BID.NEXTVAL,#{bTitle},#{bWriter},#{bContent},
-			   #{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT)
+		VALUES(#{board_id},#{board_category},#{board_title},#{board_content},
+			 0,0,0,#{regi_id},SYSDATE,#{updt_id},SYSDATE)
 	</insert>
 	
-	<update id="updateBoard" parameterType="Board">
+	<!-- <update id="updateBoard" parameterType="Board">
 		UPDATE BOARD
 		SET BTITLE=#{bTitle}
 		   ,BCONTENT=#{bContent}

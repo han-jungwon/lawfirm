@@ -64,7 +64,7 @@
 	<div id="tab01" class="tab-contents">
 	<div class="container">
   <h3 id="h3_category" style="font-size: 30px; font-weight: bold;"></h3>
-  <a href ="/hansong/boards/board_add?BOARD_CATEGORY=${BOARD_CATEGORY}" id="add_board_button" 
+  <a href ="/hansong/boards/board_write?BOARD_CATEGORY=${BOARD_CATEGORY}" id="add_board_button" 
 			class="write btn float-right">글쓰기</a>
  <input type="hidden" id="BOARD_CATEGORY" name ="BOARD_CATEGORY" value="${BOARD_CATEGORY}"> 
   <table class="table">
@@ -72,7 +72,7 @@
       <tr>
         <th style="width: 70px">번호</th>
         <th style="width: 300px">제목</th>
-        <th style="width: 50px">조회수</th>
+        <th style="width: 85px">조회수</th>
         <th style="width: 50px">작성자</th>
         <th style="width: 50px">등록일</th>
       </tr>

@@ -38,37 +38,31 @@ body {
 		</div>
 	</div>
 	<div class="container">
-		<form id="board_form" action="/hansong/boards/board_add" method="post"
+		<form id="board_form" action="/hansong/boards/board_add_action" method="post"
 			enctype="multipart/form-data" name="boardform">
 			<h3 id="h3_category">게시판 글쓰기</h3>
 			<input id="board_category" type="hidden" name="BOARD_CATEGORY"
 				value="${BOARD_CATEGORY}"> <input type="hidden"
-				name="MEMBER_ID" value="${email}">
+				name="REGI_ID" value="${board.regi_id}">
 			<div class="form-group">
-				<label for="board_name">글쓴이</label> <input name="MEMBER_NAME"
-					id="board_name" value="${regi_id}" readOnly type="text"
+				<label for="board_name">글쓴이</label> <input name="REGI_ID"
+					id="board_name" value="${board.regi_id}" readOnly type="text"
 					class="form-control">
 			</div>
 
 			<div class="form-group">
-				<label for="board_subject">제목</label> <input name="BOARD_SUBJECT"
+				<label for="board_subject">제목</label> <input name="BOARD_TITLE"
 					id="board_subject" type="text" size="50" maxlength="100"
 					class="form-control" placeholder="Enter board_subject" value="">
 			</div>
 
-			<div class="form-group">
-				<label for="board_pass">비밀번호</label> <input name="BOARD_PASSWORD"
-					id="board_pass" type="password" size="4" maxlength="4"
-					class="form-control" placeholder="Enter password(숫자 4자리)" value="">
-			</div>
-
 
 			<div class="form-group">
-				<label for="board_content">내용</label>
+				<label for="BOARD_CONTENT">내용</label>
 				<textarea name="editordata" id="summernote"></textarea>
 			</div>
 
-			<div class="form-group">
+<!-- 			<div class="form-group">
 				<label style="display: inline" for="board_file">파일 첨부</label> <label
 					style="display: inline" for="upfile" data-toggle="tooltip"
 					data-placement="top" title="최대 용량 : 10MB"> <img
@@ -79,10 +73,10 @@ body {
 					style="vertical-align: bottom"
 					src="#" alt="파일삭제"
 					width="10px" class="remove">
-			</div>
-			<div class="form-group">
+			</div> -->
+			<!-- <div class="form-group">
 				<div class="g-recaptcha" data-sitekey=key></div>
-			</div>
+			</div> -->
 			<div class="form-group">
 				<button id="add_board_button" type="button" class="btn"
 					style="background: rgb(83, 133, 193); color: white;">등록</button>

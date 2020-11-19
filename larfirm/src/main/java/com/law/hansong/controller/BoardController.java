@@ -3,15 +3,22 @@ package com.law.hansong.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse.File;
 import com.law.hansong.dto.Board;
+import com.law.hansong.dto.Board_file;
 import com.law.hansong.service.BoardService;
 
 
@@ -129,31 +136,39 @@ public class BoardController {
 
 
 
-	@GetMapping("/board_add")
+	@GetMapping("/board_write")
 	public String board_add() {
 		return "board/board_add";
 	}
 
-	/*
-	 * // 게시판 글쓰기
-	 * 
-	 * @PostMapping("/board_add") public String board_add_action(Board board,
-	 * RedirectAttributes redirect) throws Exception {
-	 * 
-	 * List<MultipartFile> uploadfile = board.getUploadfile(); int board_id =
-	 * boardService.select_max_id(); board.setBOARD_ID(board_id);
-	 * 
-	 * boardService.insert_board(board); // 저장 메서드 호출 for (MultipartFile mf :
-	 * uploadfile) { if(mf.getSize() == 0) { break; } Board_file board_file = new
-	 * Board_file(); String fileName = mf.getOriginalFilename(); // 원래 파일명
-	 * board_file.setBOARD_FILE_ORIGINAL(fileName); // 원래 파일명 저장 String fileDBName =
-	 * fileDBName(fileName, save_folder); mf.transferTo(new File(save_folder +
-	 * fileDBName)); board_file.setBOARD_FILE(fileDBName);
-	 * board_file.setBOARD_ID(board_id); boardService.insert_file(board_file); }
-	 * memberservice.add_write_act(board.getMEMBER_ID(), 5);
-	 * log_service.insert_log(new Member_log(board.getMEMBER_ID(), 0, board_id));
-	 * redirect.addAttribute("BOARD_CATEGORY", board.getBOARD_CATEGORY()); return
-	 * "redirect:/board_list"; }
-	 * 
-	 */
+
+	// 게시판 글쓰기
+
+	@PostMapping("/board_add_action") 
+	public String board_add_action(Board board, Board_file board_file, HttpServletRequest request,
+									@RequestParam(name="uploadFile",required = false)MultipartFile file){
+		/*
+		 * if(!file.getOriginalFilename().equals("")) { // 서버에 업로드 해야한다. String
+		 * renameFileName = saveFile(file,request);
+		 * 
+		 * if(renameFileName != null) { // 파일이 잘 저장된 경우
+		 * board_file.setFile_original(file.getOriginalFilename()); // 파일명만 DB에 저장
+		 * board_file.setFile_name(renameFileName);
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
+		
+		int result = boardService.board_add(board);
+		if(result > 0) {
+			return "redirect:board_list";
+		}else {
+			return "common/errorPage";
+		}
+		
+	}
+		
+
+
 }

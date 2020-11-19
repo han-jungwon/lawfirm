@@ -86,14 +86,14 @@ p {
 			</div>
 		</div>
 	</div>
-<input type="hidden" id="loginid" value="${regi_id}">
+<input type="hidden" id="loginid" value="${board.regi_id}">
 	<div class="container">
 		<h3 id ="h3_category" class="float-left"></h3> 	
 		<table class="table table-bordered">
 			<thead>
 				<tr>
 					<td>
-						<span style="font-weight:bold">${board.id}</span>&#32;
+						<span style="font-weight:bold">${board.regi_id}</span>&#32;
 						<span style="font-size:9pt"><fmt:formatDate value="${board.regi_dt }" pattern="yyyy.MM.dd"/>에 작성됨</span>
 						
 					</td>

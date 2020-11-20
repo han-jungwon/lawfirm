@@ -103,39 +103,6 @@ public class BoardController {
 	}
 
 
-
-
-
-
-	/*
-	 * // 게시판 상세 보기
-	 *
-	 * @GetMapping("/board_view_action")
-	 * public ModelAndView Detail(int board_id, ModelAndView mv, HttpServletResponse response, HttpServletRequest request)
-	 * throws Exception {
-	 * Board board = boardService.getDetail(board_id);
-	 * if (board == null) { response.setContentType("text/html;charset=utf-8");
-	 * PrintWriter out = response.getWriter(); out.println("<script>");
-	 * out.println("alert('삭제 또는 없는 게시물입니다.');"); out.println("history.go(-1);");
-	 * out.println("</script>"); out.close(); } else {
-	 *
-	 * // 게시판정보, 회원 정보, 파일 리스트, 댓글 리스트 Member member =
-	 * memberService.getUser(board.getRegi_id()); List<Board_file> board_file_list =
-	 * boardService.get_file_list(board_id); //List<Comment> comment_list =
-	 * comment_service.get_list(board_id); board.setMember_name(member.getName());
-	 *
-	 * //board.setBoard_comment(""+((comment_list == null) ?
-	 * 0:comment_list.size()));
-	 *
-	 * mv.setViewName("board/board_view"); mv.addObject("board_file_list",
-	 * board_file_list); //mv.addObject("comment_list", comment_list);
-	 * mv.addObject("board_data", board);
-	 *
-	 * return mv; }
-	 */
-
-
-
 	@GetMapping("/board_write")
 	public String board_add() {
 		return "board/board_add";
@@ -147,19 +114,19 @@ public class BoardController {
 	@PostMapping("/board_add_action") 
 	public String board_add_action(Board board, Board_file board_file, HttpServletRequest request,
 									@RequestParam(name="uploadFile",required = false)MultipartFile file){
-		/*
-		 * if(!file.getOriginalFilename().equals("")) { // 서버에 업로드 해야한다. String
-		 * renameFileName = saveFile(file,request);
-		 * 
-		 * if(renameFileName != null) { // 파일이 잘 저장된 경우
-		 * board_file.setFile_original(file.getOriginalFilename()); // 파일명만 DB에 저장
-		 * board_file.setFile_name(renameFileName);
-		 * 
-		 * }
-		 * 
-		 * }
-		 */
-		
+
+		  if(!file.getOriginalFilename().equals("")) { // 서버에 업로드 해야한다. String
+		  renameFileName = saveFile(file,request);
+
+		  if(renameFileName != null) { // 파일이 잘 저장된 경우
+		  board_file.setFile_original(file.getOriginalFilename()); // 파일명만 DB에 저장
+		  board_file.setFile_name(renameFileName);
+
+		  }
+
+		  }
+
+
 		int result = boardService.board_add(board);
 		if(result > 0) {
 			return "redirect:board_list";

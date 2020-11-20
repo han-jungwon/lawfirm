@@ -56,12 +56,12 @@
 		FROM BOARD
 		WHERE ID=#{id}
 	</select>
-	
-	
-	
+
+
+
 	<insert id="insert" parameterType="Board">
-		INSERT INTO BOARD
-		VALUES(#{board_id},#{board_category},#{board_title},#{board_content},
+		INSERT INTO BOARD (ID, BOARD_CATEGORY, BOARD_TITLE, BOARD_CONTENT, BOARD_COUNT, BOARD_RE_REF, BOARD_RE_LEV, BOARD_RE_SEQ, REGI_ID, REGI_DT, UPDT_ID, UPDT_DT)
+		VALUES(#{id},#{board_category},#{board_title},#{board_content},0,
 			 0,0,0,#{regi_id},SYSDATE,#{updt_id},SYSDATE)
 	</insert>
 	

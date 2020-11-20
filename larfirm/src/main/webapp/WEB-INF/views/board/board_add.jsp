@@ -62,7 +62,7 @@ body {
 				<textarea name="editordata" id="summernote"></textarea>
 			</div>
 
-<!-- 			<div class="form-group">
+ 			<div class="form-group">
 				<label style="display: inline" for="board_file">파일 첨부</label> <label
 					style="display: inline" for="upfile" data-toggle="tooltip"
 					data-placement="top" title="최대 용량 : 10MB"> <img
@@ -73,7 +73,7 @@ body {
 					style="vertical-align: bottom"
 					src="#" alt="파일삭제"
 					width="10px" class="remove">
-			</div> -->
+			</div>
 			<!-- <div class="form-group">
 				<div class="g-recaptcha" data-sitekey=key></div>
 			</div> -->

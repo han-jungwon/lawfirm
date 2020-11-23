@@ -385,26 +385,6 @@ ul {
 						return false;
 					}
 				})
-
-				$("#test2").click(function () {
-					//common.alertBox("gd",test,'gd');
-
-					let modalContent = "";
-					modalContent += "<div>";
-					modalContent += "	<button id = \"odd\">gd</button>";
-					modalContent += "	<button id = \"odd\">gd</button>";
-					modalContent += "	<strong>로그인이 되었습니다.</strong>";
-					modalContent += "</div>";
-					common.gfn_alert('c','알림',modalContent,'normal', null, false, true, _this.test, {val:'test'});
-
-				});
-				/**
-				 *  ~~
-				 */
-				// 동적 리소스
-				$(document).on("click", "#odd", function () {
-					console.log("정워나 알러뷰");
-				});
 			},
 
 			// 상담 나가기 시
@@ -454,7 +434,7 @@ ul {
 			 * @param sMessage(String)
 			 */
 			chatSend : function(sMessage) {
-				this.ws.send(sMessage);
+				this.ws.send("1&"+sMessage);
 			},
 
 			chatResponse : function(rtext) {
@@ -494,19 +474,6 @@ ul {
 				$("#txtChatContent").val(null);
 
 				return message;
-			},
-
-			/**
-			 *
-			 */
-			test : function (result, jsonData) {
-				location.href=common.gfn_getContextPath()+"/main";
-				if(result == true) {
-					console.log(result);
-				}
-				if(jsonData.val == 'test') {
-					console.log(jsonData);
-				}
 			}
 		}
 		main.init();

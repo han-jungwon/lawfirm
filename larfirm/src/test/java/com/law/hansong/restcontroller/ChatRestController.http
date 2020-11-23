@@ -1,0 +1,4 @@
+GET http://localhost:8088/hansong/v1/chats
+Accept: application/json
+
+###

@@ -9,5 +9,5 @@ import javax.websocket.Session;
 @Builder
 public class ChatUser {
     private Session session;
-    private String id;
+    private String chatId;
 }

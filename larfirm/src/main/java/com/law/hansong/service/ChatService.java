@@ -1,7 +1,15 @@
 package com.law.hansong.service;
 
-public interface ChatService {
-     void createChat(String id, String chatId);
+import com.law.hansong.dto.Chat;
 
-     String sendMessage(String message, String participantId);
+import java.util.List;
+
+public interface ChatService {
+     void createChat(String id);
+
+     void onMessage(String message, String participantId);
+
+     void endChat(String id);
+
+     List<Chat> getAllChat();
 }

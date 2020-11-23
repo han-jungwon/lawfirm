@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Board {
 	private Long id;
-	private String member_name;
-	private String board_comment;
 	private String board_category;
 	private String board_title;
 	private String board_content;

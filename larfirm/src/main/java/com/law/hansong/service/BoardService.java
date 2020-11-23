@@ -15,13 +15,13 @@ public interface BoardService {
 	// 글 내용
 	Board getDetail(int id);
 
-	
+	int board_add(Board board);
 
 	
 
 	
+
 	
-	// 조회수 업데이트
-	//int updateCount(int num);
+	
 	
 }

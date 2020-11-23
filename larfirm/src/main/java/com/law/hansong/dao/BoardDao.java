@@ -16,6 +16,7 @@ public class BoardDao {
 
 	@Autowired
 	   private SqlSessionTemplate sqlSession;
+	
 
 
 
@@ -29,14 +30,17 @@ public class BoardDao {
 	}
 	// 게시글 조회수
 	public int updateCount(int num) {
-		return sqlSession.update("Board.readcount_update", num);
+		return sqlSession.update("Board.readCountUpdate", num);
 	}
 	// 게시글 상세보기
 	public Board getDetail(int id) {
 		return sqlSession.selectOne("Board.getDetail", id);
 	}
-
-
+	// 게시글 등록하기
+	public int board_add(Board board) {
+		return sqlSession.insert("Board.insert", board); 
+	}
+	
 	
 
 	

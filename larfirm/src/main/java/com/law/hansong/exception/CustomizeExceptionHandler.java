@@ -21,6 +21,16 @@ import java.util.Map;
 
 @ControllerAdvice("com.law.hansong.controller")
 public class CustomizeExceptionHandler {
+    // 400
+    @ExceptionHandler(BadRequestException.class)
+    public ModelAndView handler(BadRequestException e) {
+        ExceptionResponse es = new ExceptionResponse(new Date(), e.getMessage(), "400", e.getHistoryBack() );
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("error/default");
+        mav.addObject("es",es);
+
+        return mav;
+    }
     // 404
     @ExceptionHandler(ObjectNotFoundException.class)
     public ModelAndView handler(ObjectNotFoundException e) {

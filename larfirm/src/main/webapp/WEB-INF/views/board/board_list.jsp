@@ -95,15 +95,6 @@
   </table>
 </div>
 
-<!-- <div class="container paging">
-<ul class="pagination">
-  <li class="page-item"><a class="page-link" href="#">이전</a></li>
-  <li class="page-item"><a class="page-link" href="#">1</a></li>
-  <li class="page-item"><a class="page-link" href="#">2</a></li>
-  <li class="page-item"><a class="page-link" href="#">3</a></li>
-  <li class="page-item"><a class="page-link" href="#">다음</a></li>
-</ul>
-</div> -->
 
  <c:if test="${listCount > 0 }">		
 			<div class="center-block">
@@ -153,8 +144,7 @@
 <script>
 
 $(function(){
-
-			
+	
 			if($("#BOARD_CATEGORY").val()=="0"){
 				$('#h3_category').text("공지사항");	
 			}else if($("#BOARD_CATEGORY").val()=="1"){

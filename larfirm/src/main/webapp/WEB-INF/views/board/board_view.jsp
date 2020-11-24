@@ -132,39 +132,29 @@ p {
 			<tr>
 				<!-- 버튼 모음 -->
 				<td class="center">
-					<button id ="read_button"style="background:transparent">
-						<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-						  <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
-						  <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-						</svg>${board.board_count}
-					</button>
 					<!-- 답변 -->
-					<a id ="reply_button" href="/pro/board_reply_view?id=${board_data.BOARD_ID}">
+					<a id ="reply_button" href="/hansong/boards/boardReplyView?id=${board_data.BOARD_ID}">
 						<button style="background:transparent;vertical-align: middle" data-toggle="tooltip" data-placement="top" title="답변">
-						<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reply-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-						  <path d="M9.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L9.079 4.1A.716.716 0 0 0 8 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z"/>
-						</svg>
+						<img src="/hansong/resources/images/reply-fill.svg" width ="25px" class="padding-top2">
 						</button>
 					</a>
 					<c:if test="${board_data.MEMBER_ID == id}">
 						<!-- 수정 -->
-						<a id ="edit_button" href="/pro/board_edit_view?num=${board_data.BOARD_ID}">
-							<button style="background:transparent;vertical-align: middle;" data-toggle="tooltip" data-placement="top" title="수정"><img src="/pro/resources/Image/icon/pencil.svg" width ="25px" class="padding-top2"></button>
+						<a id ="edit_button" href="/hansong/boards/boardEditView?num=${board_data.BOARD_ID}">
+							<button style="background:transparent;vertical-align: middle;" data-toggle="tooltip" data-placement="top" title="수정">
+								<img src="/hansong/resources/images/pencil.svg" width ="25px" class="padding-top2">
+							</button>
 						</a>
 						<!-- 삭제 -->
 						<a id ="delete_button" href="#">
 							<button style="background:transparent;vertical-align: middle;" data-toggle="modal" data-target="#myModal">
-							<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-							  <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
-							</svg>
+							<img src="/hansong/resources/images/trash.svg" width ="25px" class="padding-top2">
 							</button>
 						</a>
 					</c:if> 
-					<a id ="list_button" href="/pro/board_list">
+					<a id ="list_button" href="/hansong/boards/board_list">
 						<button style="background:transparent;vertical-align: middle;" data-toggle="tooltip" data-placement="top" title="목록">
-							<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-					  		<path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-							</svg>
+							<img src="/hansong/resources/images/list.svg" width ="25px" class="padding-top2">
 						</button>						
 					</a>
 				</td>

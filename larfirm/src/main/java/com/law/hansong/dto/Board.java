@@ -1,6 +1,9 @@
 package com.law.hansong.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,5 +30,10 @@ public class Board {
 	private String updt_id;
 	private Date updt_dt;
 
+	
+	List<MultipartFile> uploadfile;
+	
+	 
 }
 
+       

@@ -19,9 +19,12 @@
 		from MEMBER
 	</select>
 	<insert id="INSERT_MEMBER" parameterType="Member">
+		<selectKey resultType="Long" keyProperty="id" order="BEFORE">
+			select member_seq.nextval from dual
+		</selectKey>
 		INSERT INTO
 		MEMBER(ID,NAME,PASSWORD,EMAIL,PHONE,REGI_ID,REGI_DT,UPDT_ID,UPDT_DT)
-		VALUES(MEMBER_SEQ.nextval,#{name},#{password},#{email},#{phone},MEMBER_SEQ.CURRVAL,SYSDATE,MEMBER_SEQ.CURRVAL,SYSDATE)
+		VALUES(#{id},#{name},#{password},#{email},#{phone},#{id},SYSDATE,#{id},SYSDATE)
 	</insert>
 
 	<select id="CHECK_MAIL" parameterType="string" resultType="int">
@@ -30,9 +33,9 @@
 		FROM MEMBER
 		WHERE EMAIL=#{email}
 	</select>
-	<insert id="INSERT_MEMBER_ROLE">
+	<insert id="INSERT_MEMBER_ROLE" parameterType="Long">
 		INSERT INTO MEMBER_ROLE(ID,MEMBER_ID,ROLE_NAME)
-		VALUES(MEMBER_ROLE_SEQ.NEXTVAL, MEMBER_SEQ.CURRVAL,'ROLE_USER')
+		VALUES(MEMBER_ROLE_SEQ.NEXTVAL, #{member_id},'ROLE_USER')
 	</insert>
 
 	<select id="SELECT_ROLE_ALL_BY_EMAIL" parameterType="String" resultType="MemberRole">

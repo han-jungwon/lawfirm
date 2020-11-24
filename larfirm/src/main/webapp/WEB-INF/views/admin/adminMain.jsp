@@ -43,35 +43,8 @@
                 <th>상태</th>
             </tr>
         </thead>
-        <tbody>
-            <c:set var="num" value="${listCount-(page-1)*15}"/>
-            <!-- 채팅리스트가 없는 경우 -->
-            <c:if test = "${listCount == 0}">
-            <tr>
-                <td colspan="4" style="text-align:center">등록된 글이 없습니다.</td>
-            </tr>
-            </c:if>
+        <tbody id = "chatTableBody">
 
-            <!-- 있는 경우-->
-            <c:if test="${listCount > 0}">
-                <c:forEach var ="chat" items="${chatList}">
-                    <tr>
-                        <td>
-                            ${chat.id}
-                        </td>
-                        <td>
-                            ${chat.name}
-                        </td>
-                        <td>
-                            ${chat.regi_dt}
-                        </td>
-                        <td>
-                            ${chat.condition}
-                        </td>
-                    </tr>
-                </c:forEach>
-
-            </c:if>
         </tbody>
     </table>
     <button type="button" class="btn btn-outline-white chat chat_normal" id="btnChatNormal" ><!-- data-toggle="modal" data-target="#mdlChatNormal" -->
@@ -112,10 +85,12 @@
 </div>
 <script>
     $(function () {
-        const main = {
+        const adminMain = {
             ws : null,
             init: function () {
-
+                const _this = this;
+                _this.initChatBoard();
+                /*
                 const _this = this;
                 // 관리자는 관리자페이지 접속과 동시에 소켓연결
                 ws = new WebSocket("ws://localhost:8088/hansong/boot?admin");
@@ -156,25 +131,46 @@
                     }
                 })
 
-                $("#test2").click(function () {
-                    //common.alertBox("gd",test,'gd');
+                */
+            },
+            // 채팅방 초기화
+            initChatBoard : function() {
+                $.ajax({
+                    url : common.gfn_getContextPath()+"/v1/chats",
+                    cache : false,
+                    dataType : "json",
+                    method : "GET",
+                    async : false
+                })
+                    .done(function (chat) {
+                        let chatBodyHtml =  "<tbody>             ";
+                        for(const key in chat) {
+                                chatBodyHtml += "   <tr>             ";
+                                chatBodyHtml += "      <td>          ";
+                                chatBodyHtml +=           chat[key].id;
+                                chatBodyHtml += "      </td>         ";
+                                chatBodyHtml += "      <td>          ";
+                                chatBodyHtml +=           chat[key].regi_id;
+                                chatBodyHtml += "      </td>         ";
+                                chatBodyHtml += "      <td>          ";
+                                chatBodyHtml +=           chat[key].regi_dt;
+                                chatBodyHtml += "      </td>         ";
+                                chatBodyHtml += "      <td>          ";
+                                chatBodyHtml +=           chat[key].condition;
+                                chatBodyHtml += "      </td>         ";
+                                chatBodyHtml += "   </tr>            ";
+                        }
 
-                    let modalContent = "";
-                    modalContent += "<div>";
-                    modalContent += "	<button id = \"odd\">gd</button>";
-                    modalContent += "	<button id = \"odd\">gd</button>";
-                    modalContent += "	<strong>로그인이 되었습니다.</strong>";
-                    modalContent += "</div>";
-                    common.gfn_alert('c','알림',modalContent,'normal', null, false, true, _this.test, {val:'test'});
+                        chatBodyHtml += "</tbody>            ";
+                        $("#chatTableBody").html(chatBodyHtml);
 
-                });
-                /**
-                 *  ~~
-                 */
-                // 동적 리소스
-                $(document).on("click", "#odd", function () {
-                    console.log("정워나 알러뷰");
-                });
+                    })
+                    .fail(function (xhr, status, errorThrown) {
+                        console.log('실패1');
+                    })
+                    .always(function (xhr, status) {
+                        console.log('실패2');
+                    })
             },
 
             // 상담 나가기 시
@@ -250,22 +246,9 @@
                 $("#txtChatContent").val(null);
 
                 return message;
-            },
-
-            /**
-             *
-             */
-            test : function (result, jsonData) {
-                location.href=common.gfn_getContextPath()+"/main";
-                if(result == true) {
-                    console.log(result);
-                }
-                if(jsonData.val == 'test') {
-                    console.log(jsonData);
-                }
             }
         }
-        //main.init();
+        adminMain.init();
 
     })
 </script>

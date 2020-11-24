@@ -1,16 +1,21 @@
 package com.law.hansong.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.law.hansong.dao.BoardDao;
 import com.law.hansong.dto.Board;
+import com.law.hansong.dto.BoardFile;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -28,6 +33,7 @@ public class BoardServiceImpl implements BoardService {
     public Map<String, Object> getBoardList(int page, int BOARD_CATEGORY) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         
+   
         int limit = 10;
 
         // 갯수
@@ -78,23 +84,54 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 상세보기
     @Override
     public Board getDetail(int id) {
+    if(readCountUpdate(id)!=1)
+    	return null;
         return boardDao.getDetail(id);
     }
 
 
 	@Override
-	public int board_add(Board board) {
-		return boardDao.board_add(board);
+	public void addBoard(Board board, String filePath) {
+		List<MultipartFile> uploadfile = board.getUploadfile();
+		for (MultipartFile mf : uploadfile) {
+			if(mf.getSize() == 0) {
+				break;
+			}
+			BoardFile boardFile = new BoardFile();
+			String fileName = mf.getOriginalFilename(); // 원래 파일명
+			boardFile.setFile_original(fileName); // 원래 파일명 저장
+			String fileDBName = fileDBName(fileName, filePath);
+			mf.transferTo(new File(filePath + fileDBName));
+			boardFile.setFile_name(fileDBName);
+			boardService.fileInsert(boardFile);
+		}
+		
+		boardDao.addBoard(board);
+		
+	}
+
+
+	@Override
+	public void fileInsert(BoardFile boardFile) {
+		boardDao.fileInsert(boardFile);
+		
+	}
+
+
+
+
+	@Override 
+	public int readCountUpdate(int id) { 
+		System.out.println("리드카운트업뎃 : " + id);
+		return boardDao.readCountUpdate(id); 
 	}
 
 
 }
 
 
-/*
- * @Override public int setReadCountUpdate(int num) { return
- * boardDao.set_readcount_update(num); }
- */
+
+
 
 
 

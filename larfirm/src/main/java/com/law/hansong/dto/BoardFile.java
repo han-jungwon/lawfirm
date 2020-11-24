@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board_file {
+public class BoardFile {
 	private Long id;
 	private Long board_id;
 	private String file_name;

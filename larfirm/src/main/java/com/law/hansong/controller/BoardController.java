@@ -1,12 +1,19 @@
 package com.law.hansong.controller;
 
+import java.io.File;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse.File;
 import com.law.hansong.dto.Board;
-import com.law.hansong.dto.Board_file;
+import com.law.hansong.dto.BoardFile;
 import com.law.hansong.service.BoardService;
 
 
@@ -30,12 +36,17 @@ public class BoardController {
 
 	// 스프링 컨테이너가 생성자를 통해 자동으로 주입한다.
 	private final BoardService boardService;
+	@Autowired
+    Environment env;
 
 
 	public BoardController(BoardService boardService) {
 
 		this.boardService = boardService;
 	}
+	
+	@Value("${savefoldername}")
+	private String save_folder;
 
 	@GetMapping("/counsel")
 	public String counsel() {
@@ -69,10 +80,7 @@ public class BoardController {
 			@RequestParam(value = "BOARD_CATEGORY", defaultValue = "0", required = false) int BOARD_CATEGORY,
 			ModelAndView mv) throws Exception {
 
-
 		Map<String, Object> resultMap = boardService.getBoardList(page, BOARD_CATEGORY);
-
-
 
 		mv.setViewName("board/board_list");
 		mv.addObject("page", page);
@@ -104,38 +112,30 @@ public class BoardController {
 
 
 	@GetMapping("/board_write")
-	public String board_add() {
-		return "board/board_add";
+	public ModelAndView boardWrite(@RequestParam(value = "BOARD_CATEGORY", defaultValue = "0", required = false) int BOARD_CATEGORY,
+						 			HttpSession session, HttpServletResponse response, ModelAndView mv) throws Exception {
+		mv.setViewName("board/board_add");
+		mv.addObject("BOARD_CATEGORY", BOARD_CATEGORY);
+		return mv;
 	}
 
 
 	// 게시판 글쓰기
 
-	@PostMapping("/board_add_action") 
-	public String board_add_action(Board board, Board_file board_file, HttpServletRequest request,
-									@RequestParam(name="uploadFile",required = false)MultipartFile file){
+	@PostMapping
+	public String boardAddAction(Board board, RedirectAttributes redirect
+									) throws Exception {
+		boardService.addBoard(board, env.getProperty("savefoldername"));
 
-		  if(!file.getOriginalFilename().equals("")) { // 서버에 업로드 해야한다. String
-		  renameFileName = saveFile(file,request);
+		redirect.addAttribute("BOARD_CATEGORY", board.getBoard_category());
+		return "redirect:/boards/board_list";
+	 }
 
-		  if(renameFileName != null) { // 파일이 잘 저장된 경우
-		  board_file.setFile_original(file.getOriginalFilename()); // 파일명만 DB에 저장
-		  board_file.setFile_name(renameFileName);
-
-		  }
-
-		  }
+	
 
 
-		int result = boardService.board_add(board);
-		if(result > 0) {
-			return "redirect:board_list";
-		}else {
-			return "common/errorPage";
-		}
-		
 	}
 		
 
 
-}
+

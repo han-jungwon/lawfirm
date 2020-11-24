@@ -3,16 +3,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시판 작성</title>
 <jsp:include page="../common/header.jsp" />
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <style>
-body {
-	padding-top: 100px;
+
+#h3_category {
+	margin-top: 50px;
+    margin-bottom: 30px;
 }
+
+
+#add_button {
+	background: #0B0B3B;
+	color: white;
+}
+
+
 
 </style>
 </head>
@@ -27,62 +41,51 @@ body {
 					style="height: 250px; width: 2200px;">
 				<div class="container">
 					<div class="carousel-caption text-left">
-						<h1 style="font-weight: bold; font-size: 25px; color:white;">
-														LAW FIRM SONGHAN</h1>
+						<h1 style="font-weight: bold; font-size: 25px; color: white;">
+							LAW FIRM SONGHAN</h1>
 						<br>
-						<p style="font-weight: bold; color:white; margin-top: 30px;">
-													의뢰인 중심 법률 서비스, 여기는 법무법인 한송입니다.</p>
+						<p style="font-weight: bold; color: white; margin-top: 30px;">
+							의뢰인 중심 법률 서비스, 여기는 법무법인 한송입니다.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="container">
-		<form id="board_form" action="/hansong/boards/board_add_action" method="post"
-			enctype="multipart/form-data" name="boardform">
-			<h3 id="h3_category">게시판 글쓰기</h3>
-			<input id="board_category" type="hidden" name="BOARD_CATEGORY"
-				value="${BOARD_CATEGORY}"> <input type="hidden"
-				name="REGI_ID" value="${board.regi_id}">
+		<form id="board_form" action="/hansong/boards/board_add_action" method="post" 
+					enctype="multipart/form-data" name="boardform">
+			<h3 id="h3_category" style="font-size: 30px; font-weight: bold;"></h3>
+			<input id="BOARD_CATEGORY" type="hidden" name="board_category" value="${BOARD_CATEGORY}">
 			<div class="form-group">
-				<label for="board_name">글쓴이</label> <input name="REGI_ID"
-					id="board_name" value="${board.regi_id}" readOnly type="text"
-					class="form-control">
+				<label for="boardTitle">제목</label>
+				<input type="text" class="form-control" name="board_title" id="board_title"
+				placeholder="제목을 입력해 주세요">		
+			</div>
+			<div class="form-group">
+				<label for="regiId">작성자</label>	
+				<input name="regi_id" id="regi_id"  value="${principal.username}" readOnly type = "text" class="form-control">			
+			</div>
+			<div class="form-group">
+						<label for="boaredContent">내용</label>
+
+					<textarea name="board_content" id="board_content" ></textarea>			
+					
+			</div>
+			
+	 		 <div>
+			    <input multiple="multiple" type="file"  id="customFile" name="uploadFile">
+			    <label class="custom-file-label" for="customFile">파일선택</label>
+			    <span id="filevalue"></span>
+			    <img src="/hansong/resources/images/trash.svg" alt="파일삭제" width="32" height="32 class="remove">
+			 </div> 
+			 
+			
+			<div class="form-group" style="margin-top:50px; margin-bottom: 100px;">
+				<button type="submit" class="btn" id="add_button">등록</button>
+				<button type="button" class="btn btn-secondary" onclick='history.back(); return false;'>취소</button>
+				
 			</div>
 
-			<div class="form-group">
-				<label for="board_subject">제목</label> <input name="BOARD_TITLE"
-					id="board_subject" type="text" size="50" maxlength="100"
-					class="form-control" placeholder="Enter board_subject" value="">
-			</div>
-
-
-			<div class="form-group">
-				<label for="BOARD_CONTENT">내용</label>
-				<textarea name="editordata" id="summernote"></textarea>
-			</div>
-
- 			<div class="form-group">
-				<label style="display: inline" for="board_file">파일 첨부</label> <label
-					style="display: inline" for="upfile" data-toggle="tooltip"
-					data-placement="top" title="최대 용량 : 10MB"> <img
-					style="vertical-align: bottom" id=ig
-					src="#" width="10px" alt="파일첨부">
-				</label> <input multiple="multiple" type="file" id="upfile"
-					name="uploadfile"> <span id="filevalue"></span> <img
-					style="vertical-align: bottom"
-					src="#" alt="파일삭제"
-					width="10px" class="remove">
-			</div>
-			<!-- <div class="form-group">
-				<div class="g-recaptcha" data-sitekey=key></div>
-			</div> -->
-			<div class="form-group">
-				<button id="add_board_button" type="button" class="btn"
-					style="background: rgb(83, 133, 193); color: white;">등록</button>
-				<button type="button" class="btn btn-secondary"
-					onClick='history.back(); return false;'>취소</button>
-			</div>
 
 		</form>
 	</div>
@@ -90,15 +93,22 @@ body {
 	<jsp:include page="../common/footer.jsp" />
 	<!-- summernote -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> 
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </body>
 <script>
-	$(document)
-			.ready(
-					function() {
+
+
+function show() {
+	if ($('#filevalue').text() == '') {
+		// 파일 이름이 있는 경우 remove 이미지를 보이게 하고 없는 경우는 보이지 않게 한다.
+		$(".remove").css('display', 'none');
+	} else {
+		$(".remove").css('display', 'inline-block');
+	}
+};
+					$(function() {
 						//여기 아래 부분
-						$('#summernote')
+						$('#board_content')
 								.summernote(
 										{
 											height : 300, // 에디터 높이
@@ -155,5 +165,31 @@ body {
 
 						$('[data-toggle="tooltip"]').tooltip();
 					});
+	
+	
+	
+				// 카테고리
+				
+				
+				if($("#BOARD_CATEGORY").val()=="0"){
+					$('#h3_category').text("공지사항");	
+				}else if($("#BOARD_CATEGORY").val()=="1"){
+					$('#h3_category').text("온라인 상담");
+				}else if($("#BOARD_CATEGORY").val()=="2"){
+					$('#h3_category').text("언론보도");
+				}else if($("#BOARD_CATEGORY").val()=="3"){
+					$('#h3_category').text("합의서");
+				}else if($("#BOARD_CATEGORY").val()=="4"){
+					$('#h3_category').text("탄원서");
+				}else{
+					$('#h3_category').text("반성문");
+				}
+				
+				
+
+
+
+
+
 </script>
 </html>

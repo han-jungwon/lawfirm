@@ -24,6 +24,7 @@
       <typeAlias alias="MemberRole" type="com.law.hansong.dto.MemberRole"/>
       <typeAlias alias="Board" type="com.law.hansong.dto.Board"/>
       <typeAlias alias="ChatUser" type="com.law.hansong.dto.ChatUser"/>
+      <typeAlias alias="BoardFile" type="com.law.hansong.dto.BoardFile"/>
    </typeAliases>
 
 </configuration>

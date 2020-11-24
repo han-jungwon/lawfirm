@@ -39,9 +39,9 @@
 		]]>
 	</select>
 	
-	<update id="readCountUpdate" parameterType="_int">
+	<update id="readCountUpdate" parameterType="int">
 		UPDATE BOARD
-		SET BOARD_READCOUNT = BOARD_READCOUNT +1
+		SET BOARD_COUNT = BOARD_COUNT +1
 		WHERE ID=#{id}
 	</update>
 	
@@ -60,10 +60,43 @@
 
 
 	<insert id="insert" parameterType="Board">
-		INSERT INTO BOARD (ID, BOARD_CATEGORY, BOARD_TITLE, BOARD_CONTENT, BOARD_COUNT, BOARD_RE_REF, BOARD_RE_LEV, BOARD_RE_SEQ, REGI_ID, REGI_DT, UPDT_ID, UPDT_DT)
-		VALUES(#{id},#{board_category},#{board_title},#{board_content},0,
-			 0,0,0,#{regi_id},SYSDATE,#{updt_id},SYSDATE)
+		INSERT INTO BOARD (ID
+						 , BOARD_CATEGORY
+						 , BOARD_TITLE
+						 , BOARD_CONTENT
+						 , BOARD_COUNT
+						 , BOARD_RE_REF
+						 , BOARD_RE_LEV
+						 , BOARD_RE_SEQ
+						 , REGI_ID
+						 , REGI_DT
+						 , UPDT_ID
+						 , UPDT_DT)
+		          VALUES (BOARD_SEQ.NEXTVAL
+		          		 , #{board_category}
+		          		 , #{board_title}
+		          		 , #{board_content}
+		          		 , 0
+		          		 , 0
+		          		 , 0
+		          		 , 0
+		          		 , #{regi_id}
+		          		 , SYSDATE
+		          		 , #{regi_id}
+		          		 ,SYSDATE)
 	</insert>
+
+	<insert id="fileInsert" parameterType="BoardFile">
+		INSERT INTO BOARD_FILE VALUES(BOARD_FILE_SEQ.NEXTVAL
+									, #{board_id}
+									, #{file_name}
+									, #{file_original}
+									, #{regi_id}
+									, SYSDATE
+									, #{regi_id}
+									, SYSDATE)
+	</insert>
+
 	
 	<!-- <update id="updateBoard" parameterType="Board">
 		UPDATE BOARD

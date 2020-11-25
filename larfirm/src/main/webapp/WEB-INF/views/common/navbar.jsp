@@ -92,7 +92,7 @@
             <li>
              <div class="dropdown">
                 <button class="btn click" type="button" id="dropdownNotice" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                	 onclick = "location.href ='/hansong/boards/board_list?BOARD_CATEGORY=0'">
+                	 onclick = "location.href ='/hansong/boards/boardList?BOARD_CATEGORY=0'">
                     	공지사항
                 </button>
             </div>

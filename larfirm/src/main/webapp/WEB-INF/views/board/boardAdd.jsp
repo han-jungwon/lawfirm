@@ -52,7 +52,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<form id="board_form" action="/hansong/boards/board_add_action" method="post" 
+		<form id="board_form" action="/hansong/boards" method="post" 
 					enctype="multipart/form-data" name="boardform">
 			<h3 id="h3_category" style="font-size: 30px; font-weight: bold;"></h3>
 			<input id="BOARD_CATEGORY" type="hidden" name="board_category" value="${BOARD_CATEGORY}">
@@ -62,7 +62,7 @@
 				placeholder="제목을 입력해 주세요">		
 			</div>
 			<div class="form-group">
-				<label for="regiId">작성자</label>	
+				<label for="boardName">작성자</label>	
 				<input name="regi_id" id="regi_id"  value="${principal.username}" readOnly type = "text" class="form-control">			
 			</div>
 			<div class="form-group">

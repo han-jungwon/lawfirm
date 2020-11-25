@@ -9,8 +9,6 @@
 <meta charset="UTF-8">
 <title>게시판 상세보기</title>
 <jsp:include page="../common/header.jsp" />
-<!-- Site css -->
-<link rel="stylesheet" href="../resources/css/joinform.css" />
 </head>
 <body>
 <style>
@@ -29,14 +27,7 @@ span {
 #no {
 	display: none;
 }
-#count {
-	position: relative;
-	top: -10px;
-	left: -10px;
-	background: orange;
-	color: white;
-	border-radius: 30%;
-}
+
 .container {
 	padding-top: 55px;
 }
@@ -61,7 +52,7 @@ p {
 		display: flex;
 	}
 	
-	#reco_button, #read_button, #reply_button, #edit_button, #delete_button, #list_button {
+	 #read_button, #reply_button, #edit_button,#list_button {
 		width : 15%
 	}
 }
@@ -120,7 +111,7 @@ p {
 						<div>첨부파일</div>
 						<div>
 						<c:forEach var="files" items="${board_file_list}">
-							<img src="/pro/resources/Image/down.png" width ="12px">
+							<img src="/hansong/resources/images/down.png" width ="12px">
 							<a href="board_file_down?filename=${files.BOARD_FILE}&original=${files.BOARD_FILE_ORIGINAL}">
 								${files.BOARD_FILE_ORIGINAL}</a>
 							&#32;/&#32;
@@ -133,26 +124,20 @@ p {
 				<!-- 버튼 모음 -->
 				<td class="center">
 					<!-- 답변 -->
-					<a id ="reply_button" href="/hansong/boards/boardReplyView?id=${board_data.BOARD_ID}">
+					<a id ="reply_button" href="/hansong/boards/boardReply?id=${board.id}">
 						<button style="background:transparent;vertical-align: middle" data-toggle="tooltip" data-placement="top" title="답변">
 						<img src="/hansong/resources/images/reply-fill.svg" width ="25px" class="padding-top2">
 						</button>
 					</a>
-					<c:if test="${board_data.MEMBER_ID == id}">
+					<c:if test="${board.regi_id == member.email}">
 						<!-- 수정 -->
-						<a id ="edit_button" href="/hansong/boards/boardEditView?num=${board_data.BOARD_ID}">
+						<a id ="edit_button" href="/hansong/boards/boardUpdateView?id=${board.id}">
 							<button style="background:transparent;vertical-align: middle;" data-toggle="tooltip" data-placement="top" title="수정">
 								<img src="/hansong/resources/images/pencil.svg" width ="25px" class="padding-top2">
 							</button>
 						</a>
-						<!-- 삭제 -->
-						<a id ="delete_button" href="#">
-							<button style="background:transparent;vertical-align: middle;" data-toggle="modal" data-target="#myModal">
-							<img src="/hansong/resources/images/trash.svg" width ="25px" class="padding-top2">
-							</button>
-						</a>
 					</c:if> 
-					<a id ="list_button" href="/hansong/boards/board_list">
+					<a id ="list_button" href="/hansong/boards/boardList">
 						<button style="background:transparent;vertical-align: middle;" data-toggle="tooltip" data-placement="top" title="목록">
 							<img src="/hansong/resources/images/list.svg" width ="25px" class="padding-top2">
 						</button>						
@@ -161,7 +146,7 @@ p {
 			</tr>
 			</tbody>
 		</table>
-		<div id="comment">
+		<%-- <div id="comment">
 			<table class="table table_striped">
 				<thead>
 					<tr>
@@ -204,57 +189,13 @@ p {
 							<button type="button" id="write" class="btn btn-info float-right">등록</button>
 						</td>
 					</tr>
-				</tfoot>
-			</table>
+				</tfoot>--%>
+			</table> 
 		</div>
 		
 		
-		<%-- delete 모달 --%>
-	<div class="modal" id="myModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
 
 
-					<!-- Modal body -->
-					<div class="modal-body">
-						<form name="deleteForm" action="board_delete_action"
-							method="post">
-							<div class="form-group">
-								<label for="board_password">비밀번호</label> 
-								<input type="hidden" name="BOARD_ID" id="board_id" value="${board_data.BOARD_ID}">
-								<input type="hidden" name="BOARD_CATEGORY" id="BOARD_CATEGORY" value="${board_data.BOARD_CATEGORY}">
-								<input type="password"
-									class="form-control" placeholder="Enter password"
-									name="BOARD_PASSWORD" id="board_password">
-							</div>
-							<button type="submit" class="btn btn-primary">삭제</button>
-							<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div> 
-	</div>
-
-<%-- <h2>게시판</h2>
-<br><br><br>
-<div id="outter">
-	<table border="1">
-		<tr>
-			<td>제목: ${board.board_title }</td>
-		</tr>
-		<tr>
-			<td>
-				작성자: ${board.regi_id}
-				<span style="float: right;"><fmt:formatDate value="${board.regi_dt }" pattern="yyyy.MM.dd"/></span>
-			</td>
-		</tr>
-		<tr>
-			<td><div style="height: 300px; margin: 10px; display: inline-block">${board.board_content }</div></td>
-		</tr>
-	</table>
-	<input type="button" value="글 목록" style="float: right;" onclick="location.href='board';"> 
-</div> --%>
 <jsp:include page="../common/footer.jsp" />>
 </body>
 </html>

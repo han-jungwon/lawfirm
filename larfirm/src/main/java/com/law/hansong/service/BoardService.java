@@ -21,11 +21,13 @@ public interface BoardService {
 
 	// 게시글 추가
 	void addBoard(Board board, String filePath);
-
-	void fileInsert(BoardFile boardFile);
 	
 	// 조회수 업데이트
 	int readCountUpdate(int id);
+
+	// 게시글 수정
+	Board selectUpdateBoard(int id);
+	int updateBoard(Board board);
 	
 	
 

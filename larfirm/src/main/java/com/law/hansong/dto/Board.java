@@ -31,7 +31,7 @@ public class Board {
 	private Date updt_dt;
 
 	
-	List<MultipartFile> uploadfile;
+	List<MultipartFile> uploadFile;
 	
 	 
 }

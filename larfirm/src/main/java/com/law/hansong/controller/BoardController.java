@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +34,8 @@ public class BoardController {
 	// 스프링 컨테이너가 생성자를 통해 자동으로 주입한다.
 	private final BoardService boardService;
 	private final MemberService memberService;
-	
-	@Autowired
-    Environment env;
+	@Value("${filePath}")
+	String filePath;
 
 
 	public BoardController(BoardService boardService, MemberService memberService) {
@@ -125,7 +125,7 @@ public class BoardController {
 	// 게시판 글쓰기
 	@PostMapping
 	public String boardAddAction(Board board, RedirectAttributes redirect) throws Exception {
-		boardService.addBoard(board, env.getProperty("savefoldername"));
+		boardService.addBoard(board, filePath);
 		
 		redirect.addAttribute("BOARD_CATEGORY", board.getBoard_category());
 		return "redirect:/boards/boardList";
@@ -142,7 +142,6 @@ public class BoardController {
 	
 	@PostMapping("/boardUpdate")
 	public ModelAndView boardUpdate(ModelAndView mv, Board board) {
-		
 		int result = boardService.updateBoard(board);
 		
 		if(result > 0) {

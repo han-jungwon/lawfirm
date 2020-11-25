@@ -65,7 +65,7 @@ public class MemberServiceImpl implements MemberService {
             return -1;
         }
         result = memberDao.addMember(member);
-        result += memberRoleDao.addMemberRole();
+        result += memberRoleDao.addMemberRole(member.getId());
 
         if (result < 2) { // 뭔가 하나 실패함
             throw new BusinessLogicException("회원 등록 중 문제가 발생했습니다. 관리자에게 문의 바랍니다.", true);

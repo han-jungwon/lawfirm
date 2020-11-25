@@ -3,7 +3,9 @@ package com.law.hansong.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -27,7 +29,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration  // 설정
 @EnableWebMvc // 기본적인 것 자동 설정
 @EnableSwagger2
-@PropertySource({"classpath:common/savefolder.properties","classpath:common/key.properties"})
+@PropertySource(value = {"classpath:common/savefolder.properties","classpath:common/key.properties"})
 @ComponentScan(basePackages = {"com.law.hansong.controller", "com.law.hansong.exception","com.law.hansong.restcontroller"}) // 스캔시키기
 public class WebMvcContextConfiguration implements WebMvcConfigurer {
    //dispatcherServlet이 읽어들일 대상들
@@ -120,5 +122,11 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
       configurer.favorPathExtension(false);
    }
+
+   @Bean
+   public static PropertySourcesPlaceholderConfigurer properties() {
+      return new PropertySourcesPlaceholderConfigurer();
+   }
+
    
 }

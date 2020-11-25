@@ -60,6 +60,9 @@
 
 
 	<insert id="insert" parameterType="Board">
+		<selectKey resultType="Long" keyProperty="id" order="BEFORE">
+			select BOARD_SEQ.NEXTVAL from dual
+		</selectKey>
 		INSERT INTO BOARD (ID
 						 , BOARD_CATEGORY
 						 , BOARD_TITLE
@@ -72,7 +75,7 @@
 						 , REGI_DT
 						 , UPDT_ID
 						 , UPDT_DT)
-		          VALUES (BOARD_SEQ.NEXTVAL
+		          VALUES ( #{id}
 		          		 , #{board_category}
 		          		 , #{board_title}
 		          		 , #{board_content}
@@ -87,14 +90,22 @@
 	</insert>
 
 	<insert id="fileInsert" parameterType="BoardFile">
-		INSERT INTO BOARD_FILE VALUES(BOARD_FILE_SEQ.NEXTVAL
-									, #{board_id}
-									, #{file_name}
-									, #{file_original}
-									, #{regi_id}
-									, SYSDATE
-									, #{regi_id}
-									, SYSDATE)
+		INSERT INTO BOARD_FILE(ID
+							  , BOARD_ID
+							  , FILE_NAME
+							  , FILE_ORIGINAL
+							  , REGI_ID
+							  , REGI_DT
+							  , UPDT_ID
+							  , UPDT_DT)
+						VALUES(BOARD_FILE_SEQ.NEXTVAL
+							  , #{board_id}
+							  , #{file_name}
+							  , #{file_original}
+							  , #{regi_id}
+							  , SYSDATE
+							  , #{updt_id}
+							  , SYSDATE)
 	</insert>
 
 	<delete id="deleteBoard" parameterType="int">

@@ -16,9 +16,9 @@ public class BoardFile {
 	private Long board_id;
 	private String file_name;
 	private String file_original;
-	private Long regi_id;
+	private String regi_id;
 	private Date regi_dt;
-	private Long updt_id;
+	private String updt_id;
 	private Date updt_dt;	
 	
 }

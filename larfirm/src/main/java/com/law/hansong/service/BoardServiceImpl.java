@@ -92,26 +92,31 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 작성하기
 	@Override
 	public void addBoard(Board board, String filePath)  {
-		List<MultipartFile> upLoadFile = board.getUploadfile();
+        boardDao.addBoard(board);
+		List<MultipartFile> upLoadFile = board.getUploadFile();
 		for (MultipartFile mf : upLoadFile) {
 			if(mf.getSize() == 0) {
 				break;
 			}
-	
-			BoardFile boardFile = new BoardFile();
-			String fileName = mf.getOriginalFilename(); // 원래 파일명
-			boardFile.setFile_original(fileName); // 원래 파일명 저장
-			String fileDBName = CommonUtil.gm_fileDbName(fileName, filePath);
-			try {
+            String fileName = mf.getOriginalFilename(); // 원래 파일명
+            String fileDBName = CommonUtil.gm_fileDbName(fileName, filePath);
+
+			BoardFile boardFile = BoardFile.builder()
+                    .board_id(board.getId())
+                    .file_name(fileDBName)
+                    .file_original(fileName)
+                    .regi_id(board.getRegi_id())
+                    .updt_id(board.getRegi_id())
+                    .build();
+
+
+            try {
 				mf.transferTo(new File(filePath + fileDBName));
 			} catch(Exception e) {
 				throw new BusinessLogicException("파일 업로드 간 에러가 발생했습니다." ,true);
 			}
-			boardFile.setFile_name(fileDBName);
 			boardDao.fileInsert(boardFile);
-					}
-		
-		boardDao.addBoard(board);
+		}
 	}
 
 

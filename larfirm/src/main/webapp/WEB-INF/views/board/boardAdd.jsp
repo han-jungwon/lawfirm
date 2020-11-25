@@ -57,16 +57,16 @@
 			<h3 id="h3_category" style="font-size: 30px; font-weight: bold;"></h3>
 			<input id="BOARD_CATEGORY" type="hidden" name="board_category" value="${BOARD_CATEGORY}">
 			<div class="form-group">
-				<label for="boardTitle">제목</label>
+				<label for="board_title">제목</label>
 				<input type="text" class="form-control" name="board_title" id="board_title"
 				placeholder="제목을 입력해 주세요">		
 			</div>
 			<div class="form-group">
-				<label for="boardName">작성자</label>	
+				<label for="regi_id">작성자</label>
 				<input name="regi_id" id="regi_id"  value="${principal.username}" readOnly type = "text" class="form-control">			
 			</div>
 			<div class="form-group">
-						<label for="boaredContent">내용</label>
+						<label for="board_content">내용</label>
 
 					<textarea name="board_content" id="board_content" ></textarea>			
 					
@@ -76,7 +76,7 @@
 			    <input multiple="multiple" type="file"  id="customFile" name="uploadFile">
 			    <label class="custom-file-label" for="customFile">파일선택</label>
 			    <span id="filevalue"></span>
-			    <img src="/hansong/resources/images/trash.svg" alt="파일삭제" width="32" height="32 class="remove">
+			    <img src="/hansong/resources/images/trash.svg" alt="파일삭제" width="32" height="32" class="remove">
 			 </div> 
 			 
 			

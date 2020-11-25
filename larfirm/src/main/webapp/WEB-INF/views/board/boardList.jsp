@@ -64,7 +64,7 @@
 	<div id="tab01" class="tab-contents">
 	<div class="container">
   <h3 id="h3_category" style="font-size: 30px; font-weight: bold;"></h3>
-  <a href ="/hansong/boards/board_write?BOARD_CATEGORY=${BOARD_CATEGORY}" id="add_board_button" 
+  <a href ="/hansong/boards/boardWrite?BOARD_CATEGORY=${BOARD_CATEGORY}" id="add_board_button" 
 			class="write btn float-right">글쓰기</a>
  <input type="hidden" id="BOARD_CATEGORY" name ="BOARD_CATEGORY" value="${BOARD_CATEGORY}"> 
   <table class="table">
@@ -81,7 +81,7 @@
       	<tr>
       		<td><c:out value="${boardList.id}"/></td>
       		<td>
-      			<a href="/hansong/boards/board_view?id=${boardList.id}"><c:out value="${boardList.board_title}" /></a>
+      			<a href="/hansong/boards/boardView?id=${boardList.id}"><c:out value="${boardList.board_title}" /></a>
 			</td>
       		<td><c:out value="${boardList.board_count}"/></td>
       		<td><c:out value="${boardList.regi_id }"/></td>
@@ -107,7 +107,7 @@
 							</c:if>
 							<c:if test="${page > 1 }">
 								<li class="page-item"><a
-									href="/hansong/boards/board_list?page=${page-1}&BOARD_CATEGORY=${BOARD_CATEGORY}" class="page-link">이전</a>
+									href="/hansong/boards/boardList?page=${page-1}&BOARD_CATEGORY=${BOARD_CATEGORY}" class="page-link">이전</a>
 									&nbsp;</li>
 							</c:if>
 
@@ -117,7 +117,7 @@
 									</li>
 								</c:if>
 								<c:if test="${a != page }">
-									<li class="page-item"><a href="/hansong/boards/board_list?page=${a}&BOARD_CATEGORY=${BOARD_CATEGORY}"
+									<li class="page-item"><a href="/hansong/boards/boardList?page=${a}&BOARD_CATEGORY=${BOARD_CATEGORY}"
 										class="page-link">${a}</a></li>
 								</c:if>
 							</c:forEach>
@@ -128,7 +128,7 @@
 							</c:if>
 							<c:if test="${page < maxPage }">
 								<li class="page-item"><a
-									href="/hansong/boards/board_list?page=${page+1}&BOARD_CATEGORY=${BOARD_CATEGORY}" class="page-link">&nbsp;다음</a>
+									href="/hansong/boards/boardList?page=${page+1}&BOARD_CATEGORY=${BOARD_CATEGORY}" class="page-link">&nbsp;다음</a>
 								</li>
 							</c:if>
 						</ul>

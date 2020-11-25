@@ -43,6 +43,9 @@ public class BoardDao {
 	public int fileInsert(BoardFile boardFile) {
 		return sqlSession.insert("Board.fileInsert", boardFile); 		
 	}
+	public int updateBoard(Board board) {
+		return sqlSession.update("Board.updateBoard", board); 		
+	}
 	
 
 

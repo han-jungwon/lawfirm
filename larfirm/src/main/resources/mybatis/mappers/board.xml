@@ -97,34 +97,25 @@
 									, SYSDATE)
 	</insert>
 
+	<delete id="deleteBoard" parameterType="int">
+		DELETE BOARD
+		WHERE ID=#{id}
+	</delete>
 	
-	<!-- <update id="updateBoard" parameterType="Board">
+	
+ 	<update id="updateBoard" parameterType="Board">
 		UPDATE BOARD
-		SET BTITLE=#{bTitle}
-		   ,BCONTENT=#{bContent}
-		   ,ORIGINAL_FILENAME=#{originalFileName}
-		   ,RENAME_FILENAME=#{renameFileName}
-		   ,B_MODIFY_DATE=SYSDATE
-		WHERE BID=#{bId}
+				SET BOARD_TITLE=#{board_title}
+		   		   ,BOARD_CONTENT=#{board_content}
+		   		   ,UPDT_ID=#{regi_id}
+		   		   ,UPDT_DT=SYSDATE
+				WHERE ID=#{id}
 	</update>
 
-	<update id="deleteBoard" parameterType="_int">
-		UPDATE BOARD
-		SET B_STATUS='N'
-		WHERE BID=#{bId}
-	</update>
+
 	
-	<select id="selectTopList" resultMap="boardResultSet">
-		<![CDATA[
-		SELECT *
-		FROM (SELECT *
-			  FROM board
-			  ORDER BY BCOUNT desc)
-		WHERE ROWNUM <= 5
-		]]>
-	</select>
 	
-	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">
+<!-- 	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">
 		SELECT *
 		FROM REPLY
 		WHERE REF_BID=#{bId}

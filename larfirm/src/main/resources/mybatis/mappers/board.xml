@@ -123,7 +123,9 @@
 				WHERE ID=#{id}
 	</update>
 
-
+	<select id="getFileList" parameterType="int" resultType="BoardFile">
+		SELECT * FROM BOARD_FILE WHERE BOARD_ID = #{id}
+	</select>
 	
 	
 <!-- 	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">

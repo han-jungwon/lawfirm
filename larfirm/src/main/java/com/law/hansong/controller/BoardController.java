@@ -1,16 +1,14 @@
 package com.law.hansong.controller;
 
+import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.law.hansong.dto.Board;
+import com.law.hansong.dto.BoardFile;
 import com.law.hansong.dto.Member;
 import com.law.hansong.service.BoardService;
 import com.law.hansong.service.MemberService;
@@ -100,14 +99,13 @@ public class BoardController {
 
 		Board board = boardService.getDetail(id);
 		Member member  = memberService.getMemberByEmail(board.getRegi_id());
+		
+		List<BoardFile> boardFileList = boardService.getFileList(id);
 
-		if (board != null) {
-			mv.addObject("board", board);
-			mv.addObject("member",member);
-			mv.setViewName("board/boardView");
-		} else {
-			mv.addObject("msg", "게시글 상세조회 실패").setViewName("common/errorPage");
-		}
+		mv.addObject("board", board);
+		mv.addObject("member",member);
+		mv.addObject("boardFileList", boardFileList);
+		mv.setViewName("board/boardView");
 		return mv;
 	}
 
@@ -140,6 +138,8 @@ public class BoardController {
 		return mv;
 	}
 	
+	
+	// 게시판 수정
 	@PostMapping("/boardUpdate")
 	public ModelAndView boardUpdate(ModelAndView mv, Board board) {
 		int result = boardService.updateBoard(board);

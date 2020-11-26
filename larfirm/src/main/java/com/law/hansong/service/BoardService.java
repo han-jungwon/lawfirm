@@ -1,6 +1,7 @@
 package com.law.hansong.service;
 
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,9 @@ public interface BoardService {
 	// 게시글 수정
 	Board selectUpdateBoard(int id);
 	int updateBoard(Board board);
+
+	// 게시판 첨부파일 리스트
+	List<BoardFile> getFileList(int id);
 	
 	
 

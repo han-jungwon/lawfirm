@@ -75,18 +75,15 @@
 	 		 <div>
 			    <input multiple="multiple" type="file"  id="customFile" name="uploadFile">
 			    <label class="custom-file-label" for="customFile">파일선택</label>
-			    <span id="filevalue"></span>
+			    <span id="filevalue"> </span>
 			    <img src="/hansong/resources/images/trash.svg" alt="파일삭제" width="32" height="32" class="remove">
 			 </div> 
 			 
 			
 			<div class="form-group" style="margin-top:50px; margin-bottom: 100px;">
 				<button type="submit" class="btn" id="add_button">등록</button>
-				<button type="button" class="btn btn-secondary" onclick='history.back(); return false;'>취소</button>
-				
+				<button type="button" class="btn btn-secondary" onclick='history.back(); return false;'>취소</button>				
 			</div>
-
-
 		</form>
 	</div>
 
@@ -106,6 +103,30 @@ function show() {
 		$(".remove").css('display', 'inline-block');
 	}
 };
+
+
+
+
+
+//썸머노트에 첨부된 이미지를 서버에 저장한다.
+function sendFile(file, el) {
+	var form_data = new FormData();
+	form_data.append('file', file);
+	$.ajax({
+		data: form_data,
+		type : "post",
+		url: 'summer_image',
+		cache :false,
+		contentType : false,
+		enctype : 'multipart/form-data',
+		processData : false,
+		success : function(img_name) {
+			$(el).summernote('editor.insertImage', img_name);
+		}
+	});
+}
+
+
 					$(function() {
 						//여기 아래 부분
 						$('#board_content')
@@ -168,9 +189,7 @@ function show() {
 	
 	
 	
-				// 카테고리
-				
-				
+				// 카테고리				
 				if($("#BOARD_CATEGORY").val()=="0"){
 					$('#h3_category').text("공지사항");	
 				}else if($("#BOARD_CATEGORY").val()=="1"){

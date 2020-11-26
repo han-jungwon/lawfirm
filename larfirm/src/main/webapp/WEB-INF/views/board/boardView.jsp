@@ -85,7 +85,7 @@ p {
 				<tr>
 					<td>
 						<span style="font-weight:bold">${board.regi_id}</span>&#32;
-						<span style="font-size:9pt"><fmt:formatDate value="${board.regi_dt }" pattern="yyyy.MM.dd"/>에 작성됨</span>
+						<span style="font-size:9pt"><fmt:formatDate value="${board.regi_dt}" pattern="yyyy.MM.dd"/>에 작성됨</span>
 						
 					</td>
 				</tr>
@@ -105,15 +105,15 @@ p {
 						<div>${board.board_content}</div>
 					</td>
 				</tr>
-				<c:if test="${!empty board_file_list}">
+				<c:if test="${!empty boardFileList}">
 				<tr>
 					<td>
 						<div>첨부파일</div>
 						<div>
-						<c:forEach var="files" items="${board_file_list}">
+						<c:forEach var="files" items="${boardFileList}">
 							<img src="/hansong/resources/images/down.png" width ="12px">
-							<a href="board_file_down?filename=${files.BOARD_FILE}&original=${files.BOARD_FILE_ORIGINAL}">
-								${files.BOARD_FILE_ORIGINAL}</a>
+							<a href="board_file_down?filename=${files.file_name}&original=${files.file_original}">
+								${files.file_original}</a>
 							&#32;/&#32;
 						</c:forEach>
 						</div>
@@ -189,8 +189,8 @@ p {
 							<button type="button" id="write" class="btn btn-info float-right">등록</button>
 						</td>
 					</tr>
-				</tfoot>--%>
-			</table> 
+				</tfoot>
+			</table>--%> 
 		</div>
 		
 		

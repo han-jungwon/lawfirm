@@ -43,9 +43,15 @@ public class BoardDao {
 	public int fileInsert(BoardFile boardFile) {
 		return sqlSession.insert("Board.fileInsert", boardFile); 		
 	}
+	// 파일 첨부 리스트
+	public List<BoardFile> getFileList(int id) {
+		return sqlSession.selectList("Board.getFileList", id);
+	}
+	
 	public int updateBoard(Board board) {
 		return sqlSession.update("Board.updateBoard", board); 		
 	}
+	
 	
 
 

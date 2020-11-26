@@ -138,6 +138,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	// 게시판 첨부파일 리스트
+	@Override
+	public List<BoardFile> getFileList(int id) {
+		return boardDao.getFileList(id);
+	}
+
+
 
 
 

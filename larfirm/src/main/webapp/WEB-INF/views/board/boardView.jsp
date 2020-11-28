@@ -136,7 +136,7 @@ p {
 								<img src="/hansong/resources/images/pencil.svg" width ="25px" class="padding-top2">
 							</button>
 						</a>
-					</c:if> 
+					</c:if>
 					<a id ="list_button" href="/hansong/boards/boardList">
 						<button style="background:transparent;vertical-align: middle;" data-toggle="tooltip" data-placement="top" title="목록">
 							<img src="/hansong/resources/images/list.svg" width ="25px" class="padding-top2">

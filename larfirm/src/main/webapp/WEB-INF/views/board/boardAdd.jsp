@@ -115,12 +115,13 @@ function sendFile(file, el) {
 	$.ajax({
 		data: form_data,
 		type : "post",
-		url: 'summer_image',
+		url: '/hansong/boards/summerImage',
 		cache :false,
 		contentType : false,
 		enctype : 'multipart/form-data',
 		processData : false,
 		success : function(img_name) {
+			console.log(img_name);
 			$(el).summernote('editor.insertImage', img_name);
 		}
 	});
@@ -129,62 +130,55 @@ function sendFile(file, el) {
 
 					$(function() {
 						//여기 아래 부분
-						$('#board_content')
-								.summernote(
-										{
+						$('#board_content').summernote( {
 											height : 300, // 에디터 높이
 											minHeight : null, // 최소 높이
 											maxHeight : null, // 최대 높이
 											focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 											lang : "ko-KR", // 한글 설정
 											placeholder : '최대 2048자까지 쓸 수 있습니다', //placeholder 설정
+											callbacks : {
+												onImageUpload: function (files, editor, welEditable) {
+													for (var i = files.length - 1; i >= 0; i--) {
+														sendFile(files[i], this);
+													}
 
+												}
+											},
 											toolbar : [
-													[ 'fontname',
-															[ 'fontname' ] ],
-													[ 'fontsize',
-															[ 'fontsize' ] ],
-													[
-															'style',
-															[
-																	'bold',
-																	'italic',
-																	'underline',
-																	'strikethrough',
-																	'clear' ] ],
-													[
-															'color',
-															[ 'forecolor',
-																	'color' ] ],
+													[ 'fontname', [ 'fontname' ] ],
+													[ 'fontsize', [ 'fontsize' ] ],
+													['style', [ 'bold',
+																'italic',
+														        'underline',
+														        'strikethrough',
+														        'clear' ] ],
+													['color', [ 'forecolor',
+														         'color' ] ],
 													[ 'table', [ 'table' ] ],
-													[
-															'para',
-															[ 'ul', 'ol',
-																	'paragraph' ] ],
+													['para', [ 'ul',
+														       'ol',
+														       'paragraph' ] ],
 													[ 'height', [ 'height' ] ],
-													[
-															'insert',
-															[ 'picture',
-																	'link',
-																	'video' ] ],
-													[
-															'view',
-															[ 'fullscreen',
-																	'help' ] ] ],
+													['insert', [ 'picture',
+														         'link',
+														         'video' ] ],
+													['view', [ 'fullscreen',
+														        'help' ] ]
+													],
 											fontNames : [ 'Arial',
-													'Arial Black',
-													'Comic Sans MS',
-													'Courier New', '맑은 고딕',
-													'궁서', '굴림체', '굴림', '돋음체',
-													'바탕체' ],
+														  'Arial Black',
+													      'Comic Sans MS',
+													      'Courier New', '맑은 고딕',
+													      '궁서', '굴림체', '굴림', '돋음체',
+													      '바탕체' ],
 											fontSizes : [ '8', '9', '10', '11',
-													'12', '14', '16', '18',
-													'20', '22', '24', '28',
-													'30', '36', '50', '72' ]
+													      '12', '14', '16', '18',
+													      '20', '22', '24', '28',
+													      '30', '36', '50', '72' ]
 
 										});
 
-						$('[data-toggle="tooltip"]').tooltip();
 					});
 	
 	

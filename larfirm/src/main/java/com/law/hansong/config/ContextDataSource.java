@@ -33,7 +33,6 @@ public class ContextDataSource {
     private Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String EXPRESSION = "execution(* com.law.hansong..*Impl.*(..))";
-    //private static final String multi_EXPRESSION = "(execution(* *..*.service..*.*(..)) || execution(* *..*.services..*.*(..)))";
     private static final int TX_METHOD_TIMEOUT = 5;
 
     /**
@@ -54,74 +53,4 @@ public class ContextDataSource {
         return dataSource;
 
     }
-
-    /**
-     * 트랜잭션 매니저 등록
-     *
-     * @return
-     */
-    /*
-    @Bean
-    public DataSourceTransactionManager transactionManager() {
-        log.info("manager init...");
-        return new DataSourceTransactionManager(dataSource());
-    }
-*/
-/*
-    @Bean
-    public TransactionInterceptor transactionInterceptor() {
-        log.info("interceptor init...");
-        TransactionInterceptor txAdvice = new TransactionInterceptor();
-        Properties txAttributes = new Properties();
-
-        // rollback 적용 exception 추가
-        List<RollbackRuleAttribute> rollbackRules = new ArrayList<RollbackRuleAttribute>();
-        rollbackRules.add(new RollbackRuleAttribute(Exception.class));
-        rollbackRules.add(new RollbackRuleAttribute(ObjectNotFoundException.class));
-        rollbackRules.add(new RollbackRuleAttribute(BusinessLogicException.class));
-
-        //readonly 세팅
-        DefaultTransactionAttribute readOnlyAttribute = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRED);
-        readOnlyAttribute.setReadOnly(true);
-        readOnlyAttribute.setTimeout(TX_METHOD_TIMEOUT);
-
-        //CUD 세팅
-        RuleBasedTransactionAttribute transactionAttribute
-                = new RuleBasedTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRED, rollbackRules);
-        transactionAttribute.setName("*");
-        transactionAttribute.setTimeout(TX_METHOD_TIMEOUT);
-        transactionAttribute.setIsolationLevel(TransactionDefinition.ISOLATION_SERIALIZABLE);
-
-        String readOnlyTransactionAttributesDefinition = readOnlyAttribute.toString();
-        String transactionAttributesDefinition = transactionAttribute.toString();
-
-        // readonly 네임
-        txAttributes.setProperty("select*", readOnlyTransactionAttributesDefinition);
-        txAttributes.setProperty("get*", readOnlyTransactionAttributesDefinition);
-        txAttributes.setProperty("search*", readOnlyTransactionAttributesDefinition);
-        txAttributes.setProperty("find*", readOnlyTransactionAttributesDefinition);
-
-        // CUD 네임
-        txAttributes.setProperty("update*", transactionAttributesDefinition);
-        txAttributes.setProperty("create*", transactionAttributesDefinition);
-        txAttributes.setProperty("addBoard", transactionAttributesDefinition);
-        txAttributes.setProperty("delete*", transactionAttributesDefinition);
-        txAttributes.setProperty("*", transactionAttributesDefinition);
-
-        txAdvice.setTransactionAttributes(txAttributes);
-        txAdvice.setTransactionManager(transactionManager());
-
-        return txAdvice;
-    }
-
-    @Bean
-    public Advisor transactionAdvisor() {
-        log.info("advisor init...");
-        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression(EXPRESSION);
-
-        return new DefaultPointcutAdvisor(pointcut, transactionInterceptor());
-    }
-
-*/
 }

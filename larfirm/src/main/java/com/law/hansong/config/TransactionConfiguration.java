@@ -44,6 +44,7 @@ public class TransactionConfiguration implements TransactionManagementConfigurer
         transactionAttributes.setProperty("insert*",cudOption);
         transactionAttributes.setProperty("save*",cudOption);
         transactionAttributes.setProperty("add*",cudOption);
+
         // Update
         transactionAttributes.setProperty("update*",cudOption);
         transactionAttributes.setProperty("modify*",cudOption);
@@ -52,13 +53,16 @@ public class TransactionConfiguration implements TransactionManagementConfigurer
         transactionAttributes.setProperty("refuse*",cudOption);
         transactionAttributes.setProperty("enable*",cudOption);
         transactionAttributes.setProperty("disable*",cudOption);
+
+        // update option이 있는 조회 조건일 경우
+        transactionAttributes.setProperty("search*",cudOption);
+
         // Delete
         transactionAttributes.setProperty("delete*",cudOption);
 
         // Read
         transactionAttributes.setProperty("find*",rOption);
         transactionAttributes.setProperty("query*",rOption);
-        transactionAttributes.setProperty("search*",rOption);
         transactionAttributes.setProperty("get*",rOption);
         transactionAttributes.setProperty("select*",rOption);
         transactionAttributes.setProperty("*",rOption);

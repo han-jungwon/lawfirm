@@ -99,19 +99,10 @@ public class BoardController {
 	// 게시글 상세보기
 	@GetMapping("/boardView")
 	public ModelAndView boardDetail(ModelAndView mv, @RequestParam(value = "id", required =  true) int id) {
+		Map<String, Object> returnMap = boardService.getDetail(id);
 
-		/*Map<String, Object> resultMap = boardService.getDetail(id);*/
-
-
-
-		Board board = boardService.getDetail(id);
-		Member member  = memberService.getMemberByEmail(board.getRegi_id());
-
-		List<BoardFile> boardFileList = boardService.getFileList(id);
-
-		mv.addObject("board", board);
-		mv.addObject("member",member);
-		mv.addObject("boardFileList", boardFileList);
+		mv.addObject("board", returnMap.get("board"));
+		mv.addObject("boardFileList", returnMap.get("boardFileList"));
 		mv.setViewName("board/boardView");
 		return mv;
 	}

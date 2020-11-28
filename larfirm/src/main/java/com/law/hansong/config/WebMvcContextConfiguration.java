@@ -117,7 +117,7 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
             new ApiInfo("Swagger Sample", "APIs Sample", "Sample Doc 0.1v", "", contact, "This sentence will be display.", "/");
       return apiInfo;
    }
-
+   // pathvariable - email 사용하기 위함.
    @Override
    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
       configurer.favorPathExtension(false);

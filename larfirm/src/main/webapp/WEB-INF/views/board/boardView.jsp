@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -129,7 +130,7 @@ p {
 						<img src="/hansong/resources/images/reply-fill.svg" width ="25px" class="padding-top2">
 						</button>
 					</a>
-					<c:if test="${board.regi_id == member.email}">
+					<c:if test="${board.regi_id == principal.username}">
 						<!-- 수정 -->
 						<a id ="edit_button" href="/hansong/boards/boardUpdateView?id=${board.id}">
 							<button style="background:transparent;vertical-align: middle;" data-toggle="tooltip" data-placement="top" title="수정">

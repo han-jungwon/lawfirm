@@ -1,19 +1,22 @@
 package com.law.hansong.controller;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.law.hansong.common.CommonUtil;
+import com.law.hansong.exception.BusinessLogicException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -83,7 +86,7 @@ public class BoardController {
 		mv.setViewName("board/boardList");
 		mv.addObject("page", page);
 		mv.addObject("maxPage", resultMap.get("maxPage"));
-		mv.addObject("startPage", resultMap.get("startPage"));
+		mv.addObject("startPage+**++++++++++++++++++++++++++++++++++++++++++++++++", resultMap.get("startPage"));
 		mv.addObject("endPage", resultMap.get("endPage"));
 		mv.addObject("listCount", resultMap.get("listCount"));
 		mv.addObject("boardList", resultMap.get("boardList"));
@@ -95,11 +98,15 @@ public class BoardController {
 
 	// 게시글 상세보기
 	@GetMapping("/boardView")
-	public ModelAndView boardDetail(ModelAndView mv, int id) {
+	public ModelAndView boardDetail(ModelAndView mv, @RequestParam(value = "id", required =  true) int id) {
+
+		/*Map<String, Object> resultMap = boardService.getDetail(id);*/
+
+
 
 		Board board = boardService.getDetail(id);
 		Member member  = memberService.getMemberByEmail(board.getRegi_id());
-		
+
 		List<BoardFile> boardFileList = boardService.getFileList(id);
 
 		mv.addObject("board", board);
@@ -108,7 +115,6 @@ public class BoardController {
 		mv.setViewName("board/boardView");
 		return mv;
 	}
-
 	
 	// 글쓰기 폼
 	@GetMapping("/boardWrite")
@@ -129,7 +135,28 @@ public class BoardController {
 		return "redirect:/boards/boardList";
 	 }
 
-	
+	 // 썸머노트 이미지
+	@PostMapping("/summerImage")
+	@ResponseBody
+	public void summerImage(MultipartFile file, HttpServletRequest request, HttpServletResponse response)
+		 					throws Exception {
+			response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		// 업로드할 폴더 경로
+		String fileName = file.getOriginalFilename();
+		String serverFileName = CommonUtil.gm_fileDbName(fileName,filePath);
+
+		File f = new File(filePath);
+		if(!f.exists()) {
+			f.mkdirs();
+		}
+
+		file.transferTo(new File(filePath + serverFileName));
+		out.print("/hansong/resources/upload"+serverFileName);
+		out.close();
+	}
+
+
 	// 게시판 수정 폼
 	@GetMapping("/boardUpdateView")
 	public ModelAndView boardUpdateView(ModelAndView mv, int id) {

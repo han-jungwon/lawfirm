@@ -2,6 +2,7 @@ package com.law.hansong.dto;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 

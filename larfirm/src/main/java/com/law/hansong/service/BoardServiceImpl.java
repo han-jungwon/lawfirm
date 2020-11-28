@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.law.hansong.dao.MemberDao;
+import com.law.hansong.dto.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,10 @@ public class BoardServiceImpl implements BoardService {
     private Logger log = LoggerFactory.getLogger(getClass());
 
     private final BoardDao boardDao;
+    private final MemberDao memberDao;
 
-    public BoardServiceImpl(BoardDao boardDao) {
+    public BoardServiceImpl(BoardDao boardDao, MemberDao memberDao) {
+        this.memberDao =  memberDao;
         this.boardDao = boardDao;
     }
 
@@ -83,9 +87,12 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 상세보기
     @Override
     public Board getDetail(int id) {
+
     if(readCountUpdate(id)!=1)
     	return null;
-        return boardDao.getDetail(id);
+
+
+    return boardDao.getDetail(id);
     }
 
     
@@ -132,9 +139,10 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	// 게시글 수정
 	@Override
 	public int updateBoard(Board board) {
-		return boardDao.updateBoard(board);
+        return boardDao.updateBoard(board);
 	}
 
 

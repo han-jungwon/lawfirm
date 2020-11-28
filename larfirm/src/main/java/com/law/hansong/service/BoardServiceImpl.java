@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.law.hansong.dao.MemberDao;
 import com.law.hansong.dto.Member;
+import com.law.hansong.exception.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -86,19 +87,28 @@ public class BoardServiceImpl implements BoardService {
     
     // 게시글 상세보기
     @Override
-    public Board getDetail(int id) {
+    public Map<String, Object> getDetail(int id) {
 
-    if(readCountUpdate(id)!=1)
-    	return null;
+        if(readCountUpdate(id)!=1)
+            return null;
 
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        Board board = boardDao.getDetail(id);
+        if(board == null) {
+            throw new ObjectNotFoundException("게시판 정보를 찾을 수 없습니다.",true);
+        }
+        List<BoardFile> fileList = boardDao.getFileList(id);
 
-    return boardDao.getDetail(id);
+        returnMap.put("board", board);
+        returnMap.put("boardFileList", fileList);
+
+        return returnMap;
     }
 
     
     // 게시글 작성하기
 	@Override
-	public void addBoard(Board board, String filePath)  {
+	public void addBoard(Board board, String filePath) throws Exception{
         boardDao.addBoard(board);
 		List<MultipartFile> upLoadFile = board.getUploadFile();
 		for (MultipartFile mf : upLoadFile) {
@@ -117,11 +127,8 @@ public class BoardServiceImpl implements BoardService {
                     .build();
 
 
-            try {
-				mf.transferTo(new File(filePath + fileDBName));
-			} catch(Exception e) {
-				throw new BusinessLogicException("파일 업로드 간 에러가 발생했습니다." ,true);
-			}
+			mf.transferTo(new File(filePath + fileDBName));
+
 			boardDao.fileInsert(boardFile);
 		}
 	}

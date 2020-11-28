@@ -18,10 +18,10 @@ public interface BoardService {
 	Map<String,Object> getBoardList(int page, int BOARD_CATEGORY);
 	
 	// 글 내용
-	Board getDetail(int id);
+	Map<String, Object>  getDetail(int id);
 
 	// 게시글 추가
-	void addBoard(Board board, String filePath);
+	void addBoard(Board board, String filePath) throws Exception;
 	
 	// 조회수 업데이트
 	int readCountUpdate(int id);

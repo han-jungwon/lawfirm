@@ -340,7 +340,7 @@ ul {
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h1 class="modal-title" style="font-size: large">실시간 상담</h1>
+					<h1 class="modal-title2" style="font-size: large">실시간 상담</h1>
 					<button type="button" class="close" data-dismiss="modal">×</button>
 				</div>
 
@@ -392,6 +392,7 @@ ul {
 				if(result) {
 					main.chatSend(common.gfn_getUserId()+"님이 퇴장하셨습니다.");
 					main.ws.close();
+					$(".modal-body > ul").html("");
 				}
 			},
 
@@ -438,25 +439,22 @@ ul {
 			},
 
 			chatResponse : function(rtext) {
-				var arr = rtext.split('&');
-				var message = arr[1];
 
 				var out = "님이 퇴장하셨습니다.";
 				var inin = "님이 입장하셨습니다.";
 				var output = "";
 				// 입장과 퇴장의 경우 css가 가운데로 위치해야 함.
-				console.log(message);
-				if(message.indexOf(out) > -1 || message.indexOf(inin) > -1) {
-					var index = message.lastIndexOf('.');
+				console.log(rtext);
+				if(rtext.indexOf(out) > -1 || rtext.indexOf(inin) > -1) {
+
 					output = "<li class = 'inout'><p></p></li>";
-					message = message.substring(0, index);
+
 				} else {
-					var name = arr[0];
 					output = "<li class = 'replies'>"
-							+"<sup>" + name + "</sup><p></p></li>";
+							+"<sup>관리자</sup><p></p></li>";
 				}
 				$(".modal-body > ul").append(output);
-				$('.modal-body > ul > li').last().find('p').text(message);
+				$('.modal-body > ul > li').last().find('p').text(rtext);
 
 			},
 
@@ -468,7 +466,8 @@ ul {
 				}
 
 				var output = "<li class='sent'>"
-							+"<p></p></li>";
+							+"  <p></p>"
+                            +"</li>";
 				$(".modal-body > ul").append(output);
 				$('.modal-body > ul > li').last().find('p').text(message);
 				$("#txtChatContent").val(null);

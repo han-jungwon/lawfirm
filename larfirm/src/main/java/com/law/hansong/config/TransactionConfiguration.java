@@ -44,6 +44,9 @@ public class TransactionConfiguration implements TransactionManagementConfigurer
         transactionAttributes.setProperty("insert*",cudOption);
         transactionAttributes.setProperty("save*",cudOption);
         transactionAttributes.setProperty("add*",cudOption);
+        transactionAttributes.setProperty("on*",cudOption);
+        transactionAttributes.setProperty("create*",cudOption);
+
 
         // Update
         transactionAttributes.setProperty("update*",cudOption);
@@ -59,6 +62,7 @@ public class TransactionConfiguration implements TransactionManagementConfigurer
 
         // Delete
         transactionAttributes.setProperty("delete*",cudOption);
+        transactionAttributes.setProperty("end*",cudOption);
 
         // Read
         transactionAttributes.setProperty("find*",rOption);

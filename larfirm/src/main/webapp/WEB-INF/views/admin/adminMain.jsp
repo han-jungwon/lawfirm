@@ -47,13 +47,6 @@
 
         </tbody>
     </table>
-    <button type="button" class="btn btn-outline-white chat chat_normal" id="btnChatNormal" ><!-- data-toggle="modal" data-target="#mdlChatNormal" -->
-        <svg id = "imgChatNormal" width="50px" height="50px" viewBox="0 0 16 16" class="bi bi-chat-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
-            <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-        </svg>
-        <span id = "spanChatNormal" style="display: none;" class="spinner-border spinner-border-sm"></span>
-    </button>
     <!-- /.container -->
     <jsp:include page="../common/footer.jsp" />
 
@@ -64,8 +57,9 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h1 class="modal-title" style="font-size: large">실시간 상담</h1>
+                <h1 class="modal-title2" style="font-size: large">실시간 상담(관리자)</h1>
                 <button type="button" class="close" data-dismiss="modal">×</button>
+                <input id="inputChatId" type="hidden">
             </div>
 
             <!-- messages -->
@@ -90,31 +84,35 @@
             init: function () {
                 const _this = this;
                 _this.initChatBoard();
-                /*
-                const _this = this;
+
                 // 관리자는 관리자페이지 접속과 동시에 소켓연결
-                ws = new WebSocket("ws://localhost:8088/hansong/boot?admin");
+                _this.ws = new WebSocket("ws://localhost:8088/hansong/boot?admin");
 
                 // 웹 소켓 연결 시 호출되는 이벤트
-                this.ws.open = function (event) {
+                _this.ws.open = function (event) {
                     if(common.gfn_isNull(event.data)) {
                         console.log(event.data);
                     }
                 }
                 // 웹 소켓에서 메시지가 날라왔을 때 호출되는 이벤트이다.
-                this.ws.onmessage = function (event) {
-                    main.chatResponse(event.data);
+                _this.ws.onmessage = function (event) {
+                    _this.chatResponse(event.data);
                 }
 
                 // 웹 소켓이 닫혔을 때 호출되는 이벤트입니다.
-                this.ws.onclose = function(event) {
+                _this.ws.onclose = function(event) {
                     common.gfn_alert('c','알림',"상담이 종료되었습니다.",'small');
                 }
 
-
-                $("#btnChatNormal").click(function () {
-                    _this.btnChatNormalClick();
+                $(".btnJoinChat").click(function () {
+                    const chatId = $(this).parent().prev().prev().prev().text().trim();
+                    $("#inputChatId").val(chatId);
+                    _this.btnJoinChatClick(chatId);
                 })
+                // 페이지 언로드 시 socket close
+                $(window).on("beforeunload", function(){
+                    _this.ws.close();
+                });
                 // modal out -> socket close
                 $("#mdlChatNormal").on("hidden.bs.modal",function (e) {
                     common.gfn_alert('confirm','알림',"정말로 나가시겠습니까?",'small', null, false, true, _this.chatClose);
@@ -123,15 +121,15 @@
                 // enter 입력 시 채팅 보내기
                 $(window).on('keyup',function (e) {
                     if(e.which == 13) {
-                        var message = _this.newMessage();
+                        const message = _this.newMessage();
                         if(common.gfn_isNotNull(message)) {
-                            _this.chatSend(message);
+                            _this.chatSend("1&"+message);
                         }
                         return false;
                     }
                 })
 
-                */
+
             },
             // 채팅방 초기화
             initChatBoard : function() {
@@ -146,7 +144,7 @@
                         let chatBodyHtml =  "<tbody>             ";
                         for(const key in chat) {
                                 chatBodyHtml += "   <tr>             ";
-                                chatBodyHtml += "      <td>          ";
+                                chatBodyHtml += "      <td class = 'tdChatId'>          ";
                                 chatBodyHtml +=           chat[key].id;
                                 chatBodyHtml += "      </td>         ";
                                 chatBodyHtml += "      <td>          ";
@@ -156,7 +154,15 @@
                                 chatBodyHtml +=           chat[key].regi_dt;
                                 chatBodyHtml += "      </td>         ";
                                 chatBodyHtml += "      <td>          ";
-                                chatBodyHtml +=           chat[key].condition;
+                                if(chat[key].condition === 0) {
+                                    chatBodyHtml += "<button class = 'btnJoinChat'>상담</button>";
+                                } else if(chat[key].condition === 1) {
+                                    chatBodyHtml += "상담중";
+                                } else if(chat[key].condition === 2) {
+                                    chatBodyHtml += "상담완료";
+                                } else if(chat[key].condition === 3){
+                                    chatBodyHtml += "상담중지";
+                                }
                                 chatBodyHtml += "      </td>         ";
                                 chatBodyHtml += "   </tr>            ";
                         }
@@ -166,23 +172,27 @@
 
                     })
                     .fail(function (xhr, status, errorThrown) {
-                        console.log('실패1');
+
                     })
                     .always(function (xhr, status) {
-                        console.log('실패2');
+
                     })
             },
 
             // 상담 나가기 시
             chatClose : function(result, json) {
                 if(result) {
-                    main.chatSend(common.gfn_getUserId()+"님이 퇴장하셨습니다.");
-                    main.ws.close();
+                    adminMain.chatSend("1&상담사가 상담을 종료했습니다.");
+                    const chatId = $("#inputChatId").val();
+                    $("#inputChatId").val("");
+                    adminMain.chatSend("3&"+chatId)
+                    $(".modal-body > ul").html("");
                 }
             },
 
-            // 일반상담 클릭 시 socket open
-            btnChatNormalClick : function() {
+            // 상담 클릭 시 상담시작
+            btnJoinChatClick : function(chatId) {
+                const _this = this;
                 $("#imgChatNormal").hide();
                 $("#spanChatNormal").show();
                 if(common.gfn_isNull(common.gfn_getUserId())) {
@@ -192,14 +202,11 @@
                     return;
                 }
 
-
-
-
                 $("#mdlChatNormal").modal('show');
                 $("#imgChatNormal").show();
                 $("#spanChatNormal").hide();
 
-
+                _this.chatSend("2&"+chatId)
             },
             /**
              * @description message 보냄
@@ -210,36 +217,31 @@
             },
 
             chatResponse : function(rtext) {
-                var arr = rtext.split('&');
-                var message = arr[1];
 
                 var out = "님이 퇴장하셨습니다.";
                 var inin = "님이 입장하셨습니다.";
                 var output = "";
                 // 입장과 퇴장의 경우 css가 가운데로 위치해야 함.
-                console.log(message);
-                if(message.indexOf(out) > -1 || message.indexOf(inin) > -1) {
-                    var index = message.lastIndexOf('.');
+                console.log(rtext);
+                if(rtext.indexOf(out) > -1 || rtext.indexOf(inin) > -1) {
                     output = "<li class = 'inout'><p></p></li>";
-                    message = message.substring(0, index);
                 } else {
-                    var name = arr[0];
                     output = "<li class = 'replies'>"
-                        +"<sup>" + name + "</sup><p></p></li>";
+                        +"<sup>사용자</sup><p></p></li>";
                 }
                 $(".modal-body > ul").append(output);
-                $('.modal-body > ul > li').last().find('p').text(message);
+                $('.modal-body > ul > li').last().find('p').text(rtext);
 
             },
 
             newMessage : function() {
-                var message = $("#txtChatContent").val();
+                const message = $("#txtChatContent").val();
 
                 if(common.gfn_isNull($.trim(message))) {
                     return false;
                 }
 
-                var output = "<li class='sent'>"
+                let output = "<li class='sent'>"
                     +"<p></p></li>";
                 $(".modal-body > ul").append(output);
                 $('.modal-body > ul > li').last().find('p').text(message);

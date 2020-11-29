@@ -9,7 +9,10 @@
 <mapper namespace="Chat">
 
 
-	<insert id="createChat" parameterType="String">
+	<insert id="createChat" parameterType="Map">
+		<selectKey resultType="Long" keyProperty="chatId" order="BEFORE">
+			select CHAT_SEQ.nextval from dual
+		</selectKey>
 		<![CDATA[
 			INSERT INTO CHAT(ID
 							, CONDITION
@@ -17,7 +20,7 @@
 							, REGI_DT
 							, UPDT_ID
 							, UPDT_DT)
-					  VALUES(CHAT_SEQ.nextval
+					  VALUES( #{chatId}
 							, 0
 							, #{id}
 							,sysdate
@@ -32,7 +35,7 @@
 								, REGI_ID
 								, REGI_DT)
 						VALUES (PARTICIPANT_SEQ.nextval
-								, chat_seq.currval
+								, #{chatId}
 								, #{id}
 								, sysdate)
 		]]>
@@ -102,19 +105,19 @@
 		FROM CHAT A
 				 INNER JOIN PARTICIPANT B
 							ON A.ID = B.CHAT_ID
-		WHERE A.REGI_ID = #{participantId}
-		  AND A.CONDITION IN (0, 1)
+		WHERE A.CONDITION IN (0, 1)
 		  AND B.REGI_ID != #{participantId}
+		  AND B.USE_YN = 'Y'
 		]]>
 	</select>
 
-	<update id="endChat" parameterType="String">
+	<update id="endChat" parameterType="Chat">
 		<![CDATA[
 			UPDATE CHAT A
 			   SET A.CONDITION = DECODE(A.CONDITION, 1, 2, 3)
-			WHERE REGI_ID = #{id}
-			  AND UPDT_ID = #{id}
-			  AND UPDT_DT = SYSDATE
+			       , UPDT_ID = #{regi_id}
+				   , UPDT_DT = SYSDATE
+			WHERE ID = #{id}
 		]]>
 	</update>
 
@@ -128,4 +131,22 @@
 		ORDER BY CONDITION, REGI_DT DESC
 		]]>
 	</select>
+
+	<update id="updateParticipantStatus" parameterType="Map">
+		<![CDATA[
+		UPDATE PARTICIPANT
+		   SET USE_YN = 'N'
+		 WHERE CHAT_ID = #{chatId}
+		   AND REGI_ID = #{participantId}
+		]]>
+	</update>
+
+	<update id="endParticipant" parameterType="Chat">
+		<![CDATA[
+		UPDATE PARTICIPANT
+		   SET USE_YN = 'N'
+		 WHERE CHAT_ID = #{id}
+		   AND REGI_ID = #{regi_id}
+		]]>
+	</update>
 </mapper>

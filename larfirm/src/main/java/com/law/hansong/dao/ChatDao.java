@@ -17,25 +17,25 @@ public class ChatDao {
 	private SqlSessionTemplate sqlSession;
 	
 	// 채팅방 생성
-	public int createChat(String id) {
-		return sqlSession.insert("Chat.createChat", id);
+	public int createChat(Map<String, Object> map) {
+		return sqlSession.insert("Chat.createChat", map);
 	}
 
 	// 참가자 생성
-	public int createParticipant(Map<String, String> map) {
+	public int createParticipant(Map<String, Object> map) {
 		return sqlSession.insert("Chat.createParticipant", map);
 	}
 
 	// 관리자 참가자 추가
-	public int addParticipant(Map<String, String> map) {
+	public int addParticipant(Map<String, Object> map) {
 		return sqlSession.insert("Chat.addParticipant", map);
 	}
 	// 채팅상태 변경(상담대기 -> 상담중)
-	public int updateChatCondition(Map<String, String> map) {
+	public int updateChatCondition(Map<String, Object> map) {
 		return sqlSession.update("Chat.updateChatCondition", map);
 	}
 	// 메시지 전송
-	public int sendMessage(Map<String, String> map) {
+	public int sendMessage(Map<String, Object> map) {
 		return sqlSession.insert("Chat.sendMessage", map);
 	}
 
@@ -45,17 +45,26 @@ public class ChatDao {
 	}
 
 	// 메시지 전송 대상 가져오기
-	public String getParticipantId(Map<String, String> map) {
+	public String getParticipantId(Map<String, Object> map) {
 		return sqlSession.selectOne("Chat.getParticipantId", map);
 	}
 
 	// 채팅 종료(정상)
-	public int endChat(String id) {
-		return sqlSession.selectOne("Chat.endChat", id);
+	public int endChat(Chat chat) {
+		return sqlSession.delete("Chat.endChat", chat);
 	}
 
 	// 채팅 정보(전체)
 	public List<Chat> getAllChat() {
 		return sqlSession.selectList("Chat.getAllChat");
+	}
+
+	// 관리자 상담 종료시
+	public int updateParticipantStatus(Map<String, Object> map) {
+		return sqlSession.update("Chat.updateParticipantStatus",map);
+	}
+	// 유저 상담 종료시
+	public int endParticipant(Chat chat) {
+		return sqlSession.update("Chat.endParticipant",chat);
 	}
 }

@@ -34,21 +34,7 @@ public class ChatController {
 
     @OnOpen
     public void onOpen(Session session) {
-        String adminYn = session.getQueryString();
-        String id = session.getUserPrincipal().getName();
-
-        logger.info("id = " + id);
-        ChatUser user = ChatUser.builder()
-               .chatId(id)
-               .session(session)
-               .build();
-
-        if("admin".equals(adminYn)) {
-            adminList.add(user);
-        } else {
-            userList.add(user);
-            chatService.createChat(id);
-        }
+        chatService.createChat(session);
     }
 
     @OnError
@@ -64,13 +50,13 @@ public class ChatController {
     }
 
     private void remove(Session session) {
-        chatService.endChat(session.getId());
+        chatService.endChat(session);
     }
 
     @OnMessage
     public void onMessage(String message, Session session) {
         logger.info("onMessage : " + message);
-        chatService.onMessage(message, session.getUserPrincipal().getName());
+        chatService.onMessage(message, session);
     }
 
 

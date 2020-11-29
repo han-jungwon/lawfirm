@@ -36,48 +36,65 @@ public class ChatServiceImpl implements ChatService {
 
     // 채팅 생성
     @Override
-    public void createChat(String id) {
-        int result = 0;
+    public void createChat(Session session) {
+        String adminYn = session.getQueryString();
+        String id = session.getUserPrincipal().getName();
 
-        List<MemberRole> rolesByEmail = memberRoleDao.getRolesByEmail(id);
+        ChatUser user = ChatUser.builder()
+                .session(session)
+                .build();
 
-        // 권한 여부 체크(계정 비활성화 exception)
-        if(rolesByEmail == null) {
-            throw new DisabledException("권한 정보가 없습니다.");
+        if("admin".equals(adminYn)) {
+            adminList.add(user);
+        } else {
+            int result = 0;
+
+            List<MemberRole> rolesByEmail = memberRoleDao.getRolesByEmail(id);
+
+            // 권한 여부 체크(계정 비활성화 exception)
+            if(rolesByEmail == null) {
+                throw new DisabledException("권한 정보가 없습니다.");
+            }
+
+            // 기존에 상담중인 채팅방이 있는지 체크
+            result = chatDao.checkJoinChat(id);
+            if (result > 0) {
+                throw new BadRequestException("이미 상담중인 채팅방이 존재합니다.", true);
+            }
+            // 채팅방 생성
+            Map<String, Object> paramMap = new HashMap<String, Object>();
+            paramMap.put("id", id);
+
+            result = chatDao.createChat(paramMap);
+            if (result < 1) {
+                throw new BusinessLogicException("채팅연결 중 에러가 발생했습니다. 관리자에게 문의바랍니다.(1)", true);
+            }
+
+            // 참가자 추가
+            result = chatDao.createParticipant(paramMap);
+            if (result < 1) {
+                throw new BusinessLogicException("채팅연결 중 에러가 발생했습니다. 관리자에게 문의바랍니다.(2)", true);
+            }
+            user.setChatId(Long.parseLong(paramMap.get("chatId").toString()));
+            userList.add(user);
         }
 
-        // 기존에 상담중인 채팅방이 있는지 체크
-        result = chatDao.checkJoinChat(id);
-        if (result > 0) {
-            throw new BadRequestException("이미 상담중인 채팅방이 존재합니다.", true);
-        }
-        // 채팅방 생성
-        result = chatDao.createChat(id);
-        if (result < 1) {
-            throw new BusinessLogicException("채팅연결 중 에러가 발생했습니다. 관리자에게 문의바랍니다.(1)", true);
-        }
 
-        Map<String,String> map = new HashMap<>();
-        map.put("id", id);
-
-        // 참가자 추가
-        result = chatDao.createParticipant(map);
-        if (result < 1) {
-            throw new BusinessLogicException("채팅연결 중 에러가 발생했습니다. 관리자에게 문의바랍니다.(2)", true);
-        }
 
     }
     @Override
-    public void onMessage(String message, String participantId) {
-        message = CommonUtil.gm_xssFilter(message);
+    public void onMessage(String message, Session session) {
+
         String[] messageArray = message.split("&");
-        Map<String, String> paramMap = new HashMap<String, String>();
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+
         int result = 0;
 
-        // 1.유저,관리자가 보내는 채팅기능  2. 관리자가 방 선택해서 참가
+        // 1.유저,관리자가 보내는 채팅기능
         if("1".equals(messageArray[0])) {
-            paramMap.put("content", messageArray[1]);
-            paramMap.put("participantId", participantId);
+            String userMessage =  CommonUtil.gm_xssFilter(messageArray[1]);
+            paramMap.put("content", userMessage);
+            paramMap.put("participantId", session.getUserPrincipal().getName());
             result = chatDao.sendMessage(paramMap);
             if(result < 1) {
                 throw new BusinessLogicException("메시지를 보내는 과정에서 에러가 발생했습니다. 관리자에게 문의바랍니다.", true);
@@ -88,9 +105,10 @@ public class ChatServiceImpl implements ChatService {
             send(messageArray, toParticipantId, userList);
             // adminList 탐색
             send(messageArray, toParticipantId, adminList);
+            // 2. 관리자가 방 선택해서 참가
         } else if("2".equals(messageArray[0])) {
             paramMap.put("chatId", messageArray[1]);
-            paramMap.put("participantId", participantId);
+            paramMap.put("participantId", session.getUserPrincipal().getName());
 
             // 채팅방 참가자 추가
             result = chatDao.addParticipant(paramMap);
@@ -103,6 +121,24 @@ public class ChatServiceImpl implements ChatService {
             if(result < 1) {
                 throw new BusinessLogicException("이미 상담중인 채팅방입니다. 관리자에게 문의바랍니다.(2)", true);
             }
+
+            synchronized (adminList) {
+                for(int i = 0; i <adminList.size(); i++) {
+                    Session s = adminList.get(i).getSession();
+                    if(session.getId().equals(s.getId())) {
+                        adminList.get(i).setChatId(Long.parseLong(messageArray[1]));
+                        System.out.println("chat은 이게 들어갇나 : "+adminList.get(i).getChatId());
+                    }
+                }
+            }
+            // 관리자 채팅 종료시
+        } else if("3".equals(messageArray[0])) {
+            paramMap.put("chatId", messageArray[1]);
+            paramMap.put("participantId", session.getUserPrincipal().getName());
+            result = chatDao.updateParticipantStatus(paramMap);
+            if(result < 1) {
+                throw new BusinessLogicException("상담 종료에 실패했습니다.", true);
+            }
         } else {
             throw new BadRequestException();
         }
@@ -114,7 +150,7 @@ public class ChatServiceImpl implements ChatService {
                 for(ChatUser user : userList) {
                     Session s = user.getSession();
                     if(s.getUserPrincipal().getName().equals(toParticipantId)) {
-                        s.getBasicRemote().sendText(messageArray[1]);
+                        s.getBasicRemote().sendText(CommonUtil.gm_xssFilter(messageArray[1]));
                     }
                 }
             }catch(Exception e) {
@@ -124,24 +160,35 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void endChat(String id) {
-
+    public void endChat(Session session) {
         synchronized (userList) {
             for(int i = 0; i <userList.size(); i++) {
                 Session s = userList.get(i).getSession();
-                if(id.equals(s.getId())) {
-                    int result = chatDao.endChat(id);
+                if(session.getId().equals(s.getId())) {
+                    Chat chat = Chat.builder()
+                            .id(userList.get(i).getChatId())
+                            .regi_id(session.getUserPrincipal().getName())
+                            .build();
+                    int result = 0;
+                    result = chatDao.endChat(chat);
                     if(result < 1) {
                         throw new BusinessLogicException("상담종료중 에러가 발생했습니다. 관리자에게 문의바랍니다.", true);
                     }
+
+                    result = chatDao.endParticipant(chat);
+                    if(result < 1) {
+                        throw new BusinessLogicException("상담종료중 에러가 발생했습니다. 관리자에게 문의바랍니다.(2)", true);
+                    }
+
                     userList.remove(i);
+                    break;
                 }
             }
         }
         synchronized (adminList) {
             for(int i = 0; i <adminList.size(); i++) {
                 Session s = adminList.get(i).getSession();
-                if(id.equals(s.getId())) {
+                if(session.getId().equals(s.getId())) {
                     adminList.remove(i);
                 }
             }

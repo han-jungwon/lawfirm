@@ -46,14 +46,14 @@
     <logger name="org.apache.commons" level="ERROR">
     </logger>
     
-    <logger name="org.springframework" level="DEBUG" >
+    <logger name="org.springframework" level="ERROR" >
     </logger>
     
 
-    <logger name="java.sql" level="DEBUG">
+    <logger name="java.sql" level="ERROR">
     </logger>
     
-    <logger name="org.mybatis.spring" level="DEBUG">
+    <logger name="org.mybatis.spring" level="ERROR">
     </logger>
     
     

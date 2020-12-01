@@ -104,7 +104,7 @@ public class BoardController {
 
 	// 게시글 상세보기
 	@GetMapping("/boardView")
-	public ModelAndView searchDetail(ModelAndView mv, Member member, @RequestParam(value = "id", required =  true) Long id) {
+	public ModelAndView searchDetail(ModelAndView mv, @RequestParam(value = "id", required =  true) Long id) {
 		Map<String, Object> returnMap = boardService.searchDetail(id);
 
 		
@@ -162,7 +162,11 @@ public class BoardController {
 	// 게시판 수정 폼
 	@GetMapping("/boardUpdateView")
 	public ModelAndView boardUpdateView(ModelAndView mv, Long id) {
-		mv.addObject("board", boardService.selectUpdateBoard(id))
+		Map<String, Object> returnMap = boardService.selectUpdateBoard(id);
+
+		mv.addObject("board", returnMap.get("board"));
+		mv.addObject("boardFileList", returnMap.get("fileList"))
+
 		.setViewName("board/boardUpdate");
 		return mv;
 	}
@@ -172,11 +176,12 @@ public class BoardController {
 	@PostMapping("/boardUpdate")
 	public String boardUpdate(Board board, @RequestParam("CHANGE_FILE") int changeFile, RedirectAttributes redirect,
 			 ModelAndView mv, HttpServletResponse response, HttpServletRequest request) throws Exception {
+		log.info(board.toString());
 		boardService.updateBoard(board,changeFile, filePath);
 		
-		redirect.addAttribute("board_id",board.getId());
+		redirect.addAttribute("id",board.getId());
 		mv.addObject("boardFileList", "boardFileList");;
-		return "redirect:/boards/boardUpdate";
+		return "redirect:/boards/boardView";
 		
 		
 	}
@@ -237,13 +242,7 @@ public class BoardController {
 		//게시물 삭제
 		@GetMapping("/deleteBoard") 
 		public String deleteBoard(Long id, HttpServletRequest request) {
-			
-			Board board = boardService.selectUpdateBoard(id);
-			
-			if(board.getUploadFile() != null) {
-				deleteFile(board.getUploadFile(),request);
-			}
-			
+
 			int result = boardService.deleteBoard(id);
 			
 	

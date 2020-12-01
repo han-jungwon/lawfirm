@@ -157,8 +157,16 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public Board selectUpdateBoard(Long id) {
-		return boardDao.searchDetail(id);
+	public Map<String, Object>  selectUpdateBoard(Long id) {
+    	Map<String, Object> returnMap = new HashMap<String, Object>();
+		List<BoardFile> fileList = boardDao.getFileList(id);
+
+		Board board = boardDao.searchDetail(id);
+
+		returnMap.put("board", board);
+		returnMap.put("fileList", fileList);
+
+		return returnMap;
 	}
 
 
@@ -171,21 +179,22 @@ public class BoardServiceImpl implements BoardService {
 		if(result < 0) {
 			throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.", true);
 		}
-		
+		log.info("check1");
 		
 		List<MultipartFile> upLoadFile = board.getUploadFile();
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("id",board.getId());
 		returnMap.put("filePath",filePath);
-		
+
+		log.info("check2");
 		if(changeFile == 1) { // 파일 변경
 			
 			result = boardDao.fileDelete(returnMap);
 			if(result < 0) {
 				throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.(2)", true);
 			}
-			
+			log.info("check3");
 			for(MultipartFile mf : upLoadFile) {
 				if(mf.getSize() == 0) {
 					break;
@@ -214,6 +223,7 @@ public class BoardServiceImpl implements BoardService {
 			if(result < 0) {
 				throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.(2)", true);
 			}
+			log.info("check4");
 		}
 			
 	

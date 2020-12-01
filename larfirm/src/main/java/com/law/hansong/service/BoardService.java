@@ -27,7 +27,7 @@ public interface BoardService {
 	int updateReadCount(Long id);
 
 	// 게시글 수정
-	Board selectUpdateBoard(Long id);
+	Map<String, Object> selectUpdateBoard(Long id);
 	void updateBoard(Board board, int changeFile, String filePath) throws Exception;
 
 	// 게시판 첨부파일 리스트

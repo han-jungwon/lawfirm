@@ -72,7 +72,7 @@
 					
 			</div>
 			
-	 		 <div>
+	 		 <div class="form-group">
 			    <input multiple="multiple" type="file"  id="customFile" name="uploadFile">
 			    <label class="custom-file-label" for="customFile">파일선택</label>
 			    <span id="filevalue"> </span>

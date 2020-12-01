@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Comments">
+	<select id="getList" resultType="Comments" parameterType="Long">	
+		 SELECT ID
+		 		, MEMBER_ID
+		 		, CONTENT
+		 		, REGI_ID
+		 		, REGI_DT
+		   FROM  COMMENTS
+		   WHERE BOARD_ID = #{board_id}
+	</select>
+
+	<insert id="insertComment" parameterType="Comments">
+		<selectKey resultType="Long" keyProperty="id" order="BEFORE">
+			SELECT COMMENTS_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO COMMENTS (ID
+							, BOARD_ID
+							, MEMBER_ID
+							, CONTENT
+							, REGI_ID
+							, REGI_DT
+							, UPDT_ID
+							, REGI_DT)
+					 VALUES ( #{id}
+					 		, #{board_id}
+					 		, #{member_id}
+					 		, #{content}
+					 		, #{regi_id}
+					 		, SYSDATE
+					 		, #{regi_id]
+					 		, SYSDATE)	
+			
+	</insert>
+	
+</mapper>	

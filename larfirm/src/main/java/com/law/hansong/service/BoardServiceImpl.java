@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.law.hansong.dao.MemberDao;
-import com.law.hansong.dto.Member;
-import com.law.hansong.exception.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,20 +12,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.law.hansong.common.CommonUtil;
 import com.law.hansong.dao.BoardDao;
+import com.law.hansong.dao.CommentsDao;
 import com.law.hansong.dto.Board;
 import com.law.hansong.dto.BoardFile;
+import com.law.hansong.dto.Comments;
 import com.law.hansong.exception.BusinessLogicException;
+import com.law.hansong.exception.ObjectNotFoundException;
 
 @Service
 public class BoardServiceImpl implements BoardService {
     private Logger log = LoggerFactory.getLogger(getClass());
 
     private final BoardDao boardDao;
-    private final MemberDao memberDao;
+    private final CommentsDao commentsDao;
 
-    public BoardServiceImpl(BoardDao boardDao, MemberDao memberDao) {
-        this.memberDao =  memberDao;
+	
+    public BoardServiceImpl(BoardDao boardDao, CommentsDao commentsDao) {
         this.boardDao = boardDao;
+        this.commentsDao = commentsDao;
     }
 
     
@@ -87,21 +88,27 @@ public class BoardServiceImpl implements BoardService {
     
     // 게시글 상세보기
     @Override
-    public Map<String, Object> getDetail(int id) {
+    public Map<String, Object> searchDetail(Long id) {
 
-        if(readCountUpdate(id)!=1)
+        if(updateReadCount(id)!=1)
             return null;
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
-        Board board = boardDao.getDetail(id);
+        Board board = boardDao.searchDetail(id);
         if(board == null) {
             throw new ObjectNotFoundException("게시판 정보를 찾을 수 없습니다.",true);
         }
+       
         List<BoardFile> fileList = boardDao.getFileList(id);
-
+        List<Comments> commentsList = commentsDao.readComments(id);
+        
+        board.setBoard_comment(""+((commentsList == null) ? 0 : commentsList.size()));
+        
         returnMap.put("board", board);
-        returnMap.put("boardFileList", fileList);
-
+        returnMap.put("boardFileList", fileList);   
+        returnMap.put("commentsList", commentsList);
+        
+        
         return returnMap;
     }
 
@@ -109,7 +116,14 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 작성하기
 	@Override
 	public void addBoard(Board board, String filePath) throws Exception{
-        boardDao.addBoard(board);
+        board.setBoard_content(CommonUtil.gm_xssFilter(board.getBoard_content()));
+        int result = 0;
+		result = boardDao.addBoard(board);
+		if(result < 0) {
+			throw new BusinessLogicException("게시글 작성 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.", true);
+		}
+	
+        log.info("보드서비스1");
 		List<MultipartFile> upLoadFile = board.getUploadFile();
 		for (MultipartFile mf : upLoadFile) {
 			if(mf.getSize() == 0) {
@@ -125,7 +139,8 @@ public class BoardServiceImpl implements BoardService {
                     .regi_id(board.getRegi_id())
                     .updt_id(board.getRegi_id())
                     .build();
-
+				
+			log.info("보드서비스2");
 
 			mf.transferTo(new File(filePath + fileDBName));
 
@@ -134,30 +149,106 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	// 게시물 읽은 수
 	@Override 
-	public int readCountUpdate(int id) { 
-		return boardDao.readCountUpdate(id); 
+	public int updateReadCount(Long id) { 
+		return boardDao.updateReadCount(id); 
 	}
 
 
 	@Override
-	public Board selectUpdateBoard(int id) {
-		return boardDao.getDetail(id);
+	public Board selectUpdateBoard(Long id) {
+		return boardDao.searchDetail(id);
 	}
 
 
 	// 게시글 수정
 	@Override
-	public int updateBoard(Board board) {
-        return boardDao.updateBoard(board);
+	public void updateBoard(Board board, int changeFile, String filePath) throws Exception {
+		int result = 0;
+				
+		result = boardDao.updateBoard(board);
+		if(result < 0) {
+			throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.", true);
+		}
+		
+		
+		List<MultipartFile> upLoadFile = board.getUploadFile();
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("id",board.getId());
+		returnMap.put("filePath",filePath);
+		
+		if(changeFile == 1) { // 파일 변경
+			
+			result = boardDao.fileDelete(returnMap);
+			if(result < 0) {
+				throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.(2)", true);
+			}
+			
+			for(MultipartFile mf : upLoadFile) {
+				if(mf.getSize() == 0) {
+					break;
+				}
+				String fileName = mf.getOriginalFilename(); // 원래 파일명
+			    String fileDBName = CommonUtil.gm_fileDbName(fileName, filePath);	
+			    
+			    BoardFile boardFile = BoardFile.builder()
+	                    .board_id(board.getId())
+	                    .file_name(fileDBName)
+	                    .file_original(fileName)
+	                    .regi_id(board.getRegi_id())
+	                    .updt_id(board.getRegi_id())
+	                    .build();
+			    
+			    mf.transferTo(new File(filePath + fileDBName));
+			    
+			    result = boardDao.fileInsert(boardFile);
+			    if(result < 0) {
+					throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.(3)", true);
+				}
+		    
+			}		
+		}else if(changeFile == 2) { // 파일 삭제
+			result = boardDao.fileDelete(returnMap);
+			if(result < 0) {
+				throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.(2)", true);
+			}
+		}
+			
+	
 	}
 
 
 	// 게시판 첨부파일 리스트
 	@Override
-	public List<BoardFile> getFileList(int id) {
+	public List<BoardFile> getFileList(Long id) {
 		return boardDao.getFileList(id);
 	}
+
+
+	@Override
+	public int deleteBoard(Long id) {
+		return boardDao.deleteBoard(id);
+	}
+
+
+
+
+	
+	  // 게시글 삭제
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

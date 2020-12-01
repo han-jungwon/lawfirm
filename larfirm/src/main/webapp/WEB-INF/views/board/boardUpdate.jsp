@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,13 +50,12 @@
 	<div class="container">
 		<form id = "boardUpdateForm" action = "/hansong/boards/boardUpdate" method="post" name="boardForm" enctype="mutipart/form-data">
 		<input id = "board_id" type="hidden" name="board_id" value="${board.id}">
-		
-		<input type="hidden" name="email" value="${member.email}">
+		<input id="CHANGE_FILE" type="hidden" name="CHANGE_FILE" value="0">
+		<input type="hidden" name="email" value="${principal.username}">
 		<input type="hidden" id="board_category" name="BOARD_CATEGORY" value="${board.board_category}">
 		<h3 id="h3_category">수정</h3>
 		<div class="form-group">
-			<label for="boardTitle">제목</label>
-	                                                                                                                                                                                                     		<input type = "text"  class="form-control"  name="board_title" id="board_title" value="${board.board_title}" placeholder="제목을 입력해 주세요.">		
+			<label for="boardTitle">제목</label>                                                                                                                                                                                                     		<input type = "text"  class="form-control"  name="board_title" id="board_title" value="${board.board_title}" placeholder="제목을 입력해 주세요.">		
 		</div>
 		
 		<div class="form-group">
@@ -67,6 +68,19 @@
 			<textarea name="board_content" id="board_content"></textarea>	
 		</div>
 		
+		 <div class="form-group">
+			    <input multiple="multiple" type="file"  id="customFile" name="uploadFile">
+			    <label class="custom-file-label" for="customFile">파일선택</label>
+			    <span id="filevalue">
+					<c:if test="${!empty boardFileList}">
+						<c:forEach var="files" items="${boardFileList}">
+							${files.file_original}&nbsp;
+						</c:forEach>
+					</c:if>
+				</span>
+			    <img src="/hansong/resources/images/trash.svg" alt="파일삭제" width="32" height="32" class="remove">
+		</div> 
+			
 		 <div class="form-group">
 	      <button id ="boardEditBtn" type="submit" class="btn btn-primary">수정</button>
 	      <button type="reset" class="btn btn-primary" onClick="history.go(-1)">취소</button>

@@ -4,7 +4,7 @@
 
 <mapper namespace="Board">
 	
-	<select id="getListCount" resultType="_int">
+	<select id="getListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM BOARD	
 	</select>
@@ -39,14 +39,14 @@
 		]]>
 	</select>
 	
-	<update id="readCountUpdate" parameterType="int">
+	<update id="updateReadCount" parameterType="Long">
 		UPDATE BOARD
 		SET BOARD_COUNT = BOARD_COUNT +1
 		WHERE ID=#{id}
 	</update>
 	
 	
-	<select id="getDetail" resultType="Board" parameterType="_int">
+	<select id="getDetail" resultType="Board" parameterType="Long">
 		SELECT ID,
 			   BOARD_CATEGORY,
 			   BOARD_TITLE,
@@ -59,9 +59,9 @@
 
 
 
-	<insert id="insert" parameterType="Board">
+	<insert id="insertBoard" parameterType="Board">
 		<selectKey resultType="Long" keyProperty="id" order="BEFORE">
-			select BOARD_SEQ.NEXTVAL from dual
+			SELECT BOARD_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 		INSERT INTO BOARD (ID
 						 , BOARD_CATEGORY
@@ -86,7 +86,7 @@
 		          		 , #{regi_id}
 		          		 , SYSDATE
 		          		 , #{regi_id}
-		          		 ,SYSDATE)
+		          		 , SYSDATE)
 	</insert>
 
 	<insert id="fileInsert" parameterType="BoardFile">
@@ -108,7 +108,7 @@
 							  , SYSDATE)
 	</insert>
 
-	<delete id="deleteBoard" parameterType="int">
+	<delete id="deleteBoard" parameterType="Long">
 		DELETE BOARD
 		WHERE ID=#{id}
 	</delete>
@@ -123,10 +123,14 @@
 				WHERE ID=#{id}
 	</update>
 
-	<select id="getFileList" parameterType="int" resultType="BoardFile">
+	<select id="getFileList" parameterType="Long" resultType="BoardFile">
 		SELECT * FROM BOARD_FILE WHERE BOARD_ID = #{id}
 	</select>
 	
+	<delete id="fileDelete" parameterType="Long">
+		DELETE FROM BOARD_FILE
+		WHERE BOARD_ID = #{board_id}
+	</delete>
 	
 <!-- 	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">
 		SELECT *

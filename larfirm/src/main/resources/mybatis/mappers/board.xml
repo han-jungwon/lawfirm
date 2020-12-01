@@ -118,7 +118,7 @@
 		UPDATE BOARD
 				SET BOARD_TITLE=#{board_title}
 		   		   ,BOARD_CONTENT=#{board_content}
-		   		   ,UPDT_ID=#{regi_id}
+		   		   ,UPDT_ID=#{updt_id}
 		   		   ,UPDT_DT=SYSDATE
 				WHERE ID=#{id}
 	</update>

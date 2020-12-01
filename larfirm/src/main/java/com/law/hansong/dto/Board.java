@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Board {
 	private Long id;
+	List<MultipartFile> uploadFile;
 	private String board_category;
 	private String board_title;
 	private String board_content;
@@ -33,7 +34,7 @@ public class Board {
 
 	
 	private String board_comment;
-	List<MultipartFile> uploadFile;
+
 	
 	 
 }

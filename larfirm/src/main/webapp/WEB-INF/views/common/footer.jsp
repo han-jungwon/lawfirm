@@ -21,6 +21,7 @@
 </footer>
 <!-- end footer -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/hansong/resources/js/jquery.modal.min.js"></script>
 <script src="/hansong/resources/js/common.js?ver=7"></script>
 <script>

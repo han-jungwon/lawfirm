@@ -11,7 +11,19 @@
     <meta name="description" content="법무법인 한송 관리자페이지">
     <meta name="author" content="Team. hansong">
     <jsp:include page="../common/header.jsp" />
-
+<style>
+    ul {
+        list-style-type: none;
+    }
+    .replies {
+        float : left;
+        clear : left;
+    }
+    .sent {
+        float : right;
+        clear : right;
+    }
+</style>
 </head>
 <body>
 
@@ -217,21 +229,25 @@
             },
 
             chatResponse : function(rtext) {
+                const separatorIndex = rtext.indexOf("&");
+                const fromId = rtext.substring(0,separatorIndex);
+                const message = rtext.substring(separatorIndex+1);
 
-                var out = "님이 퇴장하셨습니다.";
-                var inin = "님이 입장하셨습니다.";
-                var output = "";
+                const out = "님이 퇴장하셨습니다.";
+                const come = "님이 입장하셨습니다.";
+                let output = "";
+
                 // 입장과 퇴장의 경우 css가 가운데로 위치해야 함.
-                console.log(rtext);
-                if(rtext.indexOf(out) > -1 || rtext.indexOf(inin) > -1) {
+                if(message.indexOf(out) > -1 || message.indexOf(come) > -1) {
+
                     output = "<li class = 'inout'><p></p></li>";
+
                 } else {
                     output = "<li class = 'replies'>"
-                        +"<sup>사용자</sup><p></p></li>";
+                        +"<sup>"+fromId+"</sup><p></p></li>";
                 }
                 $(".modal-body > ul").append(output);
-                $('.modal-body > ul > li').last().find('p').text(rtext);
-
+                $('.modal-body > ul > li').last().find('p').text(message);
             },
 
             newMessage : function() {

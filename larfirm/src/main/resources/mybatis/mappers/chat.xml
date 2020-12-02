@@ -135,7 +135,7 @@
 	<update id="updateParticipantStatus" parameterType="Map">
 		<![CDATA[
 		UPDATE PARTICIPANT
-		   SET USE_YN = 'N'
+		   SET USE_YN = #{participantStatus}
 		 WHERE CHAT_ID = #{chatId}
 		   AND REGI_ID = #{participantId}
 		]]>
@@ -149,4 +149,13 @@
 		   AND REGI_ID = #{regi_id}
 		]]>
 	</update>
+
+	<select id="checkParticipant" resultType="Int" parameterType="Map">
+		<![CDATA[
+		SELECT count(*) checkCnt
+		  FROM PARTICIPANT
+		 WHERE CHAT_ID = #{chatId}
+		   AND REGI_ID = #{participantId}
+		]]>
+	</select>
 </mapper>

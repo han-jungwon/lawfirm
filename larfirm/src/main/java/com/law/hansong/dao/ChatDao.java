@@ -67,4 +67,9 @@ public class ChatDao {
 	public int endParticipant(Chat chat) {
 		return sqlSession.update("Chat.endParticipant",chat);
 	}
+
+	// 참가했던 방인지 체크
+	public int checkParticipant(Map<String, Object> map) {
+		return sqlSession.selectOne("Chat.checkParticipant",map);
+	}
 }

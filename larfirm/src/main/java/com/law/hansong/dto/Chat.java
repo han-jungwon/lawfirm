@@ -14,6 +14,6 @@ import java.util.Date;
 public class Chat {
     private Long id;
     private String regi_id;
-    private Date regi_dt;
+    private String regi_dt;
     private int condition;
 }

@@ -78,6 +78,18 @@ public class ChatServiceImpl implements ChatService {
             }
             user.setChatId(Long.parseLong(paramMap.get("chatId").toString()));
             userList.add(user);
+
+            // 새로운 채팅방 생성시 접속중인 관리자들에게 알림
+            synchronized(adminList) {
+                try {
+                    for(ChatUser chatUser : adminList) {
+                        Session s = chatUser.getSession();
+                        s.getBasicRemote().sendText("*&*");
+                    }
+                }catch(Exception e) {
+                    logger.info("send 오류" + e.getMessage());
+                }
+            }
         }
 
 

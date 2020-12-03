@@ -15,13 +15,14 @@
     ul {
         list-style-type: none;
     }
-    .replies {
-        float : left;
-        clear : left;
+    .message-body > ul {
+        padding-left : 0px;
     }
-    .sent {
-        float : right;
-        clear : right;
+    .sent > p{
+        text-align: right;
+    }
+    .inout > p {
+        text-align: center;
     }
 </style>
 </head>
@@ -49,10 +50,10 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>번호</th>
-                <th>신청자</th>
-                <th>시간</th>
-                <th>상태</th>
+                <th scope="col">번호</th>
+                <th scope="col">신청자</th>
+                <th scope="col">시간</th>
+                <th scope="col">상태</th>
             </tr>
         </thead>
         <tbody id = "chatTableBody">
@@ -113,7 +114,7 @@
 
                 // 웹 소켓이 닫혔을 때 호출되는 이벤트입니다.
                 _this.ws.onclose = function(event) {
-                    common.gfn_alert('c','알림',"상담이 종료되었습니다.",'small');
+                    //common.gfn_alert('c','알림',"상담이 종료되었습니다.",'small');
                 }
 
                 $(".btnJoinChat").click(function () {
@@ -150,13 +151,12 @@
                     cache : false,
                     dataType : "json",
                     method : "GET",
-                    async : false
                 })
                     .done(function (chat) {
-                        let chatBodyHtml =  "<tbody>             ";
+                        let chatBodyHtml =  "";
                         for(const key in chat) {
                                 chatBodyHtml += "   <tr>             ";
-                                chatBodyHtml += "      <td class = 'tdChatId'>          ";
+                                chatBodyHtml += "      <td scope='row' class = 'tdChatId'>          ";
                                 chatBodyHtml +=           chat[key].id;
                                 chatBodyHtml += "      </td>         ";
                                 chatBodyHtml += "      <td>          ";
@@ -167,19 +167,18 @@
                                 chatBodyHtml += "      </td>         ";
                                 chatBodyHtml += "      <td>          ";
                                 if(chat[key].condition === 0) {
-                                    chatBodyHtml += "<button class = 'btnJoinChat'>상담</button>";
+                                    chatBodyHtml += "<button class = 'btnJoinChat btn btn-info'>상담</button>";
                                 } else if(chat[key].condition === 1) {
-                                    chatBodyHtml += "상담중";
+                                    chatBodyHtml += "<span style='color:#0094ff'>상담중</span>";
                                 } else if(chat[key].condition === 2) {
-                                    chatBodyHtml += "상담완료";
+                                    chatBodyHtml += "<span style='color:#0094ff'>상담완료</span>";
                                 } else if(chat[key].condition === 3){
-                                    chatBodyHtml += "상담중지";
+                                    chatBodyHtml += "<span style='color:red'>상담중지</span>";
                                 }
                                 chatBodyHtml += "      </td>         ";
                                 chatBodyHtml += "   </tr>            ";
                         }
 
-                        chatBodyHtml += "</tbody>            ";
                         $("#chatTableBody").html(chatBodyHtml);
 
                     })
@@ -199,6 +198,7 @@
                     $("#inputChatId").val("");
                     adminMain.chatSend("3&"+chatId)
                     $(".modal-body > ul").html("");
+                    this.initChatBoard();
                 }
             },
 
@@ -232,22 +232,26 @@
                 const separatorIndex = rtext.indexOf("&");
                 const fromId = rtext.substring(0,separatorIndex);
                 const message = rtext.substring(separatorIndex+1);
-
-                const out = "님이 퇴장하셨습니다.";
-                const come = "님이 입장하셨습니다.";
-                let output = "";
-
-                // 입장과 퇴장의 경우 css가 가운데로 위치해야 함.
-                if(message.indexOf(out) > -1 || message.indexOf(come) > -1) {
-
-                    output = "<li class = 'inout'><p></p></li>";
-
+                // 새로운 채팅방 생성 시 관리자들 채팅리스트 다시 그려줌
+                if(fromId ==="*") {
+                    this.initChatBoard();
                 } else {
-                    output = "<li class = 'replies'>"
-                        +"<sup>"+fromId+"</sup><p></p></li>";
+                    const out = "님이 퇴장하셨습니다.";
+                    const come = "님이 입장하셨습니다.";
+                    let output = "";
+
+                    // 입장과 퇴장의 경우 css가 가운데로 위치해야 함.
+                    if(message.indexOf(out) > -1 || message.indexOf(come) > -1) {
+
+                        output = "<li class = 'inout'><p></p></li>";
+
+                    } else {
+                        output = "<li class = 'replies'>"
+                            +"<sup>"+fromId+"</sup><p></p></li>";
+                    }
+                    $(".modal-body > ul").append(output);
+                    $('.modal-body > ul > li').last().find('p').text(message);
                 }
-                $(".modal-body > ul").append(output);
-                $('.modal-body > ul > li').last().find('p').text(message);
             },
 
             newMessage : function() {

@@ -194,13 +194,14 @@ ul {
 	width: 180px;
 	height: 240px;
 }
-.replies {
-	float : left;
-	clear : left;
+.sent > p {
+	text-align: right;
 }
-.sent {
-	float : right;
-	clear : right;
+.inout > p {
+    text-align: center;
+}
+.message-body > ul {
+    padding-left : 0px;
 }
 </style>
 </head>
@@ -352,7 +353,7 @@ ul {
 				</div>
 
 				<!-- messages -->
-				<div class="modal-body" style="overflow-x: hidden; overflow-y: auto; height: 400px; word-break: break-all;">
+				<div class="modal-body message-body" style="overflow-x: hidden; overflow-y: auto; height: 400px; word-break: break-all;">
 					<ul>
 					</ul>
 				</div>

@@ -204,6 +204,7 @@ ul {
     padding-left : 0px;
 }
 </style>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
 
@@ -367,6 +368,7 @@ ul {
 			</div>
 		</div>
 	</div>
+
 <script>
 	$(function () {
 		const main = {
@@ -393,8 +395,18 @@ ul {
 						return false;
 					}
 				})
-			},
 
+				common.gfn_getAuthKey("kakao", _this.kakaoChatInit);
+			},
+			kakaoChatInit: function(key) {
+				Kakao.init(key);
+
+				$("#btnChatKaKao").click(function() {
+					Kakao.Channel.chat({
+						channelPublicId: '_IXZBK'
+					})
+				})
+			},
 			// 상담 나가기 시
 			chatClose : function(result, json) {
 				if(result) {

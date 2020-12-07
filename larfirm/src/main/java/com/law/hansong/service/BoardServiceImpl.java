@@ -206,8 +206,8 @@ public class BoardServiceImpl implements BoardService {
 	                    .board_id(board.getId())
 	                    .file_name(fileDBName)
 	                    .file_original(fileName)
-	                    .regi_id(board.getRegi_id())
-	                    .updt_id(board.getRegi_id())
+	                    .regi_id(board.getUpdt_id())
+	                    .updt_id(board.getUpdt_id())
 	                    .build();
 			    
 			    mf.transferTo(new File(filePath + fileDBName));
@@ -236,7 +236,8 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.getFileList(id);
 	}
 
-
+	
+	 // 게시글 삭제
 	@Override
 	public int deleteBoard(Long id) {
 		return boardDao.deleteBoard(id);
@@ -246,7 +247,6 @@ public class BoardServiceImpl implements BoardService {
 
 
 	
-	  // 게시글 삭제
 
 
 

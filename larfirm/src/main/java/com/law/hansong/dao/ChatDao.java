@@ -1,6 +1,5 @@
 package com.law.hansong.dao;
 
-import com.law.hansong.dto.Board;
 import com.law.hansong.dto.Chat;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

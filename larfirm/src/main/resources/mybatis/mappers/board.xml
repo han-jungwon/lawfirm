@@ -127,23 +127,11 @@
 		SELECT * FROM BOARD_FILE WHERE BOARD_ID = #{id}
 	</select>
 	
-	<delete id="fileDelete" parameterType="Long">
+	<delete id="fileDelete" parameterType="Map">
 		DELETE FROM BOARD_FILE
-		WHERE BOARD_ID = #{board_id}
+		WHERE BOARD_ID = #{id}
 	</delete>
-	
-<!-- 	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">
-		SELECT *
-		FROM REPLY
-		WHERE REF_BID=#{bId}
-		AND R_STATUS='Y'
-		ORDER BY RID DESC
-	</select>
 
-	<insert id="insertReply" parameterType="Reply">
-		INSERT INTO REPLY VALUES
-		(SEQ_RID.NEXTVAL,#{rContent},#{refBid},#{rWriter},SYSDATE,SYSDATE,DEFAULT)
-	</insert> -->
 </mapper>
 
 

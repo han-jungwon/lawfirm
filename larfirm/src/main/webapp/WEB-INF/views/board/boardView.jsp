@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
@@ -89,6 +88,8 @@ p {
 		</div>
 	</div>
 <input type="hidden" id="loginId" value="${principal.username}">
+<input type="hidden" name="id" id="board_id" value="${board.id}">
+
 	<div class="container">
 		<h3 id ="h3_category" class="float-left"></h3> 	
 		<table class="table table-bordered">
@@ -96,7 +97,7 @@ p {
 				<tr>
 					<td>
 						<span style="font-weight:bold">${principal.username}</span>&#32;
-						<span style="font-size:9pt"><fmt:formatDate value="${board.regi_dt}" pattern="yyyy.MM.dd"/>에 작성됨</span>
+						<span style="font-size:9pt">${board.regi_dt}에 작성됨</span>
 						
 					</td>
 				</tr>
@@ -176,7 +177,7 @@ p {
 					<tr>
 						<td>
 							<span>${commentsList.regi_id}</span> &nbsp; &nbsp; &nbsp; &nbsp; 
-							<fmt:formatDate value="${commentsList.regi_dt}" pattern="yyyy.MM.dd"/> &nbsp; &nbsp;
+							${commentsList.regi_dt} &nbsp; &nbsp;
 							<!-- 수정, 삭제 -->
 							<c:if test="${commentsList.regi_id == principal.username}">
 								<span class="comment_update" style ="font-size:10pt">
@@ -199,7 +200,7 @@ p {
 						<td>
 							<span style="color:gray">총 80자까지 가능합니다.</span>
 							<textarea class="float-left" rows="2" name="content" id="content" maxLength="80"></textarea>
-							<input id ="comment_id" type="hidden"></input>
+							<input id ="comment_id"  type="hidden"></input>
 							<button type="button" id="write" class="btn btn-info float-right">등록</button>
 						</td>
 					</tr>
@@ -211,74 +212,121 @@ p {
 </body>
 <script>
 
-$(function() {
-	
-
-	if($("#BOARD_CATEGORY").val()=="0"){
-		$('#h3_category').text("공지사항");	
-	}else if($("#BOARD_CATEGORY").val()=="1"){
-		$('#h3_category').text("온라인 상담");
-	}else if($("#BOARD_CATEGORY").val()=="2"){
-		$('#h3_category').text("언론보도");
-	}else if($("#BOARD_CATEGORY").val()=="3"){
-		$('#h3_category').text("합의서");
-	}else if($("#BOARD_CATEGORY").val()=="4"){
-		$('#h3_category').text("탄원서");
-	}else{
-		$('#h3_category').text("반성문");
-	}
   
 
-	$("#wirte").click(function() {
-		buttonText = $("write").text();
-		content = $("#content").val();
+	$("#write").click(function() {
+		const buttonText = $("#write").text();
+		
 		if(common.gfn_isNull($("#loginId").val())) {
 			common.gfn_alert('alert', '알림', '로그인을 해주세요.', 'small');
 			return false;
 		}
-		if(common.gfn_isNull((content).val())) {
+		if(common.gfn_isNull($("#content").val())) {
 			common.gfn_alert('alert', '알림', '내용을 입력하세요.', 'small');		
 			$("#content").focus();
 			return false;
 		}
-		if(common.gfn_isNull((buttonText).val("등록"))) { // 추가
-			url = "/hansong/comments/commentInsert";
-			data = {
-					"content" : content,
-					"member_id" : $("#loginId").val(),
-					"board_id" : $("#board_id").val()					
-				  };
-		}else { // 수정
-			url = "/hansong/comments/commentUpdate";
-			data = {
-					"id" : $("#comment_id").val(),
-					"content" : content
-				 };
-			
-			$("#write").text("등록");			
-		}		
+		let pUrl = "";
+		let pData = {}; 
+	    if(buttonText == "등록") { // 등록
+	    	pUrl = "/hansong/comments/commentInsert";
+	    	pData = {
+	        		 board_id  : $("#board_id").val(),
+	        		 member_id : $("#loginId").val(),
+	        		 content : $("#content").val(),
+	        		 regi_id : $("#loginId").val()   	 
+	         }; 
+	    	
+	      }else { // 수정  
+	    	  pUrl = "/hansong/comments/updateComment";
+	    	  pData = {
+	      			 id : $("#comment_id").val(), 
+	      			 content : $("#content").val()
+	      	  };
+	    	  $("#write").text("등록");
+	      };
+
+	 	  
+	    $.ajax({
+	         type : "post",
+	         url : pUrl,
+	         data : pData,	 
+	         success : function(result) {
+	            $("#content").val('');
+	            if (result == 1) {
+	               getList();
+	            }
+	         }
+	      })
+	      
+	 }); 
+	      
+	
+function getList() {
+      $.ajax({
+               type : "get",
+               url : "/hansong/comments/commentList",
+               data : {
+            	   board_id : $("#board_id").val()
+               },
+               dataType : "json",
+               cache : false,
+               success : function(data) {
+                  if (data.leng > 0) {
+                     $("#comment tbody").empty();
+                     output = '';
+                     $.each(data.commentsList, function(index, item) {
+                           output += "<tr><td>"
+                                  + "<span>"
+                                  + item.member_id
+                                  + "</span> " + item.regi_dt;
+                                  if($("#loginId").val() == item.member_id) {
+                                     output += "<span class='comment_update' style='font-size: 10pt'>"
+                                            + "<img src='/hansong/resources/images/pencil.svg' alt='update' width='14' height='14'></span>"
+                                            + "<span class='comment_remove' style='font-size: 10pt'>"
+                                            + "<img src='/hansong/resources/images/trash.svg' alt='remove' width='14' height='14'></span>";
+                                 }
+                           output += "<hr><span>" + item.content +"</span></td></tr>";
+                     });
+                     $("#comment tbody").append(output);
+                  } else {
+                     $("#comment tbody").empty();
+                  }
+                  $("#comment_length").text('댓글 ('+data.leng+'개)');
+               }, error : function(xhr, status, errorThrown) {
+                  alert(status+" : "+errorThrown);
+               }
+      	});
+
+	};
+	
+	// 댓글 수정 버튼 클릭
+	$(".comment_update").click(function() {
+		before = $(this).next().next().next().text(); 
+		$("#content").focus().val(before); 
+		num = $(this).prev().text();
+		$("#comment_id").val(num);
+		$("#write").text("수정"); 
+	});
+	
+	
+	// 댓글 삭제 버튼 클릭
+	$(".comment_remove").click(function() {
+		num = $(this).prev().prev().text();
 		$.ajax({
-			type : "post",
-			url : url,
-			data : data,
+			type : "get",
+			url : "/hansong/comments/deleteComment",
+			data : {
+				id : num
+			},
 			success : function(result) {
-				$("#content").val('');
-				if (result == 1) {
+				if (result == 1)
 					getList();
-				}
 			}
 		})
 	})
-				
-			
-	})
 
 
-
-
-
-
-});
 
 
 

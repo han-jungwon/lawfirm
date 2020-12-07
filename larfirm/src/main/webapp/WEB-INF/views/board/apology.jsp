@@ -8,7 +8,7 @@
 <title>반성문</title>
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
-<link rel="stylesheet" href="../resources/css/joinform.css" />
+ㅊ
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 

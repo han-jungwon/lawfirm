@@ -21,4 +21,5 @@ public class BoardFile {
 	private String updt_id;
 	private Date updt_dt;	
 	
+	
 }

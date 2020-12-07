@@ -36,7 +36,6 @@ public class BoardDao {
 	}
 	// 게시글 등록하기
 	public int addBoard(Board board) {
-	System.out.println("보드다오");
 		return sqlSession.insert("Board.insertBoard", board); 
 	}
 	// 파일 첨부
@@ -50,13 +49,11 @@ public class BoardDao {
 	// 게시글 수정
 	public int updateBoard(Board board) {
 		return sqlSession.update("Board.updateBoard", board); 		
-	}
-	
-
+	}	
+	// 게시글 삭제
 	public int deleteBoard(Long id) {
 		return sqlSession.delete("Board.deleteBoard", id); 
-	}
-	
+	}	
 	// 파일 삭제
 	public int fileDelete(Map<String, Object> returnMap) {
 		return sqlSession.delete("Board.fileDelete", returnMap); 

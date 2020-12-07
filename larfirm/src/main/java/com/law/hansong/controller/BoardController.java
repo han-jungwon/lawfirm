@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +32,7 @@ import com.law.hansong.dto.Board;
 import com.law.hansong.dto.Member;
 import com.law.hansong.service.BoardService;
 import com.law.hansong.service.MemberService;
+import com.law.hansong.service.security.VerifyRecaptcha;
 
 
 @Controller
@@ -107,11 +109,10 @@ public class BoardController {
 	public ModelAndView searchDetail(ModelAndView mv, @RequestParam(value = "id", required =  true) Long id) {
 		Map<String, Object> returnMap = boardService.searchDetail(id);
 
-		
+
 		mv.addObject("board", returnMap.get("board"));
 		mv.addObject("boardFileList", returnMap.get("boardFileList"));
 		mv.addObject("commentsList", returnMap.get("commentsList"));
-		mv.addObject("comments", returnMap.get("comments"));
 		mv.setViewName("board/boardView");
 		return mv;
 	}
@@ -222,35 +223,19 @@ public class BoardController {
 			
 		}
 		
-		/*
-		 * // 게시글 삭제
-		 * 
-		 * @PostMapping("/boardDelete") public String boardDelete(int id,
-		 * HttpServletRequest request, RedirectAttributes redirect) {
-		 * 
-		 * 
-		 * Board board = boardService.selectUpdateBoard(id); // 수정페이지로 들어가서
-		 * 
-		 * // 게시글에 파일첨부가 되어있으면 -> 파일을 삭제해준다. if(board.getUploadFile() != null) {
-		 * deleteFile(board.getUploadFile(),request); }
-		 * 
-		 * // 게시글을 삭제한다. int result = boardService.deleteBoard(id);
-		 * 
-		 * return "redirect:/boards/boardList"; }
-		 */
 		
 		//게시물 삭제
 		@GetMapping("/deleteBoard") 
-		public String deleteBoard(Long id, HttpServletRequest request) {
+		public String deleteBoard(Long id) {
 
-			int result = boardService.deleteBoard(id);
+			 boardService.deleteBoard(id);
 			
 	
 				return "redirect:/boards/boardList";
 			
 		}
 		 
-		 
+		// 파일 삭제 
 		public void deleteFile(List<MultipartFile> list, HttpServletRequest request) {
 			String root = request.getSession().getServletContext().getRealPath("resources");
 			String savePath = root + "\\upload";
@@ -260,6 +245,23 @@ public class BoardController {
 			if(f.exists()) {
 				f.delete();
 			}
+		}
+		
+		// 리캡차
+		@ResponseBody
+		@RequestMapping(value = "VerifyRecaptcha", method = RequestMethod.POST)
+		public int VerifyRecaptcha(HttpServletRequest request) {
+		    VerifyRecaptcha.setSecretKey("6LcnB94ZAAAAAD44IadSFKC47xxrR3QAzqoM9kUz");
+		    String gRecaptchaResponse = request.getParameter("recaptcha");
+		    //0 = 성공, 1 = 실패, -1 = 오류
+		    try {
+		       if(VerifyRecaptcha.verify(gRecaptchaResponse))
+		          return 0;
+		       else return 1;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        return -1;
+		    }
 		}
 
 	}

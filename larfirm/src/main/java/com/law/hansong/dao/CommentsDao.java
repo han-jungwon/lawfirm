@@ -15,13 +15,21 @@ public class CommentsDao {
 	   private SqlSessionTemplate sqlSession;
 
 	// 댓글 조회
-	public List<Comments> readComments(Long id) {
-		return sqlSession.selectList("Comments.getList", id); 
+	public List<Comments> readComments(Long board_id) {
+		return sqlSession.selectList("Comments.getList", board_id); 
 	}
 
 	// 댓글 작성
-	public int commentInsert(Comments co) {
+	public int insertComment(Comments co) {
 		return sqlSession.insert("Comments.insertComment", co);
+	}
+	// 댓글 수정
+	public int updateComment(Comments co) {
+		return sqlSession.update("Comments.updateComment", co);
+	}
+
+	public int deleteComment(Long id) {
+		return sqlSession.delete("Comments.deleteComment", id);
 	}
 	
 	

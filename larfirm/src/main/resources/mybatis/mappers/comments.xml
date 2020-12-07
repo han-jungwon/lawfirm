@@ -7,15 +7,16 @@
 		 		, MEMBER_ID
 		 		, CONTENT
 		 		, REGI_ID
-		 		, REGI_DT
+		 		, TO_CHAR(REGI_DT, 'YYYY-MM-DD') REGI_DT
 		   FROM  COMMENTS
 		   WHERE BOARD_ID = #{board_id}
+		   ORDER BY ID 
 	</select>
 
 	<insert id="insertComment" parameterType="Comments">
-		<selectKey resultType="Long" keyProperty="id" order="BEFORE">
+	<!-- 	<selectKey resultType="Long" keyProperty="id" order="BEFORE">
 			SELECT COMMENTS_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
+		</selectKey> -->
 		INSERT INTO COMMENTS (ID
 							, BOARD_ID
 							, MEMBER_ID
@@ -23,16 +24,27 @@
 							, REGI_ID
 							, REGI_DT
 							, UPDT_ID
-							, REGI_DT)
-					 VALUES ( #{id}
+							, UPDT_DT)
+					 VALUES ( COMMENTS_SEQ.NEXTVAL
 					 		, #{board_id}
 					 		, #{member_id}
 					 		, #{content}
 					 		, #{regi_id}
 					 		, SYSDATE
-					 		, #{regi_id]
+					 		, #{regi_id}
 					 		, SYSDATE)	
 			
-	</insert>
+	  </insert>
+	  
+	  <update id="updateComment" parameterType="Comments">
+   		UPDATE COMMENTS 
+   				      SET CONTENT = #{content} 
+   				      WHERE ID = #{id}
+   	  </update>
+   	  
+   	  <delete id="deleteComment" parameterType="Comments">
+		DELETE FROM COMMENTS
+		WHERE ID = #{id}
+	</delete>
 	
 </mapper>	

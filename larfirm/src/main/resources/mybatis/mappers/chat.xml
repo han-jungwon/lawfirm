@@ -9,9 +9,153 @@
 <mapper namespace="Chat">
 
 
-	<select id="SELECT_ALL_BY_EMAIL" parameterType="String" >
-		SELECT ID,NAME,PASSWORD,EMAIL, PHONE,REGI_ID,REGI_DT,UPDT_ID,UPDT_DT
-		FROM MEMBER WHERE EMAIL = #{email}
+	<insert id="createChat" parameterType="Map">
+		<selectKey resultType="Long" keyProperty="chatId" order="BEFORE">
+			select CHAT_SEQ.nextval from dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO CHAT(ID
+							, CONDITION
+							, REGI_ID
+							, REGI_DT
+							, UPDT_ID
+							, UPDT_DT)
+					  VALUES( #{chatId}
+							, 0
+							, #{id}
+							,sysdate
+							, #{id}
+							,sysdate)
+		]]>
+	</insert>
+	<insert id="createParticipant" parameterType="Map">
+		<![CDATA[
+		INSERT INTO PARTICIPANT(ID
+								, CHAT_ID
+								, REGI_ID
+								, REGI_DT)
+						VALUES (PARTICIPANT_SEQ.nextval
+								, #{chatId}
+								, #{id}
+								, sysdate)
+		]]>
+	</insert>
+	<insert id ="addParticipant" parameterType="Map">
+		<![CDATA[
+		INSERT INTO PARTICIPANT(ID
+								, CHAT_ID
+								, REGI_ID
+								, REGI_DT)
+						VALUES (PARTICIPANT_SEQ.nextval
+					  			, #{chatId}
+								, #{participantId}
+								, sysdate)
+		]]>
+	</insert>
+
+	<update id="updateChatCondition" parameterType="Map">
+		<![CDATA[
+		UPDATE CHAT
+		   SET CONDITION = 1
+		       , UPDT_ID = #{participantId}
+		       , UPDT_DT = SYSDATE
+		WHERE ID = #{chatId}
+		  AND CONDITION = 0
+		]]>
+	</update>
+
+	<insert id="sendMessage" parameterType="Map">
+		<![CDATA[
+		INSERT INTO MESSAGE(ID
+						    , CHAT_ID
+						    , CONTENT
+						    , REGI_ID
+						    , REGI_DT
+						    , UPDT_ID
+						    , UPDT_DT
+						   )
+					VALUES(MESSAGE_SEQ.nextval
+						   , (SELECT A.ID
+						        FROM CHAT A
+						            INNER JOIN PARTICIPANT B
+						                ON A.ID = B.CHAT_ID
+						       WHERE A.CONDITION IN (0, 1)
+						         AND B.REGI_ID = #{participantId})
+						   , #{content}
+						   , #{participantId}
+						   , sysdate
+						   , #{participantId}
+						   , sysdate
+						  )
+		]]>
+	</insert>
+
+	<select id="joinChat" parameterType="String" resultType="int">
+		<![CDATA[
+		SELECT COUNT(*) CNT
+		  FROM CHAT
+		 WHERE REGI_ID = #{id}
+           AND CONDITION IN (0, 1)
+		]]>
 	</select>
 
+	<select id="getParticipantId" parameterType="Map" resultType="String">
+		<![CDATA[
+		SELECT B.REGI_ID
+		FROM CHAT A
+				 INNER JOIN PARTICIPANT B
+							ON A.ID = B.CHAT_ID
+		WHERE A.CONDITION IN (0, 1)
+		  AND B.REGI_ID != #{participantId}
+		  AND B.USE_YN = 'Y'
+		]]>
+	</select>
+
+	<update id="endChat" parameterType="Chat">
+		<![CDATA[
+			UPDATE CHAT A
+			   SET A.CONDITION = DECODE(A.CONDITION, 1, 2, 3)
+			       , UPDT_ID = #{regi_id}
+				   , UPDT_DT = SYSDATE
+			WHERE ID = #{id}
+		]]>
+	</update>
+
+	<select id="getAllChat" resultType="Chat">
+		<![CDATA[
+		SELECT ID
+			   , REGI_ID
+			   , TO_CHAR(REGI_DT,'YYYY-MM-DD') REGI_DT
+		       , CONDITION
+		  FROM CHAT
+		ORDER BY CONDITION, REGI_DT DESC
+		]]>
+	</select>
+
+	<update id="updateParticipantStatus" parameterType="Map">
+		<![CDATA[
+		UPDATE PARTICIPANT
+		   SET USE_YN = #{participantStatus}
+		 WHERE CHAT_ID = #{chatId}
+		   AND REGI_ID = #{participantId}
+		]]>
+	</update>
+
+	<update id="endParticipant" parameterType="Chat">
+		<![CDATA[
+		UPDATE PARTICIPANT
+		   SET USE_YN = 'N'
+		 WHERE CHAT_ID = #{id}
+		   AND REGI_ID = #{regi_id}
+		]]>
+	</update>
+
+	<select id="checkParticipant" resultType="Int" parameterType="Map">
+		<![CDATA[
+		SELECT count(*) checkCnt
+		  FROM PARTICIPANT
+		 WHERE CHAT_ID = #{chatId}
+		   AND REGI_ID = #{participantId}
+		]]>
+	</select>
 </mapper>

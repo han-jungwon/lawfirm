@@ -9,8 +9,6 @@
 <jsp:include page="../common/header.jsp" />
 <!-- Site css -->
 <link rel="stylesheet" href="../resources/css/joinform.css" />
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
 <style>
 .big_tab {
 	margin-left: 300px;

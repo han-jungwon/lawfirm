@@ -19,8 +19,8 @@ public class MemberRoleDao {
       return sqlSession.selectList("Member.SELECT_ROLE_ALL_BY_EMAIL", email);
    }
    
-   public int addMemberRole() {
-	  return sqlSession.insert("Member.INSERT_MEMBER_ROLE");
+   public int addMemberRole(Long member_id) {
+	  return sqlSession.insert("Member.INSERT_MEMBER_ROLE", member_id);
    }
    /*
    //private NamedParameterJdbcTemplate jdbc;

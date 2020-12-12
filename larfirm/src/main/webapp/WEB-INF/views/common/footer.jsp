@@ -21,6 +21,7 @@
 </footer>
 <!-- end footer -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/hansong/resources/js/jquery.modal.min.js"></script>
 <script src="/hansong/resources/js/common.js?ver=7"></script>
 <script>
@@ -31,11 +32,15 @@
 				$("#mypage").click(function () {
 					common.gfn_alert('confirm', '알림', '로그아웃 하시겠습니까?', 'small', null, false, true, _this.callback_mypage)
 				});
+				$("#adminPage").click(function() {
+					location.href = common.gfn_getContextPath() + "/admins/main";
+				})
 				$.when(common.gfn_getUserInfo()).done(function (data, textStatus, jqXHR) {
 					if(common.gfn_isNotNull(data)) {
 						$("#navUserName").val(data.name);
 					}
 				});
+
 			},
 			callback_mypage : function (result) {
 				if (result === true) {

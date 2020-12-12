@@ -8,10 +8,10 @@
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <title>법무법인 송한</title>
 </head>
+<link rel="stylesheet" href="../resources/css/joinform.css" />
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="./joinform_account_rule.jsp" />
 <jsp:include page="./joinform_info_rule.jsp" />
-<link rel="stylesheet" href="../resources/css/joinform.css" />
 <style>
 body {
 	padding-top: 70px;
@@ -117,10 +117,9 @@ body {
 
 							</div>
 							
-					 	<div class="form-group">
-								<div class="g-recaptcha" 
-									data-sitekey="6LcnB94ZAAAAAJyGmoNL2E4Mp7pcBwtz_AeP63xb"></div>
-							
+						 	<div class="form-group">
+									<div class="g-recaptcha" 
+										data-sitekey="6LcnB94ZAAAAAJyGmoNL2E4Mp7pcBwtz_AeP63xb"></div>	
 							</div> 
 							
 							<div class="btn_wrap">

@@ -4,72 +4,134 @@
 
 <mapper namespace="Board">
 	
-	<select id="selectList" resultType="Board">
-		SELECT ID,
-			   BOARD_TITLE,
-			   BOARD_COUNT,
-			   REGI_DT		
-		FROM BOARD
-		ORDER BY ID DESC
-	</select>
-	<!--
-	<update id="updateCount" parameterType="_int">
-		UPDATE BOARD
-		SET BOARD_COUNT = BOARD_COUNT +1
-		WHERE ID=#{Id}
-	</update>
-	
-	<select id="selectBoard" resultMap="boardResultSet">
-		SELECT * 
-		FROM BOARD
-		WHERE BID=#{bId}
-		AND B_STATUS='Y'
+	<select id="getListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM BOARD	
 	</select>
 	
-	<insert id="insertBoard" parameterType="Board">
-		INSERT INTO BOARD
-		VALUES(SEQ_BID.NEXTVAL,#{bTitle},#{bWriter},#{bContent},
-			   #{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT)
-	</insert>
-	
-	<update id="updateBoard" parameterType="Board">
-		UPDATE BOARD
-		SET BTITLE=#{bTitle}
-		   ,BCONTENT=#{bContent}
-		   ,ORIGINAL_FILENAME=#{originalFileName}
-		   ,RENAME_FILENAME=#{renameFileName}
-		   ,B_MODIFY_DATE=SYSDATE
-		WHERE BID=#{bId}
-	</update>
-
-	<update id="deleteBoard" parameterType="_int">
-		UPDATE BOARD
-		SET B_STATUS='N'
-		WHERE BID=#{bId}
-	</update>
-	
-	<select id="selectTopList" resultMap="boardResultSet">
+	<select id="selectList" resultType="Board" parameterType="java.util.Map">
 		<![CDATA[
-		SELECT *
-		FROM (SELECT *
-			  FROM board
-			  ORDER BY BCOUNT desc)
-		WHERE ROWNUM <= 5
+		 SELECT ID
+		 		, BOARD_TITLE
+		 		, BOARD_COUNT
+		 		, REGI_ID
+		 		, REGI_DT
+		 		, RNUM 
+		   FROM (
+				 SELECT a.ID
+		        	   , a.BOARD_TITLE
+		           	   , a.BOARD_COUNT
+		               , a.REGI_ID
+		               , a.REGI_DT 
+				 	   , ROWNUM RNUM
+				  FROM (
+				        SELECT ID
+				        	   , BOARD_TITLE
+				           	   , BOARD_COUNT
+				               , REGI_ID
+				               , REGI_DT     
+				          FROM BOARD
+				         WHERE BOARD_CATEGORY=#{board_category}
+				         ORDER BY ID DESC
+				        ) a 
+				) 
+		  WHERE RNUM BETWEEN  #{start} and #{end}
 		]]>
 	</select>
 	
-	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">
-		SELECT *
-		FROM REPLY
-		WHERE REF_BID=#{bId}
-		AND R_STATUS='Y'
-		ORDER BY RID DESC
+	<update id="updateReadCount" parameterType="Long">
+		UPDATE BOARD
+		SET BOARD_COUNT = BOARD_COUNT +1
+		WHERE ID=#{id}
+	</update>
+	
+	
+	<select id="getDetail" resultType="Board" parameterType="Long">
+		SELECT ID,
+			   BOARD_CATEGORY,
+			   BOARD_TITLE,
+			   BOARD_CONTENT,
+			   REGI_ID,
+			   REGI_DT			   
+		FROM BOARD
+		WHERE ID=#{id}
 	</select>
 
-	<insert id="insertReply" parameterType="Reply">
-		INSERT INTO REPLY VALUES
-		(SEQ_RID.NEXTVAL,#{rContent},#{refBid},#{rWriter},SYSDATE,SYSDATE,DEFAULT)
-	</insert>-->
+
+
+	<insert id="insertBoard" parameterType="Board">
+		<selectKey resultType="Long" keyProperty="id" order="BEFORE">
+			SELECT BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO BOARD (ID
+						 , BOARD_CATEGORY
+						 , BOARD_TITLE
+						 , BOARD_CONTENT
+						 , BOARD_COUNT
+						 , BOARD_RE_REF
+						 , BOARD_RE_LEV
+						 , BOARD_RE_SEQ
+						 , REGI_ID
+						 , REGI_DT
+						 , UPDT_ID
+						 , UPDT_DT)
+		          VALUES ( #{id}
+		          		 , #{board_category}
+		          		 , #{board_title}
+		          		 , #{board_content}
+		          		 , 0
+		          		 , 0
+		          		 , 0
+		          		 , 0
+		          		 , #{regi_id}
+		          		 , SYSDATE
+		          		 , #{regi_id}
+		          		 , SYSDATE)
+	</insert>
+
+	<insert id="fileInsert" parameterType="BoardFile">
+		INSERT INTO BOARD_FILE(ID
+							  , BOARD_ID
+							  , FILE_NAME
+							  , FILE_ORIGINAL
+							  , REGI_ID
+							  , REGI_DT
+							  , UPDT_ID
+							  , UPDT_DT)
+						VALUES(BOARD_FILE_SEQ.NEXTVAL
+							  , #{board_id}
+							  , #{file_name}
+							  , #{file_original}
+							  , #{regi_id}
+							  , SYSDATE
+							  , #{updt_id}
+							  , SYSDATE)
+	</insert>
+
+	<delete id="deleteBoard" parameterType="Long">
+		DELETE BOARD
+		WHERE ID=#{id}
+	</delete>
+	
+	
+ 	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD
+				SET BOARD_TITLE=#{board_title}
+		   		   ,BOARD_CONTENT=#{board_content}
+		   		   ,UPDT_ID=#{updt_id}
+		   		   ,UPDT_DT=SYSDATE
+				WHERE ID=#{id}
+	</update>
+
+	<select id="getFileList" parameterType="Long" resultType="BoardFile">
+		SELECT * FROM BOARD_FILE WHERE BOARD_ID = #{id}
+	</select>
+	
+	<delete id="fileDelete" parameterType="Map">
+		DELETE FROM BOARD_FILE
+		WHERE BOARD_ID = #{id}
+	</delete>
+
 </mapper>
 
 

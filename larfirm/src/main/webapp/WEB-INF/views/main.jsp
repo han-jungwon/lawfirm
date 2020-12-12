@@ -194,8 +194,17 @@ ul {
 	width: 180px;
 	height: 240px;
 }
-
+.sent > p {
+	text-align: right;
+}
+.inout > p {
+    text-align: center;
+}
+.message-body > ul {
+    padding-left : 0px;
+}
 </style>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
 
@@ -340,12 +349,12 @@ ul {
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h1 class="modal-title" style="font-size: large">실시간 상담</h1>
+					<h1 class="modal-title2" style="font-size: large">실시간 상담</h1>
 					<button type="button" class="close" data-dismiss="modal">×</button>
 				</div>
 
 				<!-- messages -->
-				<div class="modal-body" style="overflow-x: hidden; overflow-y: auto; height: 400px; word-break: break-all;">
+				<div class="modal-body message-body" style="overflow-x: hidden; overflow-y: auto; height: 400px; word-break: break-all;">
 					<ul>
 					</ul>
 				</div>
@@ -359,6 +368,7 @@ ul {
 			</div>
 		</div>
 	</div>
+
 <script>
 	$(function () {
 		const main = {
@@ -386,32 +396,23 @@ ul {
 					}
 				})
 
-				$("#test2").click(function () {
-					//common.alertBox("gd",test,'gd');
-
-					let modalContent = "";
-					modalContent += "<div>";
-					modalContent += "	<button id = \"odd\">gd</button>";
-					modalContent += "	<button id = \"odd\">gd</button>";
-					modalContent += "	<strong>로그인이 되었습니다.</strong>";
-					modalContent += "</div>";
-					common.gfn_alert('c','알림',modalContent,'normal', null, false, true, _this.test, {val:'test'});
-
-				});
-				/**
-				 *  ~~
-				 */
-				// 동적 리소스
-				$(document).on("click", "#odd", function () {
-					console.log("정워나 알러뷰");
-				});
+				common.gfn_getAuthKey("kakao", _this.kakaoChatInit);
 			},
+			kakaoChatInit: function(key) {
+				Kakao.init(key);
 
+				$("#btnChatKaKao").click(function() {
+					Kakao.Channel.chat({
+						channelPublicId: '_IXZBK'
+					})
+				})
+			},
 			// 상담 나가기 시
 			chatClose : function(result, json) {
 				if(result) {
 					main.chatSend(common.gfn_getUserId()+"님이 퇴장하셨습니다.");
 					main.ws.close();
+					$(".modal-body > ul").html("");
 				}
 			},
 
@@ -421,11 +422,13 @@ ul {
 				$("#spanChatNormal").show();
 				if(common.gfn_isNull(common.gfn_getUserId())) {
 					common.gfn_alert('c','알림',"로그인을 먼저 해주세요.",'small');
+					$("#imgChatNormal").show();
+					$("#spanChatNormal").hide();
 					return;
 				}
 
 
-				this.ws = new WebSocket("ws://localhost:8088/hansong/boot?id="+common.gfn_getUserId());
+				this.ws = new WebSocket("ws://localhost:8088/hansong/boot");
 
 				$("#mdlChatNormal").modal('show');
 				$("#imgChatNormal").show();
@@ -452,26 +455,26 @@ ul {
 			 * @param sMessage(String)
 			 */
 			chatSend : function(sMessage) {
-				this.ws.send(sMessage);
+				this.ws.send("1&"+sMessage);
 			},
 
 			chatResponse : function(rtext) {
-				var arr = rtext.split('&');
-				var message = arr[1];
+				const separatorIndex = rtext.indexOf("&");
+				const fromId = rtext.substring(0,separatorIndex);
+				const message = rtext.substring(separatorIndex+1);
 
-				var out = "님이 퇴장하셨습니다.";
-				var inin = "님이 입장하셨습니다.";
-				var output = "";
+				const out = "님이 퇴장하셨습니다.";
+				const come = "님이 입장하셨습니다.";
+				let output = "";
+
 				// 입장과 퇴장의 경우 css가 가운데로 위치해야 함.
-				console.log(message);
-				if(message.indexOf(out) > -1 || message.indexOf(inin) > -1) {
-					var index = message.lastIndexOf('.');
+				if(message.indexOf(out) > -1 || message.indexOf(come) > -1) {
+
 					output = "<li class = 'inout'><p></p></li>";
-					message = message.substring(0, index);
+
 				} else {
-					var name = arr[0];
 					output = "<li class = 'replies'>"
-							+"<sup>" + name + "</sup><p></p></li>";
+							+"<sup>관리자</sup><p></p></li>";
 				}
 				$(".modal-body > ul").append(output);
 				$('.modal-body > ul > li').last().find('p').text(message);
@@ -486,25 +489,13 @@ ul {
 				}
 
 				var output = "<li class='sent'>"
-							+"<p></p></li>";
+							+"  <p></p>"
+                            +"</li>";
 				$(".modal-body > ul").append(output);
 				$('.modal-body > ul > li').last().find('p').text(message);
 				$("#txtChatContent").val(null);
 
 				return message;
-			},
-
-			/**
-			 *
-			 */
-			test : function (result, jsonData) {
-				location.href=common.gfn_getContextPath()+"/main";
-				if(result == true) {
-					console.log(result);
-				}
-				if(jsonData.val == 'test') {
-					console.log(jsonData);
-				}
 			}
 		}
 		main.init();

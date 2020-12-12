@@ -42,16 +42,16 @@
       
 * 산출물(대표)
    - ERD
-     ![erd](./src/main/webapp/resources/output/erd.png)
+     ![erd](./larfirm/src/main/webapp/resources/output/erd.png)
    - 시퀀스 다이어그램
-     ![seq](./src/main/webapp/resources/output/sequence.png)
+     ![seq](./larfirm/src/main/webapp/resources/output/sequence.png)
    - 테이블 정의서
-     ![db defi](./src/main/webapp/resources/output/table.png)
+     ![db defi](./larfirm/src/main/webapp/resources/output/table.png)
    - 유스케이스 다이어그램
-     ![usecase](./src/main/webapp/resources/output/usecase.png)
+     ![usecase](./larfirm/src/main/webapp/resources/output/usecase.png)
    - WBS
-     ![wbs](./src/main/webapp/resources/output/wbs.png)
+     ![wbs](./larfirm/src/main/webapp/resources/output/wbs.png)
    - 클래스 다이어그램
-     ![class dia](./src/main/webapp/resources/output/class.png)
+     ![class dia](./larfirm/src/main/webapp/resources/output/class.png)
    - 회의록
-     ![semi](./src/main/webapp/resources/Image/result/semi.png)
+     ![semi](./larfirm/src/main/webapp/resources/output/semi.png)

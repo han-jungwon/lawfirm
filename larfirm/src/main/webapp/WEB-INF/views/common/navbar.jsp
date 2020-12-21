@@ -84,7 +84,7 @@
             <li>
              <div class="dropdown">
                 <button class="btn click" type="button" id="dropdownMenuCounsel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                	onclick="location.href = '/hansong/boards/counsel'">
+                	onclick="location.href = '/hansong/boards/boardList?BOARD_CATEGORY=1'">
                     	온라인 상담
                 </button>
             </div>
@@ -103,10 +103,10 @@
                     	자료실
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuBoard">
-                    <button class="dropdown-item" type="button" onclick="location.href='/hansong/boards/report'">언론보도</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='/hansong/boards/agreement'">합의서</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='/hansong/boards/petition'">탄원서</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='/hansong/boards/apology'">반성문</button>
+                    <button class="dropdown-item" type="button" onclick="location.href='/hansong/boards/boardList?BOARD_CATEGORY=2'">언론보도</button>
+                    <button class="dropdown-item" type="button" onclick="location.href='/hansong/boards/boardList?BOARD_CATEGORY=3'">합의서</button>
+                    <button class="dropdown-item" type="button" onclick="location.href='/hansong/boards/boardList?BOARD_CATEGORY=4'">탄원서</button>
+                    <button class="dropdown-item" type="button" onclick="location.href='/hansong/boards/boardList?BOARD_CATEGORY=5'">반성문</button>
                     
                 </div>
             </div>

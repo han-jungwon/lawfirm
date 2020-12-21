@@ -116,7 +116,8 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 작성하기
 	@Override
 	public void addBoard(Board board, String filePath) throws Exception{
-        board.setBoard_content(CommonUtil.gm_xssFilter(board.getBoard_content()));
+        board.setBoard_content(board.getBoard_content().replaceAll(System.getProperty("line.separator"), "").replaceAll("\'", "&#39;").replaceAll("(\r\n|\r|\n|\n\r)", " "));
+        board.setBoard_title(CommonUtil.gm_xssFilter(board.getBoard_title()));
         int result = 0;
 		result = boardDao.addBoard(board);
 		if(result < 0) {
@@ -174,12 +175,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void updateBoard(Board board, int changeFile, String filePath) throws Exception {
 		int result = 0;
-				
+		board.setBoard_content(board.getBoard_content().replaceAll(System.getProperty("line.separator"), "").replaceAll("\'", "&#39;").replaceAll("(\r\n|\r|\n|\n\r)", " "));
+		board.setBoard_title(CommonUtil.gm_xssFilter(board.getBoard_title()));
 		result = boardDao.updateBoard(board);
 		if(result < 0) {
 			throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.", true);
 		}
-		log.info("check1");
 		
 		List<MultipartFile> upLoadFile = board.getUploadFile();
 		
@@ -187,14 +188,12 @@ public class BoardServiceImpl implements BoardService {
 		returnMap.put("id",board.getId());
 		returnMap.put("filePath",filePath);
 
-		log.info("check2");
 		if(changeFile == 1) { // 파일 변경
 			
 			result = boardDao.fileDelete(returnMap);
 			if(result < 0) {
 				throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.(2)", true);
 			}
-			log.info("check3");
 			for(MultipartFile mf : upLoadFile) {
 				if(mf.getSize() == 0) {
 					break;
@@ -223,7 +222,6 @@ public class BoardServiceImpl implements BoardService {
 			if(result < 0) {
 				throw new BusinessLogicException("수정 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.(2)", true);
 			}
-			log.info("check4");
 		}
 			
 	

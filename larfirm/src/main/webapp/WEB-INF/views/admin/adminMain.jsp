@@ -99,7 +99,7 @@
                 _this.initChatBoard();
 
                 // 관리자는 관리자페이지 접속과 동시에 소켓연결
-                _this.ws = new WebSocket("ws://localhost:8088/hansong/boot?admin");
+                _this.ws = new WebSocket(common.gS_wsContextPath+"?admin");
 
                 // 웹 소켓 연결 시 호출되는 이벤트
                 _this.ws.open = function (event) {

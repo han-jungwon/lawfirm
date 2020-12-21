@@ -14,9 +14,7 @@
 
 
 <style>
-.big_tab {
-	margin-left: 300px;
-}
+
 
 .big_tab ul {
 	overflow: hidden;
@@ -380,74 +378,105 @@ dt {
 	</div>
 
 	<div id="tab03" class="tab-contents">
-		<div class="container" style="margin-bottom: 20px">
-		<h2 id="ag">찾아오시는 길</h2> <br>
-		<span class="navybold">위치와 연락처</span>
-		<span class="bold">를 소개해 드립니다.</span>
-		</div>
-		<div class="container">
-		<!-- * 카카오맵 지도 -->
-		<!-- 지도 노드 -->
-		<div id="daumRoughmapContainer1603046769190" 
-			class="root_daum_roughmap root_daum_roughmap_landing"
-			style="width:100%;" ></div>
-		
+	<div class="container" style="margin-bottom: 20px">
+	<h2 id="ag">찾아오시는 길</h2> <br>
+	<span class="navybold">위치와 연락처</span>
+	<span class="bold">를 소개해 드립니다.</span>
+	</div>
+	<div class="container">
+	<!-- * 카카오맵 지도 -->
+	<!-- 지도 노드 -->
+	<div id="map" style="width:500px;height:400px;"></div>
+
 	<div class="container" style="margin-top: 30px">
-		<ul>
-			<li>
-				<span class="address">ADDRESS</span>
-			  	 서울 강남구 테헤란로14길 6 남도빌딩
-			</li>
-				<li>
-				<span class="address">TEL</span>
-				 02-123-1234 &nbsp;&nbsp;&nbsp;
-				<span class="address">FAX</span>
-				 02-142-2345 &nbsp;&nbsp;&nbsp;
-				<span class="address">PARKING</span>
-				 탄천주차장 1번 출입구 이용(유료)
-				</li>	
-			</ul>	
-			</div>		
-		</div>
+	<ul>
+	<li>
+	<span class="address">ADDRESS</span>
+	서울 강남구 테헤란로14길 6 남도빌딩
+	</li>
+	<li>
+	<span class="address">TEL</span>
+	02-123-1234 &nbsp;&nbsp;&nbsp;
+	<span class="address">FAX</span>
+	02-142-2345 &nbsp;&nbsp;&nbsp;
+	<span class="address">PARKING</span>
+	탄천주차장 1번 출입구 이용(유료)
+	</li>
+	</ul>
+	</div>
+	</div>
 	</div>
 	
 	<jsp:include page="../common/footer.jsp" />
 </body>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ef00ed0db2057c8b32419a7a16ca7795"></script>
 <script>
 	$(function() {
-		$('.big_tab li').eq(2).addClass("activeClass");
-		$(".tab-contents").not(':eq(2)').hide();
-		$('.big_tab li').on(
-				'click',
-				function() {
-					$(this).addClass("activeClass").siblings().removeClass(
-							"activeClass");
-					var link = $(this).find("a").attr("href");
-					var link_num = link.substr(link.length - 1);
-					$("select#tabmenu option").eq(link_num - 1).prop(
-							"selected", "selected");
-					$(".tab-contents").hide();
-					$(link).show();
-				});
-		$("select#tabmenu").on(
-				"change",
-				function() {
-					var select_link = $("select#tabmenu").val();
-					var select_num = $(this).prop('selectedIndex');
-					$('.big_tab li').eq(select_num).addClass("activeClass")
-							.siblings().removeClass('activeClass');
-					$(".tab-contents").hide();
-					$(select_link).show();
-					console.log(select_link);
-				});
+	$('.big_tab li').eq(2).addClass("activeClass");
+	$(".tab-contents").not(':eq(2)').hide();
+	$('.big_tab li').on(
+	'click',
+	function() {
+	$(this).addClass("activeClass").siblings().removeClass(
+	"activeClass");
+	var link = $(this).find("a").attr("href");
+	var link_num = link.substr(link.length - 1);
+	$("select#tabmenu option").eq(link_num - 1).prop(
+	"selected", "selected");
+	$(".tab-contents").hide();
+	$(link).show();
 	});
-	
-	/* 카카오지도 실행 스크립트 */
-		new daum.roughmap.Lander({
-			"timestamp" : "1603046769190",
-			"key" : "22i9a",
-			"mapHeight" : "360"
-		}).render();
+	$("select#tabmenu").on(
+	"change",
+	function() {
+	var select_link = $("select#tabmenu").val();
+	var select_num = $(this).prop('selectedIndex');
+	$('.big_tab li').eq(select_num).addClass("activeClass")
+	.siblings().removeClass('activeClass');
+	$(".tab-contents").hide();
+	$(select_link).show();
+	console.log(select_link);
+	});
+
+
+	});
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+
+	center: new kakao.maps.LatLng(37.49994152401089, 127.03292399880704), //지도의 중심좌표.
+	level: 3, //지도의 레벨(확대, 축소 정도)
+	};
+	container.style.width = '750px';
+	container.style.height = '500px';
+
+
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+	var mapTypeControl = new kakao.maps.MapTypeControl();
+
+	// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+	// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+	map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	var zoomControl = new kakao.maps.ZoomControl();
+	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+	var marker = new kakao.maps.Marker();
+
+	// 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
+	kakao.maps.event.addListener(map, 'tilesloaded', displayMarker);
+
+	function displayMarker() {
+
+	// 마커의 위치를 지도중심으로 설정합니다
+	marker.setPosition(map.getCenter());
+	marker.setMap(map);
+
+	// 아래 코드는 최초 한번만 타일로드 이벤트가 발생했을 때 어떤 처리를 하고
+	// 지도에 등록된 타일로드 이벤트를 제거하는 코드입니다
+	// kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
+	}
+
 		
 		
 </script>

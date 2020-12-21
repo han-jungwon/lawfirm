@@ -14,9 +14,6 @@
 
 
 <style>
-.big_tab {
-	margin-left: 300px;
-}
 
 .big_tab ul {
 	overflow: hidden;
@@ -404,9 +401,7 @@ dt {
 		<div class="container">
 			<!-- * 카카오맵 지도 -->
 			<!-- 지도 노드 -->
-			<div id="daumRoughmapContainer1603046769190"
-				class="root_daum_roughmap root_daum_roughmap_landing"
-				style="width: 100%;"></div>
+		<div id="map" style="width:500px;height:400px;"></div>
 
 			<div class="container" style="margin-top: 30px">
 				<ul>
@@ -428,6 +423,7 @@ dt {
 	</div>
 	<jsp:include page="../common/footer.jsp" />
 </body>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ef00ed0db2057c8b32419a7a16ca7795"></script>
 <script>
 	$(function() {
 		$('.big_tab li').first().addClass("activeClass");
@@ -456,13 +452,43 @@ dt {
 					console.log(select_link);
 				});
 	});
-	
-	/* 카카오지도 실행 스크립트 */
-	new daum.roughmap.Lander({
-		"timestamp" : "1603046769190",
-		"key" : "22i9a",
-		"mapHeight" : "360"
-	}).render();
+
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+
+	center: new kakao.maps.LatLng(37.49994152401089, 127.03292399880704), //지도의 중심좌표.
+	level: 3, //지도의 레벨(확대, 축소 정도)
+	};
+	container.style.width = '750px';
+	container.style.height = '500px';
+
+
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+	var mapTypeControl = new kakao.maps.MapTypeControl();
+
+	// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+	// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+	map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	var zoomControl = new kakao.maps.ZoomControl();
+	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+	var marker = new kakao.maps.Marker();
+
+	// 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
+	kakao.maps.event.addListener(map, 'tilesloaded', displayMarker);
+
+	function displayMarker() {
+
+	// 마커의 위치를 지도중심으로 설정합니다
+	marker.setPosition(map.getCenter());
+	marker.setMap(map);
+
+	// 아래 코드는 최초 한번만 타일로드 이벤트가 발생했을 때 어떤 처리를 하고
+	// 지도에 등록된 타일로드 이벤트를 제거하는 코드입니다
+	// kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
+	}
 </script>
 
 </html>

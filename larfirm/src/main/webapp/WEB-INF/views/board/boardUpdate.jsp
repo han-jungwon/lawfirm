@@ -89,15 +89,17 @@
 			</div>
 
 			<div class="form-group">
-				<label style="display: inline" for="board_file">파일 첨부</label> <label
+				<label style="display: inline" for="upfile">파일 첨부</label>
+				<label
 					style="display: inline" for="upfile" data-toggle="tooltip"
 					data-placement="top" title="최대 용량 : 10MB"> <img
 					style="vertical-align: bottom" id=ig
 					src="/hansong/resources/images/paperclip.svg" width="30px"
 					alt="파일첨부">
-				</label> <input multiple="multiple" type="file" id="upfile"
-					name="uploadFile"> <span id="filevalue"> <c:if
-						test="${!empty boardFileList}">
+				</label>
+				<input multiple="multiple" type="file" id="upfile" name="uploadFile">
+				<span id="filevalue">
+					<c:if test="${!empty boardFileList}">
 						<c:forEach var="files" items="${boardFileList}">
                             ${files.file_original}&nbsp;
                         </c:forEach>
@@ -113,7 +115,7 @@
 			</div>
 
 			<div class="form-group">
-				<button id="boardEditBtn" type="submit" class="btn btn-primary">수정</button>
+				<button id="boardEditBtn" type="button" class="btn btn-primary">수정</button>
 				<button type="reset" class="btn btn-primary"
 					onClick="history.go(-1)">취소</button>
 			</div>
@@ -149,9 +151,12 @@ $(function(){
 			$('#boardEditBtn').click(function() {
 				_this.EditClick();
 			});
+
+
 		},
 		
 		summernoteInit : function() {
+
 	       //여기 아래 부분
 	        $('#board_content').summernote({
 	            height: 300, // 에디터 높이
@@ -161,7 +166,7 @@ $(function(){
 	            callbacks: {
 	                onImageUpload: function (files, editor, welEditable) {
 	                    for (var i = files.length - 1; i >= 0; i--) {
-	                        sendFile(files[i], this);
+							boardUpdate.sendFile(files[i], this);
 	                    }
 	
 	                }
@@ -202,7 +207,8 @@ $(function(){
 
         	$('#board_content').summernote('code', '${board.board_content}');		
 		},
-		
+
+
 		//썸머노트에 첨부된 이미지를 서버에 저장한다.
 		sendFile : function (file, el) {
 	        var form_data = new FormData();
@@ -221,7 +227,7 @@ $(function(){
 	            }
 	        });
 	    },
- 
+
 	
 	    upfile : function(_this) {   
 	        	var array = $(_this).get(0).files; 
@@ -235,10 +241,16 @@ $(function(){
 	    		}
 	    		$('#filevalue').text(strArray);
 	    		$("#CHANGE_FILE").val("1");
-	    		boardUpdate.show();	
-	    },	 
+	    		boardUpdate.show();
+	    },
         show : function() {
-        	
+			if ($('#filevalue').text() == '') {
+				// 파일 이름이 있는 경우 remove 이미지를 보이게 하고 없는 경우는 보이지 않게 한다.
+				$(".remove").css('display', 'none');
+			} else {
+				$(".remove").css('display', 'inline-block');
+			}
+
         },
 	    removeFile : function() {
 	    	$("#CHANGE_FILE").val("2");

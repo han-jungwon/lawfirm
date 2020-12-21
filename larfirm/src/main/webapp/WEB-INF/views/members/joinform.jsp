@@ -143,55 +143,55 @@ $(function(){
 	const joinform = {
 		init: function () {			
 			const _this = this;
-			// 약관 확인
+						// 약관 확인
 			$("#account_rule_btn").click(function() {
 				rule_value += 50;
 				$(".progress-bar").css("width", rule_value + "%");
 				$(".progress-bar").text(rule_value + "%");
 				$("#account_rule_btn").off('click');
-			});
-			$("#info_rule_btn").click(function() {
-				rule_value += 50;
-				$(".progress-bar").css("width", rule_value + "%");
-				$(".progress-bar").text(rule_value + "%");
-				$("#info_rule_btn").off('click');
-			});
-			
-			
-			//비밀번호 확인
-			$('#password2').blur(function(){
-				if($('#password').val() != $('#password2').val()){
-					if($('#password2').val()!=''){
-						 common.gfn_alert('alert', '알림', '비밀번호가 틀립니다.', 'small');
-						$('#password2').val('');
-						$('#password2').focus();
+			    });
+				$("#info_rule_btn").click(function() {
+					rule_value += 50;
+					$(".progress-bar").css("width", rule_value + "%");
+					$(".progress-bar").text(rule_value + "%");
+					$("#info_rule_btn").off('click');
+				});
+
+
+				//비밀번호 확인
+				$('#password2').blur(function(){
+					if($('#password').val() != $('#password2').val()){
+						if($('#password2').val()!=''){
+							common.gfn_alert('alert', '알림', '비밀번호가 틀립니다.', 'small');
+							$('#password2').val('');
+							$('#password2').focus();
+						}
 					}
+				});
+
+				/* 가입하기 버튼 눌렀을 때 */
+				$('#join').click(function() {
+					_this.joinClick();
+				});
+
+			},
+
+			joinClick : function () {
+
+				if(rule_value != 100){
+					common.gfn_alert('alert', '알림', '약관을 읽어주세요.', 'small');
+					return false;
 				}
-			});
-			
-			/* 가입하기 버튼 눌렀을 때 */
-			$('#join').click(function() {
-				_this.joinClick();
-			});
-			
-		},
 
-		joinClick : function () { 
-			
-			if(rule_value != 100){
-				common.gfn_alert('alert', '알림', '약관을 읽어주세요.', 'small');
-				return false;
-			}
-			
-			if(common.gfn_isNull($('#email').val())){
-				common.gfn_alert('alert', '알림', '이메일을 입력하세요.', 'small');
-				$('#email').focus();
-				return false;
+				if(common.gfn_isNull($('#email').val())){
+					common.gfn_alert('alert', '알림', '이메일을 입력하세요.', 'small');
+					$('#email').focus();
+					return false;
 
-			}
-			var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-			if(!checkEmail.test($('#email').val())){
-				common.gfn_alert('alert', '알림', '적합하지 않은 이메일 형식입니다.', 'small');
+				}
+				var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+				if(!checkEmail.test($('#email').val())){
+					common.gfn_alert('alert','알림', '적합하지 않은 이메일 형식입니다.', 'small');
 				$('#email').focus();
 				return false;
 			}

@@ -11,7 +11,6 @@
 <title>게시판 상세보기</title>
 <jsp:include page="../common/header.jsp" />
 </head>
-<body>
 <style>
 body {
 	padding-top: 70px;
@@ -172,28 +171,6 @@ p {
 					</tr>
 				</thead>
 				<tbody>
-					<c:if test="${!empty commentsList}">
-					<c:forEach var="commentsList" items="${commentsList}">
-					<tr>
-						<td>
-							<span>${commentsList.regi_id}</span> &nbsp; &nbsp; &nbsp; &nbsp; 
-							${commentsList.regi_dt} &nbsp; &nbsp;
-							<!-- 수정, 삭제 -->
-							<c:if test="${commentsList.regi_id == principal.username}">
-								<span class="comment_update" style ="font-size:10pt">
-									<img src="/hansong/resources/images/pencil.svg" alt="update" width="14" height="14">
-								</span>
-								&nbsp;
-								<span class="comment_remove" style ="font-size:10pt">
-									<img src="/hansong/resources/images/trash.svg" alt="remove" width="14" height="14">
-								</span>
-							</c:if>
-							<hr>
-							<span>${commentsList.content}</span>
-						</td>
-					</tr>
-					</c:forEach>
-					</c:if>
 				</tbody>
 				<tfoot>
 					<tr>
@@ -211,7 +188,10 @@ p {
 <jsp:include page="../common/footer.jsp" />
 </body>
 <script>
+	$(function() {
 
+
+	getList();
   
 
 	$("#write").click(function() {
@@ -240,7 +220,7 @@ p {
 	      }else { // 수정  
 	    	  pUrl = "/hansong/comments/updateComment";
 	    	  pData = {
-	      			 id : $("#comment_id").val(), 
+	      			 id : $("#comment_id").val(),
 	      			 content : $("#content").val()
 	      	  };
 	    	  $("#write").text("등록");
@@ -262,57 +242,20 @@ p {
 	 }); 
 	      
 	
-function getList() {
-      $.ajax({
-               type : "get",
-               url : "/hansong/comments/commentList",
-               data : {
-            	   board_id : $("#board_id").val()
-               },
-               dataType : "json",
-               cache : false,
-               success : function(data) {
-                  if (data.leng > 0) {
-                     $("#comment tbody").empty();
-                     output = '';
-                     $.each(data.commentsList, function(index, item) {
-                           output += "<tr><td>"
-                                  + "<span>"
-                                  + item.member_id
-                                  + "</span> " + item.regi_dt;
-                                  if($("#loginId").val() == item.member_id) {
-                                     output += "<span class='comment_update' style='font-size: 10pt'>"
-                                            + "<img src='/hansong/resources/images/pencil.svg' alt='update' width='14' height='14'></span>"
-                                            + "<span class='comment_remove' style='font-size: 10pt'>"
-                                            + "<img src='/hansong/resources/images/trash.svg' alt='remove' width='14' height='14'></span>";
-                                 }
-                           output += "<hr><span>" + item.content +"</span></td></tr>";
-                     });
-                     $("#comment tbody").append(output);
-                  } else {
-                     $("#comment tbody").empty();
-                  }
-                  $("#comment_length").text('댓글 ('+data.leng+'개)');
-               }, error : function(xhr, status, errorThrown) {
-                  alert(status+" : "+errorThrown);
-               }
-      	});
 
-	};
 	
+
 	// 댓글 수정 버튼 클릭
-	$(".comment_update").click(function() {
-		before = $(this).next().next().next().text(); 
-		$("#content").focus().val(before); 
-		num = $(this).prev().text();
+	$(document).on("click",'.comment_update',function() {
+		var before = $(this).next().next().next().text();
+		$("#content").focus().val(before);
+		var num = $(this).prev().text();
 		$("#comment_id").val(num);
-		$("#write").text("수정"); 
+		$("#write").text("수정");
 	});
-	
-	
 	// 댓글 삭제 버튼 클릭
-	$(".comment_remove").click(function() {
-		num = $(this).prev().prev().text();
+	$(document).on("click",'.comment_remove',function() {
+		var num = $(this).prev().prev().text();
 		$.ajax({
 			type : "get",
 			url : "/hansong/comments/deleteComment",
@@ -326,11 +269,49 @@ function getList() {
 		})
 	})
 
+	})
 
 
 
+	function getList() {
+		$.ajax({
+			type : "get",
+			url : "/hansong/comments/commentList",
+			data : {
+				board_id : $("#board_id").val()
+			},
+			dataType : "json",
+			cache : false,
+			success : function(data) {
+				if (data.leng > 0) {
+					$("#comment tbody").empty();
+					output = '';
+					$.each(data.commentsList, function(index, item) {
+						output += "<tr><td>"
+								+ "<span>"
+								+ item.member_id
+								+ "</span> " + item.regi_dt
+								+ "<span style='display:none'>" + item.id
+								+ "</span>";
+						if($("#loginId").val() == item.member_id) {
+							output += "<span class='comment_update' style='font-size: 10pt'>"
+									+ "<img src='/hansong/resources/images/pencil.svg' alt='update' width='14' height='14'></span>"
+									+ "<span class='comment_remove' style='font-size: 10pt'>"
+									+ "<img src='/hansong/resources/images/trash.svg' alt='remove' width='14' height='14'></span>";
+						}
+						output += "<hr><span>" + item.content +"</span></td></tr>";
+					});
+					$("#comment tbody").append(output);
+				} else {
+					$("#comment tbody").empty();
+				}
+				$("#comment_length").text('댓글 ('+data.leng+'개)');
+			}, error : function(xhr, status, errorThrown) {
+				alert(status+" : "+errorThrown);
+			}
+		});
 
-
+	};
 
 
 

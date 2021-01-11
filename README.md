@@ -22,7 +22,7 @@
    - API : Google Developer, Kakao Developer, recaptcha, summernote
    
 # 내용
-* [PPT(Slideshare)](https://www.slideshare.net/mjSong9/pfd-227063816)
+* [PPT(Slideshare)](https://www2.slideshare.net/ssuser0b539c/lawfirmsonghan)
 
 * 구현 기능
    - 로그인(SSO)
